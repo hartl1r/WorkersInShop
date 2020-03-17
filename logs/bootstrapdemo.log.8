@@ -1,102 +1,107 @@
-2020-03-05 11:11:05,882 ERROR: Exception on /checkIn [POST] [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py:1891]
+2020-03-10 14:39:53,326 ERROR: Exception on / [GET] [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\result.py", line 1266, in fetchone
-    row = self._fetchone_impl()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\result.py", line 1146, in _fetchone_impl
-    return self.cursor.fetchone()
-pyodbc.ProgrammingError: Attempt to use a closed cursor.
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1246, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\default.py", line 588, in do_execute
+    cursor.execute(statement, parameters)
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name ', '. (207) (SQLExecDirectW)")
 
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
     rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 38, in checkIn
-    m = member.fetchone()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\result.py", line 1274, in fetchone
-    e, None, None, self.cursor, self.context
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1476, in _handle_dbapi_exception
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\routes.py", line 23, in index
+    workersInShop = db.engine.execute(sqlCheckInRecord)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2182, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 976, in execute
+    return self._execute_text(object_, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1149, in _execute_text
+    parameters,
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1250, in _execute_context
+    e, statement, parameters, cursor, context
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1476, in _handle_dbapi_exception
     util.raise_from_cause(sqlalchemy_exception, exc_info)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\util\compat.py", line 398, in raise_from_cause
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\util\compat.py", line 398, in raise_from_cause
     reraise(type(exception), exception, tb=exc_tb, cause=cause)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\util\compat.py", line 152, in reraise
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\util\compat.py", line 152, in reraise
     raise value.with_traceback(tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\result.py", line 1266, in fetchone
-    row = self._fetchone_impl()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\result.py", line 1146, in _fetchone_impl
-    return self.cursor.fetchone()
-sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) Attempt to use a closed cursor.
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1246, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\default.py", line 588, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name ', '. (207) (SQLExecDirectW)")
+[SQL: SELECT Last_Name + ", " +  First_Name as memberName, tblMember_Activity.Member_ID, Check_In_Date_Time, Check_Out_Date_Time, Type_Of_Work
+            FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID 
+            WHERE Check_Out_Date_Time Is Null 
+            AND Format(Check_In_Date_Time,'yyyy-MM-dd') >= '2020-03-10']
 (Background on this error at: http://sqlalche.me/e/f405)
-2020-03-05 11:17:30,106 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-05 11:18:49,641 ERROR: Exception on /checkIn [POST] [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py:1891]
+2020-03-10 14:40:48,224 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-10 14:40:52,501 ERROR: Exception on / [GET] [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\result.py", line 1266, in fetchone
-    row = self._fetchone_impl()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\result.py", line 1146, in _fetchone_impl
-    return self.cursor.fetchone()
-pyodbc.ProgrammingError: Attempt to use a closed cursor.
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1246, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\default.py", line 588, in do_execute
+    cursor.execute(statement, parameters)
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name ', '. (207) (SQLExecDirectW)")
 
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
     reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
     rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
     return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 40, in checkIn
-    m = member.fetchone()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\result.py", line 1274, in fetchone
-    e, None, None, self.cursor, self.context
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1476, in _handle_dbapi_exception
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\routes.py", line 23, in index
+    workersInShop = db.engine.execute(sqlCheckInRecord)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2182, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 976, in execute
+    return self._execute_text(object_, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1149, in _execute_text
+    parameters,
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1250, in _execute_context
+    e, statement, parameters, cursor, context
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1476, in _handle_dbapi_exception
     util.raise_from_cause(sqlalchemy_exception, exc_info)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\util\compat.py", line 398, in raise_from_cause
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\util\compat.py", line 398, in raise_from_cause
     reraise(type(exception), exception, tb=exc_tb, cause=cause)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\util\compat.py", line 152, in reraise
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\util\compat.py", line 152, in reraise
     raise value.with_traceback(tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\result.py", line 1266, in fetchone
-    row = self._fetchone_impl()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\result.py", line 1146, in _fetchone_impl
-    return self.cursor.fetchone()
-sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) Attempt to use a closed cursor.
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1246, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\default.py", line 588, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name ', '. (207) (SQLExecDirectW)")
+[SQL: SELECT (Last_Name + ", " +  First_Name) as memberName, tblMember_Activity.Member_ID, Check_In_Date_Time, Check_Out_Date_Time, Type_Of_Work
+            FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID 
+            WHERE Check_Out_Date_Time Is Null 
+            AND Format(Check_In_Date_Time,'yyyy-MM-dd') >= '2020-03-10']
 (Background on this error at: http://sqlalche.me/e/f405)
-2020-03-05 11:19:28,393 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-05 11:21:23,469 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-05 11:23:02,064 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-05 11:26:48,142 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-05 11:27:15,247 ERROR: Exception on /checkIn [POST] [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 44, in checkIn
-    print (m.First_Name, m.Last_Name)
-AttributeError: 'NoneType' object has no attribute 'First_Name'
-2020-03-05 11:53:47,070 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-05 11:56:09,287 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
+2020-03-10 14:43:09,027 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-10 14:45:05,493 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-10 14:46:43,443 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-10 14:47:44,770 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-10 14:50:30,016 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-10 14:52:22,609 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-10 14:53:32,283 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-10 14:55:18,202 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]

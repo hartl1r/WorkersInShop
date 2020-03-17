@@ -1,114 +1,82 @@
-2020-03-07 09:40:33,704 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 09:42:37,412 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 09:44:16,406 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 09:45:16,273 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 09:47:20,971 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 09:50:53,697 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 09:54:47,179 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 09:55:57,061 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 10:58:55,437 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 11:00:31,314 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 11:02:37,066 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 11:03:23,802 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 11:06:56,755 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 11:09:32,631 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 11:21:11,422 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 11:26:05,920 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 11:27:08,755 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 11:27:55,579 ERROR: Exception on /checkIn [POST] [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 61, in checkIn
-    processCheckIn(villageID,typeOfWorkToUse)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 144, in processCheckIn
-    + memberID + """', '""" + checkInDateTime + """', '""" + checkInTypeOfWork + """','FRONT', """ + shopNumber + """)"""
-NameError: name 'memberID' is not defined
-2020-03-07 11:28:57,028 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 11:29:22,698 ERROR: Exception on /checkIn [POST] [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 61, in checkIn
-    processCheckIn(villageID,typeOfWorkToUse)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 144, in processCheckIn
-    + villageID + """', '""" + checkInDateTime + """', '""" + checkInTypeOfWork + """','FRONT', """ + shopNumber + """)"""
-TypeError: bad operand type for unary +: 'str'
-2020-03-07 11:34:29,337 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 11:34:50,671 ERROR: Exception on /checkIn [POST] [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 61, in checkIn
-    processCheckIn(villageID,typeOfWorkToUse)
-TypeError: processCheckIn() missing 1 required positional argument: 'shopNumber'
-2020-03-07 11:36:16,536 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 11:36:40,624 ERROR: Exception on /checkIn [POST] [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 110, in checkIn
-    processCheckIn(villageID,typeOfWorkToUse,shopNumber)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 141, in processCheckIn
-    + villageID + """', '""" + checkInDateTime + """', '""" + typeOfWork + """','FRONT', """ + shopNumber + """)"""
-TypeError: bad operand type for unary +: 'str'
-2020-03-07 11:38:12,903 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-07 11:38:30,179 ERROR: Exception on /checkIn [POST] [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 110, in checkIn
-    processCheckIn(villageID,typeOfWorkToUse,shopNumber)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 141, in processCheckIn
-    + villageID + """', '""" + checkInDateTime + """', '""" + typeOfWork + """','FRONT', """ + str(shopNumber) + """)"""
-TypeError: bad operand type for unary +: 'str'
+2020-03-14 08:14:53,330 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 08:20:07,570 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 08:23:40,263 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 08:25:34,732 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 08:29:16,795 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:15:25,115 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:16:55,051 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:17:55,898 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:18:41,143 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:19:14,816 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:20:05,046 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:22:19,179 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:26:13,295 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:27:02,826 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:28:21,871 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:29:39,701 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:31:48,479 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:32:38,773 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:33:54,241 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:35:03,623 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:36:07,863 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:37:30,719 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:38:18,926 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:39:36,110 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:40:24,892 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:40:57,925 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:42:20,480 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:44:08,408 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:44:51,451 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:45:46,147 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:48:37,626 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:54:26,060 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:55:27,559 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:56:16,556 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:58:51,514 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 12:59:37,418 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:00:39,167 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:02:20,788 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:03:54,718 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:05:01,242 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:06:36,007 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:07:14,723 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:35:33,478 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:39:40,723 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:44:33,790 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:45:31,470 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:46:19,981 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:47:19,494 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:48:42,340 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:49:16,164 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:50:53,214 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:51:45,906 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:52:22,290 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:53:34,354 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:55:47,633 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:56:43,315 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:57:59,189 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:58:57,091 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 13:59:35,641 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:00:31,912 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:02:04,674 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:02:54,933 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:03:40,110 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:04:49,977 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:05:42,660 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:08:09,218 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:09:26,145 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:11:06,187 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:11:56,330 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:12:47,414 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:13:23,964 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:14:11,644 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:15:36,456 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:16:20,487 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:17:45,859 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:18:40,002 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:21:06,088 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:28:00,264 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:28:45,565 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:30:12,623 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:31:12,112 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-14 14:32:36,106 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]

@@ -1,0 +1,194 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+    {{super()}}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/workersInShop.css') }}">  
+{% endblock %}
+
+{% block scripts %}
+	{{super()}}
+	<script src="{{ url_for('static', filename='js/workersInShop.js') }}">  </script>
+{% endblock %}
+
+{% block content %}
+<!--<style>
+  .workersInShop {
+  background-color: blue;
+  font-size:3em;
+}
+
+.workersInShop tr td {
+  color: red;
+}
+
+#workersInShop tr td {
+  color: yellow;
+}
+
+</style> -->
+<div class= "container-fluid ">
+  <div class = hdg>
+    <h1>THE VILLAGES WOODWORKERS CLUB</h1>
+    <h2>WORKERS IN SHOP</h2>
+  </div>
+  
+  
+  <div class = "options btn-toolbar">
+    
+   
+<!--
+    <div id="myShopChoice" class = "shopChoice" style="border:1px solid white">
+      <div class="btn-group btn-group-sm data-toggle="buttons-radio" margin mt-2">
+        <button id="RA" type="button" name="shopChoiceItem" value="RA" class="btn btn-primary checked">ROLLING ACRES</button>
+        <button id = "BW" type="button" name="shopChoiceItem" value="BW" class="btn btn-primary" >BROWNWOOD</button>
+        <button id = "BOTH" type="button" name="shopChoiceItem" value="BOTH" class="btn btn-primary" >BOTH SHOPS</button>
+      </div>
+    </div>
+-->    
+    <div class="shopToShow"  style="border:1px solid white; ">
+      <form>
+        <input id = "showRA" type="radio" name="shopChoice" value='RA' >Rolling Acres<br>
+        <input id = "showBW" type="radio" name="shopChoice" value='BW' >Brownwood<br>
+        <input id = "showBoth" type="radio" name="shopChoice" value='BOTH' >Show Both<br>
+      </form>
+    </div>
+    
+   
+    <div class="inShop"  style="border:1px solid white; ">
+      <form>
+        <input id="inShopNow" type="radio" name="inShop" value='InShopNow' checked="checked >In Shop Now<br>
+        <input id = "inShopToday" type="radio" name="inShop" value='InShopToday' >In Shop Today
+      </form>
+    </div>
+   
+    <div>
+      <div class="orderBy" style="border:1px solid white">
+        <form>
+          <input id="orderByName" type="radio" name="orderByItem" value='OrderByName' checked="checked">Order By Name<br>
+          <input id="orderByTimeIn" type="radio" name="orderByItem" value='OrderByCheckInTime'>Order By Check In Time
+        </form>
+      </div>
+    </div>
+  
+    <div class = "filterBy" style="border:1px solid white">
+      <table>
+        <header style="text-align: center">FILTER BY</header>
+        <tr>
+          <td><input type="radio" name="filterItem" value='Defibrillator'>Defibrillator Trained</td>
+          <td><input type="radio" name="filterItem" value='President'>President/VP</td>
+          <td><input type="radio" name="filterItem" value='Lumber'>Lumber Sales</td>
+        </tr>
+        <tr> 
+          <td><input type="radio" name="filterItem" value='Repair'>Repair/Maint</td>
+          <td><input type="radio" name="filterItem" value='Merchandise'>Merchandise Sales</td>
+          <td><input type="radio" name="filterItem" value='BOD'>BOD Member</td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="filterItem" value='Safety'>Safety</td>
+          <td><input type="radio" name="filterItem" value='SpecProj'>Special Projects</td>
+          <td><input type="radio" name="filterItem" value='AskMe'>Ask Me</td>
+        </tr>
+        <tr>
+          <td><input type="radio" name="filterItem" value='Mentors'>Mentors</td>
+          <td><input type="radio" name="filterItem" value='All' checked="checked">EVERYONE</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class = "refresh">
+      <button type="button" id="btnRefresh" class="btn-success mr-3">Refresh List</button>
+    </div>
+
+  </div>
+
+  <div class = "message1" style="border:1px solid white; text-align:center;width:500px">
+    <label>... SHOP(S) TO SHOW ...</label><br>
+  </div>
+  <div class = "message2" style="border:1px solid white; text-align:center;width:500px">
+    <label>... IN SHOP NOW/TODAY ...</label>
+  </div>
+  
+
+
+  <div class = "displayTable">
+    <table class="table">
+      <thead>
+        <tr>   
+          <th>Name</th>
+          <th>Check In</th>
+          <th>Check Out</th>
+          <th>Type Of Work</th>
+          <th>Emergency Contact</th>
+          <th>Emergency Phone</th>
+          <th>Shop #</th>
+          <th>Door Used</th>
+        </tr>
+      </thead>
+
+      <tbody class = workersInShop>
+        {% for w in workersInShop %}
+        <tr>
+          <td>{{w.memberName}}</td>
+          <td>{{w.CheckInTime}}</td>
+          <td>{{w.CheckOutTime}} </td>
+          <td>{{w.Type_Of_Work}}</td>
+          <td>{{w.Emerg_Name}}</td>
+          <td>{{w.Emerg_Phone}}</td>
+          <td>{{w.Shop_Number}}</td>
+          <td>
+            {{w.Door_Used}}
+            <input id="prodId" name="prodId" type="hidden" value={{w.isMentor}}>
+          </td>
+          
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<!--    
+<div class="modal fade" id="myModalMsg" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id=modalBody>
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>  
+</div> -->
+
+<!--
+<script src="https://code.jquery.com/jquery-1.12.4.min.js">
+function refreshList() {
+    shopSelected = $('button[name=shopChoice]:checked').val()
+    inShopOptionSelected = $('button[name=inShop]:checked').val()
+    orderByOptionSelected = $('button[name=orderBy]:checked').val()
+    filterOptionSelected = $('button[name=filter]:checked').val()
+    
+    msg = shopSelected + inShopOptionSelected + orderByOptionSelected + filterOptionSelected
+    alert(msg)
+   }
+   $(document).ready(function(){
+   $("input[type='button']").click(function(){
+    var radioValue = $("input[name='shopChoice']:checked").val();
+    if(radioValue){
+      console.log("Selected - " + radioValue)
+        alert("Your are a - " + radioValue);
+    }
+  })
+})
+</script>
+-->
+{% endblock %}

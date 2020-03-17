@@ -1,100 +1,82 @@
-2020-03-05 16:09:51,124 ERROR: Exception on /checkIn [POST] [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1246, in _execute_context
-    cursor, statement, parameters, context
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\default.py", line 588, in do_execute
-    cursor.execute(statement, parameters)
-pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]'Now' is not a recognized built-in function name. (195) (SQLExecDirectW)")
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 90, in checkIn
-    activity = db.engine.execute(sqlCheckInRecord)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2182, in execute
-    return connection.execute(statement, *multiparams, **params)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 976, in execute
-    return self._execute_text(object_, multiparams, params)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1149, in _execute_text
-    parameters,
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1250, in _execute_context
-    e, statement, parameters, cursor, context
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1476, in _handle_dbapi_exception
-    util.raise_from_cause(sqlalchemy_exception, exc_info)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\util\compat.py", line 398, in raise_from_cause
-    reraise(type(exception), exception, tb=exc_tb, cause=cause)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\util\compat.py", line 152, in reraise
-    raise value.with_traceback(tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1246, in _execute_context
-    cursor, statement, parameters, context
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\default.py", line 588, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]'Now' is not a recognized built-in function name. (195) (SQLExecDirectW)")
-[SQL: SELECT Member_ID, Check_In_Date_Time, Check_Out_Date_Time, Type_Of_Work
-            FROM tblMember_Activity 
-            WHERE Member_ID = '604875' AND Check_Out_Date_Time Is Null 
-            AND Format([Check_In_Date_Time],"mm/dd/yyyy")=Format(Now(),"mm/dd/yyyy"); ]
-(Background on this error at: http://sqlalche.me/e/f405)
-2020-03-05 16:15:34,774 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
-2020-03-05 16:16:02,893 ERROR: Exception on /checkIn [POST] [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1246, in _execute_context
-    cursor, statement, parameters, context
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\default.py", line 588, in do_execute
-    cursor.execute(statement, parameters)
-pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]'Date' is not a recognized built-in function name. (195) (SQLExecDirectW)")
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\routes.py", line 90, in checkIn
-    activity = db.engine.execute(sqlCheckInRecord)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2182, in execute
-    return connection.execute(statement, *multiparams, **params)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 976, in execute
-    return self._execute_text(object_, multiparams, params)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1149, in _execute_text
-    parameters,
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1250, in _execute_context
-    e, statement, parameters, cursor, context
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1476, in _handle_dbapi_exception
-    util.raise_from_cause(sqlalchemy_exception, exc_info)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\util\compat.py", line 398, in raise_from_cause
-    reraise(type(exception), exception, tb=exc_tb, cause=cause)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\util\compat.py", line 152, in reraise
-    raise value.with_traceback(tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1246, in _execute_context
-    cursor, statement, parameters, context
-  File "c:\Users\richa\OneDrive\Projects\AzureCheckIn\venv\lib\site-packages\sqlalchemy\engine\default.py", line 588, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]'Date' is not a recognized built-in function name. (195) (SQLExecDirectW)")
-[SQL: SELECT Member_ID, Check_In_Date_Time, Check_Out_Date_Time, Type_Of_Work
-            FROM tblMember_Activity 
-            WHERE Member_ID = '604875' AND Check_Out_Date_Time Is Null 
-            AND Format([Check_In_Date_Time],"mm/dd/yyyy")=Format(Date(),"mm/dd/yyyy"); ]
-(Background on this error at: http://sqlalche.me/e/f405)
-2020-03-05 16:20:30,824 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureCheckIn\app\__init__.py:29]
+2020-03-10 17:00:13,769 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-10 17:01:18,102 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-10 17:01:54,791 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-10 17:08:39,874 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-10 17:12:51,646 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-10 17:14:13,149 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 10:56:04,781 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 10:57:24,522 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 10:59:11,375 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 11:02:07,001 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 11:05:22,524 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 11:05:56,732 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 12:08:47,622 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 12:09:31,882 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 12:13:48,189 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 12:15:01,055 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 12:18:02,918 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 12:19:15,510 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 12:47:16,357 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 12:48:59,894 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 12:50:21,304 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:29:43,281 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:31:20,899 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:31:56,269 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:32:07,325 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:33:46,705 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:34:50,844 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:35:10,118 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:35:56,647 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:37:15,652 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:39:40,051 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:40:49,542 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:41:38,362 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:42:52,899 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:43:46,652 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:44:54,933 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:45:35,558 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:46:39,375 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:47:53,055 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:48:47,620 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:49:32,700 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:52:23,713 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:53:22,547 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 15:54:19,009 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:19:20,922 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:21:03,765 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:22:39,744 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:23:45,286 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:25:31,251 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:26:23,825 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:29:56,663 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:31:18,253 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:32:40,962 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:33:59,530 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:37:46,212 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:40:15,167 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:41:27,851 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:43:15,754 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 17:45:24,410 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:17:40,068 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:19:38,117 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:28:44,657 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:29:49,183 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:31:14,071 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:32:09,781 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:33:15,048 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:38:42,445 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:41:19,451 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:45:20,249 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:46:37,347 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:47:48,573 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:48:28,103 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:51:21,594 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:55:18,351 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:55:49,667 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 18:58:39,072 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 19:01:01,305 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 19:04:03,608 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 19:04:49,521 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 19:05:36,672 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 19:06:29,677 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-11 19:07:28,964 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
