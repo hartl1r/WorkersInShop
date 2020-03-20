@@ -1,6 +1,10 @@
 $(document).ready(function() {
   // SET ROLLING ACRES TO CHECKED
-  document.getElementById("showRA").checked = true;
+  if (document.getElementById("shopID").val = 'RA')
+    document.getElementById("showRA").checked = true
+
+  if (document.getElementById("shopID").val = 'BW')
+    document.getElementById("showRA").checked = true
 
   //var shopLocation =$('button[#myShopChoice]:checked').val()
   var shopLocation=$('input[name=shopChoice]:checked').val()
