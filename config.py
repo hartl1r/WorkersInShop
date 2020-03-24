@@ -10,28 +10,28 @@ class Config(object):
     #SQLserver = "ShopServer"
     #SQLserver = "Azure"
     #if SQLserver = "Laptop":
-    params = urllib.parse.quote_plus("DRIVER={ODBC Driver 17 for SQL Server};"
-                                    "SERVER={localhost\SQLEXPRESS};"
-                                    "UID=sa;"
-                                    "PWD={vwc-0513!};"
-                                    "DATABASE=VWC;"
-                                    "Persist Security Info=False;"
-                                    "MultipleActiveResultSets=False;"
-                                    "Encrypt=yes;"
-                                    "TrustServerCertificate=yes;"
-                                    "Connection timeout=30;") 
+    # params = urllib.parse.quote_plus("DRIVER={ODBC Driver 17 for SQL Server};"
+    #                                 "SERVER={localhost\SQLEXPRESS};"
+    #                                 "UID=sa;"
+    #                                 "PWD={vwc-0513!};"
+    #                                 "DATABASE=VWC;"
+    #                                 "Persist Security Info=False;"
+    #                                 "MultipleActiveResultSets=False;"
+    #                                 "Encrypt=yes;"
+    #                                 "TrustServerCertificate=yes;"
+    #                                 "Connection timeout=30;") 
 	
 	#if SQLserver = "Azure":                                    
-    #params = urllib.parse.quote_plus("DRIVER={ODBC Driver 17 for SQL Server};"
-    #                            "SERVER={nro5j08dna.database.windows.net};"
-    #                            "UID={vwcDataMgr};"
-    #                            "PWD={vwc-0513!};"
-    #                            "DATABASE=VWCAccess;"
-    #                            "Persist Security Info=False;"
-    #                            "MultipleActiveResultSets=False;"
-    #                            "Encrypt=yes;"
-    #                            "TrustServerCertificate=yes;"
-    #                            "Connection timeout=30;") '''
+    params = urllib.parse.quote_plus("DRIVER={ODBC Driver 17 for SQL Server};"
+                               "SERVER={nro5j08dna.database.windows.net};"
+                               "UID={vwcDataMgr};"
+                               "PWD={vwc-0513!};"
+                               "DATABASE=VWCAccess;"
+                               "Persist Security Info=False;"
+                               "MultipleActiveResultSets=False;"
+                               "Encrypt=yes;"
+                               "TrustServerCertificate=yes;"
+                               "Connection timeout=30;") 
 
     conn_str = 'mssql+pyodbc:///?odbc_connect={}'.format(params)
     SQLALCHEMY_DATABASE_URI = conn_str 

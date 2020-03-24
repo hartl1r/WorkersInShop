@@ -1,4 +1,4 @@
-2020-03-20 09:00:02,515 ERROR: Exception on /setCookie [POST] [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py:1891]
+2020-03-20 10:22:13,091 ERROR: Exception on / [GET] [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -12,21 +12,23 @@ Traceback (most recent call last):
     rv = self.preprocess_request()
   File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 2241, in preprocess_request
     rv = func()
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\routes.py", line 34, in before_request_func
-    return redirect (url_for('setCookie'))
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\helpers.py", line 370, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 2215, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\helpers.py", line 358, in url_for
-    endpoint, values, method=method, force_external=external
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\werkzeug\routing.py", line 2179, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'setCookie'. Did you mean 'setcookie' instead?
-2020-03-20 09:01:32,541 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
-2020-03-20 09:02:14,634 ERROR: Exception on /setCookie [POST] [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py:1891]
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\routes.py", line 25, in before_request_func
+    return redirect(url_for(workersInShop))
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\helpers.py", line 318, in url_for
+    if endpoint[:1] == ".":
+TypeError: 'function' object is not subscriptable
+2020-03-20 10:23:28,008 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-20 10:24:35,672 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-20 10:24:50,558 ERROR: Exception on / [GET] [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py:1891]
+Traceback (most recent call last):
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1246, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\default.py", line 588, in do_execute
+    cursor.execute(statement, parameters)
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'isMentor'. (207) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -36,27 +38,41 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1947, in full_dispatch_request
-    rv = self.preprocess_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 2241, in preprocess_request
-    rv = func()
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\routes.py", line 34, in before_request_func
-    return redirect (url_for('setCookie'))
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\helpers.py", line 370, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 2215, in handle_url_build_error
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\helpers.py", line 358, in url_for
-    endpoint, values, method=method, force_external=external
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\werkzeug\routing.py", line 2179, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'setCookie'. Did you mean 'setcookie' instead?
-2020-03-20 09:03:24,940 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
-2020-03-20 09:05:17,205 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
-2020-03-20 09:24:10,914 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
-2020-03-20 09:24:14,219 ERROR: Exception on / [GET] [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py:1891]
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\routes.py", line 83, in workersInShop
+    workersInShop = db.engine.execute(sqlCheckInRecord)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2182, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 976, in execute
+    return self._execute_text(object_, multiparams, params)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1149, in _execute_text
+    parameters,
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1250, in _execute_context
+    e, statement, parameters, cursor, context
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1476, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\util\compat.py", line 398, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\util\compat.py", line 152, in reraise
+    raise value.with_traceback(tb)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1246, in _execute_context
+    cursor, statement, parameters, context
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\sqlalchemy\engine\default.py", line 588, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S22', "[42S22] [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Invalid column name 'isMentor'. (207) (SQLExecDirectW)")
+[SQL: SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID,
+     format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
+                Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, isMentor
+            FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID 
+            WHERE Check_Out_Date_Time Is Null 
+            AND Cast(Check_In_Date_Time as DATE) >= '2020-03-20']
+(Background on this error at: http://sqlalche.me/e/f405)
+2020-03-20 10:28:56,952 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-20 10:31:18,855 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-20 10:31:21,633 ERROR: Exception on / [GET] [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py:1891]
 Traceback (most recent call last):
   File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
     response = self.full_dispatch_request()
@@ -66,37 +82,17 @@ Traceback (most recent call last):
     reraise(exc_type, exc_value, tb)
   File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
     raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1947, in full_dispatch_request
-    rv = self.preprocess_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 2241, in preprocess_request
-    rv = func()
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\routes.py", line 17, in before_request_func
-    alert(document.cookie);
-NameError: name 'alert' is not defined
-2020-03-20 09:44:03,027 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
-2020-03-20 09:45:42,780 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
-2020-03-20 09:45:59,063 ERROR: Exception on / [GET] [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py:1891]
-Traceback (most recent call last):
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 2446, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1951, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1820, in handle_user_exception
-    reraise(exc_type, exc_value, tb)
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\_compat.py", line 39, in reraise
-    raise value
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1947, in full_dispatch_request
-    rv = self.preprocess_request()
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 2241, in preprocess_request
-    rv = func()
-  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\routes.py", line 18, in before_request_func
-    return redirect(url_for(shopLocation))
-NameError: name 'shopLocation' is not defined
-2020-03-20 09:47:17,247 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
-2020-03-20 09:49:54,692 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
-2020-03-20 09:51:05,244 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
-2020-03-20 09:55:12,392 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
-2020-03-20 10:02:05,213 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
-2020-03-20 10:17:13,803 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
-2020-03-20 10:18:05,304 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
-2020-03-20 10:21:14,829 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\venv\lib\site-packages\flask\app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\routes.py", line 43, in workersInShop
+    print ("Current shop location is - " + shopID)
+TypeError: can only concatenate str (not "NoneType") to str
+2020-03-20 10:32:26,128 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-20 10:34:26,276 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-20 10:37:53,574 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-20 10:41:19,134 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-20 10:42:12,935 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-20 10:43:22,851 INFO: Check In startup [in c:\Users\richa\OneDrive\Projects\AzureWorkersInShop\app\__init__.py:29]
+2020-03-22 12:55:59,933 INFO: Check In startup [in /Users/richardhartley/Projects/AzureWorkersInShop/app/__init__.py:29]

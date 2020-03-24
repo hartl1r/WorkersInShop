@@ -12,35 +12,50 @@ import datetime
 from datetime import date
 
 # MUST HAVE A SHOP ID IN A SESSION COOKIE NAMED SHOPID
-@app.before_request
-def before_request_func():
-    shopID = request.cookies.get('SHOPID')
-    if request.path != "/setCookie" and shopID == None:
-        return render_template('shopLocation.html')
+# @app.before_first_request
+# def before_request_func():
+#     shopID = request.cookies.get('SHOPID')
+#     print("shopID - " + str(shopID))
+#     print("Request.path - " + request.path)
+#     #if request.path != "/setCookie" and shopID == None:
+#     if shopID == None:
+#         return render_template('shopLocation.html')
+#     else:
+#     #if request.path == "/setCookie" and shopID == None:
+#         resp = make_response('Setting cookie for current shop.')
+#         resp.set_cookie('SHOPID', shopID, max_age=60*60*24*365*2)
+#         return redirect (url_for('workersInShop'))
+#         #return redirect(url_for(setCookie))
 
-    if request.path == "/setCookie" and shopID == None:
-        return redirect(url_for(setCookie))
-
-
+@app.route("/")
 @app.route("/setCookie", methods = ['POST'])
 def setCookie():
     if request.method == 'POST':
-        shopID = request.form['shopList']
+        shopIDentered = request.form['shopList']
         #session['SHOPID'] = shopID
         resp = make_response('Setting cookie for current shop.')
-        resp.set_cookie('SHOPID', shopID, max_age=60*60*24*365*2)
+        resp.set_cookie('SHOPID', shopIDentered, max_age=60*60*24*365*2)
         return redirect (url_for('workersInShop'))
-    else:
-        res = make_response("Value of cookie SHOPID is {}".format(request.cookies.get('SHOPID')))
-    return resp
+    #else:
+    #    resp = make_response("Value of cookie SHOPID is {}".format(request.cookies.get('SHOPID')))
+    #return resp
         #return('Session cookie set to -' + shopID)
     #return redirect (url_for('workersInShop'))
+    return render_template("shopLocation.html")
 
-@app.route("/")
 @app.route("/workersInShop",methods=['GET','POST'])
 def workersInShop():
     shopID = request.cookies.get('SHOPID')
-    print ("Current shop location is - " + shopID)
+    # if shopID == None:
+    #     return render_template("shopLocation.html")
+    # if request.method == 'POST':
+    #     shopIDentered = request.form['shopList']
+    #     resp = make_response('Setting cookie for selected shop.')
+    #     resp.set_cookie('SHOPID', shopIDentered,max_age=60*60*24*365*2)
+
+        #print("shopID is None")
+    #else:
+    #    print ("Current shop location is - " + shopID)
    #if shopID = None
    #     return render_template("shopLocation.html")
 
