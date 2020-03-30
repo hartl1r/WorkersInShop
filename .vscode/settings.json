@@ -1,3 +1,8 @@
 {
-    "python.pythonPath": "/Users/richardhartley/Projects/AzureWorkersInShop/venv/bin/python"
+    "python.pythonPath": "/Users/richardhartley/Projects/AzureWorkersInShop/venv/bin/python",
+
+    "python.linting.pylintArgs": [
+        "--load-plugins",
+        "pylint-flask"
+    ]
 }

@@ -1,0 +1,5 @@
+SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID,
+        format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
+                    Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, Mentor
+                FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID
+                ORDER BY Last_Name, First_Name

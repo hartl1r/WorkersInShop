@@ -29,35 +29,24 @@
 <div class= "container-fluid ">
   <div class = hdg>
     <h1>THE VILLAGES WOODWORKERS CLUB</h1>
+    <!--<input id="shopID" name="shopID" type="text" style= "background-color: white; color:blue" value={{shopIDcookieValue}}>    -->
     <h2>WORKERS IN SHOP</h2>
-    <input id="shopID" name="shopID" type="hidden" value={{shopID}}>    
   </div>
   
-  
+    <!-- TOOLBAR TO SHOW FILTERING/SORTING OPTIONS -->
   <div class = "options btn-toolbar">
     
-   
-<!--
-    <div id="myShopChoice" class = "shopChoice" style="border:1px solid white">
-      <div class="btn-group btn-group-sm data-toggle="buttons-radio" margin mt-2">
-        <button id="RA" type="button" name="shopChoiceItem" value="RA" class="btn btn-primary checked">ROLLING ACRES</button>
-        <button id = "BW" type="button" name="shopChoiceItem" value="BW" class="btn btn-primary" >BROWNWOOD</button>
-        <button id = "BOTH" type="button" name="shopChoiceItem" value="BOTH" class="btn btn-primary" >BOTH SHOPS</button>
-      </div>
-    </div>
--->    
     <div class="shopToShow"  style="border:1px solid white; ">
-      <form>
+      <form id="shopChosen">
         <input id = "showRA" type="radio" name="shopChoice" value='RA' >Rolling Acres<br>
         <input id = "showBW" type="radio" name="shopChoice" value='BW' >Brownwood<br>
         <input id = "showBoth" type="radio" name="shopChoice" value='BOTH' >Show Both<br>
       </form>
     </div>
-    
    
     <div class="inShop"  style="border:1px solid white; ">
       <form>
-        <input id="inShopNow" type="radio" name="inShop" value='InShopNow' checked="checked >In Shop Now<br>
+        <input id="inShopNow" type="radio" name="inShop" value='InShopNow' checked="checked">In Shop Now<br>
         <input id = "inShopToday" type="radio" name="inShop" value='InShopToday' >In Shop Today
       </form>
     </div>
@@ -99,18 +88,25 @@
     <div class = "refresh">
       <button type="button" id="btnRefresh" class="btn-success mr-3">Refresh List</button>
     </div>
+    <div class = "test">
+      <button type="button" id="btnRefresh" onclick = "location.href='test'" class="btn-success mr-3">TEST</button>
+    </div>
+  </div>  
 
-  </div>
-
+  <!-- TWO LINES FOR MESSAGES -->
   <div class = "message1" style="border:1px solid white; text-align:center;width:500px">
-    <label>... SHOP(S) TO SHOW ...</label><br>
+    <label id="msg1">... SHOP(S) TO SHOW ...</label><br>
   </div>
   <div class = "message2" style="border:1px solid white; text-align:center;width:500px">
-    <label>... IN SHOP NOW/TODAY ...</label>
+    <label id="msg2">... IN SHOP NOW/TODAY ...</label>
   </div>
   
+  <!-- TEXT SEARCH BOX FOR NAMES -->
+  <div class = "nameSearch" style="border:1px solid navy">
+    <input class="form-control" id="mySearch" type="text" placeholder="Search..">
+  </div>
 
-
+  <!-- TABLE TO DISPLAY MEMBER DATA -->
   <div class = "displayTable">
     <table class="table">
       <thead>
@@ -126,27 +122,24 @@
         </tr>
       </thead>
 
-      <tbody class = workersInShop>
+      <tbody class = "workersInShop" id="myTable">
         {% for w in workersInShop %}
-        <tr>
-          <td>{{w.memberName}}</td>
-          <td>{{w.CheckInTime}}</td>
-          <td>{{w.CheckOutTime}} </td>
-          <td>{{w.Type_Of_Work}}</td>
-          <td>{{w.Emerg_Name}}</td>
-          <td>{{w.Emerg_Phone}}</td>
-          <td>{{w.Shop_Number}}</td>
-          <td>
-            {{w.Door_Used}}
-            <input id="prodId" name="prodId" type="hidden" value={{w.isMentor}}>
-          </td>
-          
-        </tr>
+          <tr>
+            <td>{{w.memberName}}</td>
+            <td>{{w.CheckInTime}}</td>
+            <td>{{w.CheckOutTime}} </td>
+            <td>{{w.Type_Of_Work}}</td>
+            <td>{{w.Emerg_Name}}</td>
+            <td>{{w.Emerg_Phone}}</td>
+            <td>{{w.Shop_Number}}</td>
+            <td>{{w.Door_Used}}</td>
+          </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
 </div>
+
 
 <!-- Modal -->
 <!--    

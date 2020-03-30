@@ -4,8 +4,8 @@ from datetime import datetime
 from time import time
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import select, func, Column, extract 
-from sqlalchemy.orm import column_property
+from sqlalchemy import select, func, Column, extract, ForeignKey
+from sqlalchemy.orm import column_property, relationship
 from sqlalchemy.ext.hybrid import hybrid_property
 #from flask_login import UserMixin
 #import jwt
@@ -17,13 +17,13 @@ from app import app
 
     
 
-@staticmethod
-def verify_reset_password_token(token):
-    try:
-        id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])['reset_password']
-    except:
-        return
-    return User.query.get(id)
+# @staticmethod
+# def verify_reset_password_token(token):
+#     try:
+#         id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])['reset_password']
+#     except:
+#         return
+#     return User.query.get(id)
 
         
 
@@ -31,7 +31,9 @@ class Member(db.Model):
     __tablename__ = 'tblMember_Data'
     __table_args__ = {"schema": "dbo"}
     id = db.Column(db.Integer, primary_key=True)
-    Member_ID = db.Column(db.String(6), index=True, unique=True)
+    Member_ID = db.Column(db.String(6),
+         index=True,
+         unique=True)
     Last_Name = db.Column(db.String(30))
     First_Name = db.Column(db.String(30))
     #NickName = db.Column(db.String(30))
@@ -50,6 +52,8 @@ class Member(db.Model):
     Restricted_From_Shop = db.Column(db.Boolean)
 	
     fullName = column_property(First_Name + " " + Last_Name)
+    # Relationships
+    #activity = relationship("MemberActivity", backref="Member")
 
     def wholeName(self):
         return self.lastName + ", " + self.firstName 
@@ -62,8 +66,9 @@ class ShopName(db.Model):
 
 class MemberActivity(db.Model):
     __tablename__ = 'tblMember_Activity'
+    __table_args__ = {"schema": "dbo"}
     ID = db.Column(db.Integer, primary_key=True)
-    Member_ID = db.Column(db.String(6))
+    Member_ID = db.Column(db.String(6)) #, ForeignKey('dbo.tblMember.Member_ID'))
     Check_In_Date_Time = db.Column(db.DateTime)
     Check_Out_Date_Time = db.Column(db.DateTime)
     Type_Of_Work = db.Column(db.String(20))
