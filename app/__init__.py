@@ -11,6 +11,7 @@ from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.config.from_object(Config)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 
@@ -28,5 +29,8 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info('Check In startup')
 
+# app.jinja_env.auto_reload = True
+# app.config['TEMPLATES_AUTO_RELOAD'] = True
+# app.run(debug=True, host='0.0.0.0')
 
 from app import routes, models, errors

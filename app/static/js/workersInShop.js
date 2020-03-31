@@ -43,6 +43,11 @@ $(document).ready(function() {
     //$.post("workersInShop",{'choices[]':["Jon","Susan"]});
   })
 
+  // REFRESH (GET)
+  $('#btnRefreshGET').on('click',function(){
+    refreshListGET()
+  })
+
   // CLICK ON TABLE ROW EVENT
   $(document).on('click','#myTable td', function(e) {
     if ($(this).is('td')) {
@@ -115,6 +120,37 @@ $(document).ready(function() {
 
     xhr.send(data);
   }  
+
+  function refreshListGET() { 
+    // PUT OPTIONS INTO AN ARRAY
+    var optionArray = []
+    // START ARRAY WITH SHOP LOCATION ('RA', 'BW' OR 'BOTH')
+    optionArray.push(currentShopChoice)
+    // ADD INSHOPNOW OR INSTHOP TODAY OPTION
+    optionArray.push($('input[name=inShop]:checked').val())
+    // ADD ORDER BY PARAMETER
+    optionArray.push($('input[name=orderByItem]:checked').val())
+    // ADD FILTER CHOICE
+    optionArray.push($('input[name=filterItem]:checked').val())
+    //alert (optionArray)
+
+    // SEND ARRAY TO WORKERSINSHOP
+    xhr = new XMLHttpRequest();
+    var url = "/workersInShopGET";
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-type", "application./json");
+    xhr.onreadystatechabnge = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log("Result - " + this.responseText)
+      }
+    }
+    console.log("Array - " + optionArray)
+    var data = JSON.stringify(optionArray);
+    console.log("Data - " + data)
+
+    xhr.send(data);
+  }  
+
 
   function setCookie(cname,cvalue,exdays) {
     var d = new Date();

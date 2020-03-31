@@ -78,3 +78,4 @@ Traceback (most recent call last):
     print("shopID - " + shopID)
 TypeError: can only concatenate str (not "NoneType") to str
 2020-03-22 13:14:00,227 INFO: Check In startup [in /Users/richardhartley/Projects/AzureWorkersInShop/app/__init__.py:29]
+2020-03-31 11:19:24,331 INFO: Check In startup [in /Users/richardhartley/Projects/AzureWorkersInShop/app/__init__.py:29]
