@@ -145,7 +145,7 @@ $(document).ready(function() {
       }
     }
     console.log("Array - " + optionArray)
-    var data = JSON.stringify(optionArray);
+    var data = "option=x"  //JSON.stringify(optionArray);
     console.log("Data - " + data)
 
     xhr.send(data);
