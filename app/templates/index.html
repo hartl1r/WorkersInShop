@@ -1,4 +1,41 @@
-<html>
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+    {{super()}}
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/workersInShop.css') }}">  -->
+{% endblock %}
+
+{% block scripts %}
+	{{super()}}
+	<script src="{{ url_for('static', filename='js/index.js') }}">  </script>
+{% endblock %}
+
+{% block content %}
+<body>
+   <h1>Table Heading</h1>
+   <table id="example" class="display" style="width:100%">
+     <thead>
+       <tr>
+           <th>Name</th>
+           <th>Check In Time</th>
+       </tr>
+     </thead>
+     <tfoot>
+       <tr>
+         <tfoot>
+           <tr>
+             <th>Name</th>
+             <th>Check In Time</th>
+           </tr>
+         </tfoot>
+       </tr>
+     </tfoot>
+   </table>
+ </body>
+ 
+
+{% endblock %}
+<!--<html>
    <body>
       <h2>Select your shop location -</h2>
       <form action="/setcookie" method="POST" id="shopIDform">
@@ -10,3 +47,4 @@
       </form>
    </body>
 </html>
+-->

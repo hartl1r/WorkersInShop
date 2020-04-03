@@ -3,6 +3,7 @@
 from datetime import datetime 
 from time import time
 from app import db
+from app import ma 
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import select, func, Column, extract, ForeignKey
 from sqlalchemy.orm import column_property, relationship
@@ -53,8 +54,7 @@ class Member(db.Model):
 	
     fullName = column_property(First_Name + " " + Last_Name)
     # Relationships
-    activities = db.relationship("MemberActivity", backref="member")
-
+    #activities = db.relationship('MemberActivity', backref='member')
     def wholeName(self):
         return self.lastName + ", " + self.firstName 
   
@@ -74,5 +74,14 @@ class MemberActivity(db.Model):
     Type_Of_Work = db.Column(db.String(20))
     Shop_Number = db.Column(db.Integer)
     Door_Used = db.Column(db.String(5))
-	
-	
+
+    
+
+# class MemberSchema(ma.ModelSchema):
+#     class Meta:
+#         model = Member
+
+# class MemberActivitySchema(ma.ModelSchema):
+#     class Meta:
+#         model = MemberActivity
+

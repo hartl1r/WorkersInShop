@@ -106,7 +106,8 @@ $(document).ready(function() {
 
     // SEND ARRAY TO WORKERSINSHOP
     xhr = new XMLHttpRequest();
-    var url = "/workersInShop";
+    var url = "/workersInShopPOST";
+    //var url = "/workersInShop";
     xhr.open("POST", url, true);
     xhr.setRequestHeader("Content-type", "application./json");
     xhr.onreadystatechabnge = function() {
@@ -137,7 +138,7 @@ $(document).ready(function() {
     // SEND ARRAY TO WORKERSINSHOP
     xhr = new XMLHttpRequest();
     var url = "/workersInShopGET";
-    xhr.open("GET", url, true);
+    xhr.open('GET','/workersInShopGET', true);
     xhr.setRequestHeader("Content-type", "application./json");
     xhr.onreadystatechabnge = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -148,7 +149,7 @@ $(document).ready(function() {
     var data = "option=x"  //JSON.stringify(optionArray);
     console.log("Data - " + data)
 
-    xhr.send(data);
+    xhr.send('option=x');
   }  
 
 
