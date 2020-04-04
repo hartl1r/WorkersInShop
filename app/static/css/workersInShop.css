@@ -32,34 +32,36 @@
   color:white;
   width:175px;
   height:75px;
-  margin-left: 10px;
+  margin-left: 100px;
 }
 
 .inShop  {
   color:white;
   width:150px;
   height:50px;
-  margin-left: 10px;
+  margin-left: 40px;
 }
 
 .orderBy {
   color:white;
   width:225px;
-  margin-left: 10px;
+  margin-left: 40px;
 }
 
 .filterBy {
   color:white;
   height:130px;
-  margin-left: 10px;
+  margin-left: 40px;
+  margin-right: 200px;
   width:500px;
 }
 
-.refresh {
+.refreshBtn {
   color:white;
-  height: 30px;
-  margin-left: 10px;
-  padding-top: 10px;
+  height: 50px;
+  margin-left: 100px;
+  margin-top:30px;
+  padding-top: 5px;
 }
 
 .nameSearch {

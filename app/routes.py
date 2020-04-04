@@ -184,44 +184,64 @@ def workersInShop():
         # inShop = displayOptions[1]
         # orderBy = displayOptions[2]
         # filterOption = displayOptions[3]
-        f = request.form
-        for key in f.keys():
-            for value in f.getlist(key):
-                print (key,":",value)
+        # f = request.form
+        # for key in f.keys():
+        #     for value in f.getlist(key):
+        #         print (key,":",value)
         
-        #shopChoice = request.form['shopChoice']
-        shopChoice='RA'
-        inShop='InShopToday'
-        orderBy='OrderByCheckInTime'
-        filterOption='All'
+        shopChoice = request.form['shopChoice']#shopChoice='RA'
+        inShop=request.form['inShop'] #'InShopToday'
+        orderBy=request.form['orderByItem'] #'OrderByCheckInTime'
+        filterOption=request.form['filterItem'] #'All'
+        print(shopChoice, inShop, orderBy, filterOption)
+
         # BUILD INITIAL WHERE CLAUSE TO SELECT TODAY'S ACTIVITY RECORDS
         whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' and"
-        # ADD OPTIONS TO WHERE CLAUSE
-        if shopChoice == 'RA':
-            shopID = 1
-            whereClause += ' Shop_Number = 1 and'
-        if shopChoice == 'BW':
-            shopID = 2
-            whereClause += ' Shop_Number = 2 and'
-        
-        if inShop == 'InShopNow':
-            whereClause += ' Check_out_Date_Time is null and'
-        
-        if filterOption == 'Defibrillator':
-            whereClause += ' Definrillator_Trained'
+        #whereClause = " WHERE"
+        whereClause += ' ' + shopChoice
+        print (whereClause)
 
-        if filterOption == 'President':
-            whereClause += ' President_VP'
+        if len(whereClause) > 6:
+            whereClause += ' and '
+        print(whereClause)
+
+        whereClause += inShop
+        print(whereClause)
+
+        if len(filterOption) > 0:
+            whereClause += filterOption
+        print(whereClause)
+        
+        #whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' and"
+        # ADD OPTIONS TO WHERE CLAUSE
+        #if shopChoice == 'RA':
+        #    shopID = 1
+        #    whereClause += ' Shop_Number = 1 and'
+        #if shopChoice == 'BW':
+        #    shopID = 2
+        #    whereClause += ' Shop_Number = 2 and'
+        
+        #if inShop == 'InShopNow':
+        #    whereClause += ' Check_out_Date_Time is null and'
+        
+        # if filterOption == 'Defibrillator':
+        #     whereClause += ' Definrillator_Trained'
+
+        # if filterOption == 'President':
+        #     whereClause += ' President_VP'
 
         # IF WHERE CLAUSE ENDS WITH 'AND' REMOVE THE 'AND'
-        if whereClause[-3:] == 'and':
-            whereClause = whereClause[0:-4]
-
+        print(whereClause[-4:])
+        if whereClause[-4:] == 'and ':
+            whereClause = whereClause[0:-5]
+        print(whereClause)
         # BUILD THE ORDER BY CLAUSE
-        if orderBy == 'OrderByCheckInTime':
-            sortOrderClause = ' order by Check_In_Date_Time'
-        else:
-            sortOrderClause = ' order by last_name, first_name'
+        # if orderBy == 'OrderByCheckInTime':
+        #     sortOrderClause = ' order by Check_In_Date_Time'
+        # else:
+        #     sortOrderClause = ' order by last_name, first_name'
+        #whereClause += ' ' + orderBy
+        #print(whereClause)
 
         # BUILD MAIN QUERY
         sqlCheckInRecord = """SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID,
@@ -230,10 +250,12 @@ def workersInShop():
                 FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID""" 
         # ADD THE WHERE CLAUSE TO THE MAIN QUERY        
         sqlCheckInRecord += whereClause
+        print(sqlCheckInRecord)
+
         # ADD THE ORDER BY CLAUSE TO THE MAIN QUERY 
-        sqlCheckInRecord += sortOrderClause
-                
-        #print (sqlCheckInRecord)
+        sqlCheckInRecord += ' ' + orderBy        
+        print (sqlCheckInRecord)
+
         # EXECUTE THE SQL STATEMENT
         workersInShop = None
         workersInShop = db.engine.execute(sqlCheckInRecord)
@@ -254,26 +276,26 @@ def workersInShop():
     shopIDcookieValue =  request.cookies.get('SHOPID')
     
     # BUILD DEFAULT SQL STATEMENT USED ON FIRST DISPLAY OF THE PAGE
-    sqlCheckInRecord = """SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID,
-     format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
-            Check_In_Date_Time, Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, Mentor
-            FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID """
-            #WHERE Cast(Check_In_Date_Time as DATE) >= '""" + str(todaysDate) + """' and Cast(Check_In_Date_Time as DATE) < '""" + str(tomorrow) + "'"""
-            #+ """' AND Check_Out_Date_Time Is Null ORDER BY Last_Name, First_Name"""
+    # sqlCheckInRecord = """SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID,
+    #  format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
+    #         Check_In_Date_Time, Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, Mentor
+    #         FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID """
+    #         #WHERE Cast(Check_In_Date_Time as DATE) >= '""" + str(todaysDate) + """' and Cast(Check_In_Date_Time as DATE) < '""" + str(tomorrow) + "'"""
+    #         #+ """' AND Check_Out_Date_Time Is Null ORDER BY Last_Name, First_Name"""
     
-    whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' AND Check_Out_Date_Time Is Null"
-    sqlCheckInRecord += whereClause
+    # whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' AND Check_Out_Date_Time Is Null"
+    # sqlCheckInRecord += whereClause
+    # print(sqlCheckInRecord)
+    # #sortOrderClause = ' order by last_name, first_name'
+    # sqlCheckInRecord += ' ' + orderBy  #sortOrderClause
 
-    sortOrderClause = ' order by last_name, first_name'
-    sqlCheckInRecord += sortOrderClause
+    # print (sqlCheckInRecord)
 
-    #print (sqlCheckInRecord)
-
-    # EXECUTE THE SQL STATEMENT
-    workersInShop = db.engine.execute(sqlCheckInRecord)
+    # # EXECUTE THE SQL STATEMENT
+    # workersInShop = db.engine.execute(sqlCheckInRecord)
       
     #return render_template("workersInShop.html",workersInShop=workersInShop,shopID=shopIDcookieValue)
-    return render_template("workersInShop.html")
+    return render_template("workersInShop.html",shopID=shopIDcookieValue)
 
 
 

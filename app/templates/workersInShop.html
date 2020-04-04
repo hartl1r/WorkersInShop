@@ -34,23 +34,23 @@
   </div>
   
     <!-- TOOLBAR TO SHOW FILTERING/SORTING OPTIONS -->
-    
+  <form class = "options btn-toolbar" action = "http://localhost:5000/workersInShop" method = "POST">
     <div class = "options btn-toolbar">
-      <form action = "http://localhost:5000/workersInShop" method = "POST">
+     
     <div class="shopToShow"  style="border:1px solid white; "> 
-        <input id = "showRA" type="radio" name="shopChoice" value='RA' >Rolling Acres<br>
-        <input id = "showBW" type="radio" name="shopChoice" value='BW' >Brownwood<br>
-        <input id = "showBoth" type="radio" name="shopChoice" value='BOTH' >Show Both<br>
+        <input id = "showRA" type="radio" name="shopChoice" value='Shop_Number=1'>Rolling Acres<br>
+        <input id = "showBW" type="radio" name="shopChoice" value='Shop_Number=2'>Brownwood<br>
+        <input id = "showBoth" type="radio" name="shopChoice" value='' >Show Both<br>
     </div> 
     <div class="inShop"  style="border:1px solid white; ">
-        <input id="inShopNow" type="radio" name="inShop" value='InShopNow' checked="checked">In Shop Now<br>
-        <input id = "inShopToday" type="radio" name="inShop" value='InShopToday' >In Shop Today    
+        <input id="inShopNow" type="radio" name="inShop" value='Check_Out_Date_Time is null' checked="checked">In Shop Now<br>
+        <input id = "inShopToday" type="radio" name="inShop" value='' >In Shop Today    
     </div>
   
     <div>
       <div class="orderBy" style="border:1px solid white">
-          <input id="orderByName" type="radio" name="orderByItem" value='OrderByName' checked="checked">Order By Name<br>
-          <input id="orderByTimeIn" type="radio" name="orderByItem" value='OrderByCheckInTime'>Order By Check In Time
+          <input id="orderByName" type="radio" name="orderByItem" value='ORDER BY Last_Name, First_Name' checked="checked">Order By Name<br>
+          <input id="orderByTimeIn" type="radio" name="orderByItem" value='ORDER BY Check_In_Date_Time'>Order By Check In Time
       </div>
     </div>
   
@@ -58,31 +58,30 @@
       <table>
         <header style="text-align: center">FILTER BY</header>
         <tr>
-          <td><input type="radio" name="filterItem" value='Defibrillator'>Defibrillator Trained</td>
-          <td><input type="radio" name="filterItem" value='President'>President/VP</td>
-          <td><input type="radio" name="filterItem" value='Lumber'>Lumber Sales</td>
+          <td><input type="radio" name="filterItem" value='Defibrillator_Trained = True'>Defibrillator Trained</td>
+          <td><input type="radio" name="filterItem" value='(isPresident = True or isVP = True)'>President/VP</td>
+          <td><input type="radio" name="filterItem" value='canSellLumber = True'>Lumber Sales</td>
         </tr>
         <tr> 
-          <td><input type="radio" name="filterItem" value='Repair'>Repair/Maint</td>
-          <td><input type="radio" name="filterItem" value='Merchandise'>Merchandise Sales</td>
-          <td><input type="radio" name="filterItem" value='BOD'>BOD Member</td>
+          <td><input type="radio" name="filterItem" value='Maintenance = True'>Repair/Maint</td>
+          <td><input type="radio" name="filterItem" value='canSellMdse = True'>Merchandise Sales</td>
+          <td><input type="radio" name="filterItem" value='isBODmember = True'>BOD Member</td>
         </tr>
         <tr>
-          <td><input type="radio" name="filterItem" value='Safety'>Safety</td>
-          <td><input type="radio" name="filterItem" value='SpecProj'>Special Projects</td>
-          <td><input type="radio" name="filterItem" value='AskMe'>Ask Me</td>
+          <td><input type="radio" name="filterItem" value='isSafetyCommittee = True'>Safety</td>
+          <td><input type="radio" name="filterItem" value='isSpecialProjects = True'>Special Projects</td>
+          <td><input type="radio" name="filterItem" value='isAskMe = True'>Ask Me</td>
         </tr>
         <tr>
-          <td><input type="radio" name="filterItem" value='Mentors'>Mentors</td>
-          <td><input type="radio" name="filterItem" value='All' checked="checked">EVERYONE</td>
+          <td><input type="radio" name="filterItem" value='Mentor = True'>Mentors</td>
+          <td><input type="radio" name="filterItem" value='' checked="checked">EVERYONE</td>
         </tr>
       </table>
     </div>
-        <input type='submit' value ='Refresh List'>
-    
+        <input class="btn btn-primary refreshBtn" type='submit' value ='Refresh List'>
     </form>
   </div>
-
+  
 </div>
     <!--
     <div class = "refresh">
