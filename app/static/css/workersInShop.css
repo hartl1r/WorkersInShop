@@ -32,46 +32,46 @@
   color:white;
   width:175px;
   height:75px;
-  margin-left: 100px;
+  margin-left: 10px;
 }
 
 .inShop  {
   color:white;
   width:150px;
   height:50px;
-  margin-left: 40px;
+  margin-left: 10px;
 }
 
 .orderBy {
   color:white;
   width:225px;
-  margin-left: 40px;
+  margin-left: 10px;
 }
 
 .filterBy {
   color:white;
   height:130px;
-  margin-left: 40px;
-  margin-right: 200px;
+  margin-left: 10px;
+  margin-right: 10px;
   width:500px;
 }
 
 .refreshBtn {
   color:white;
   height: 50px;
-  margin-left: 100px;
+  margin-left: 10px;
   margin-top:30px;
   padding-top: 5px;
 }
 
 .nameSearch {
-  grid-column:1;
-  grid-row:8;
   background-color:white;
   color:navy;
-  height: 30px;
-  margin-left: 50px;
-  padding-top: 10px;
+  height: 50px;
+  width:100px;
+  margin-top: 30px;
+  margin-left: 0px;
+  padding-top: 5px;
 }
 
 

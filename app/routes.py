@@ -208,6 +208,10 @@ def workersInShop():
         whereClause += inShop
         print(whereClause)
 
+        if whereClause[-4:] != 'and ':
+            whereClause += ' and '
+        print(whereClause)
+
         if len(filterOption) > 0:
             whereClause += filterOption
         print(whereClause)
@@ -246,7 +250,9 @@ def workersInShop():
         # BUILD MAIN QUERY
         sqlCheckInRecord = """SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID,
         format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
-                    Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, Mentor
+                    Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, Mentor, Defibrillator_Trained, 
+                    isPresident, isVP, canSellLumber, canSellMdse, Maintenance, isBODmember, isSafetyCommittee,
+                    isSpecialProjects, isAskMe
                 FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID""" 
         # ADD THE WHERE CLAUSE TO THE MAIN QUERY        
         sqlCheckInRecord += whereClause
@@ -259,7 +265,8 @@ def workersInShop():
         # EXECUTE THE SQL STATEMENT
         workersInShop = None
         workersInShop = db.engine.execute(sqlCheckInRecord)
-
+        # for w in workersInShop:
+        #     print(w.memberName, w.Defibrillator_Trained)
         # GET THE SHOP ID COOKIE
         shopIDcookieValue = ""
         shopIDcookieValue =  request.cookies.get('SHOPID')

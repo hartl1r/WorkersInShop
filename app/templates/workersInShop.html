@@ -7,7 +7,7 @@
 
 {% block scripts %}
 	{{super()}}
-	<!--<script src="{{ url_for('static', filename='js/workersInShop.js') }}">  </script>-->
+	<script src="{{ url_for('static', filename='js/workersInShop.js') }}">  </script>
 {% endblock %}
 
 {% block content %}
@@ -42,6 +42,7 @@
         <input id = "showBW" type="radio" name="shopChoice" value='Shop_Number=2'>Brownwood<br>
         <input id = "showBoth" type="radio" name="shopChoice" value='' >Show Both<br>
     </div> 
+    
     <div class="inShop"  style="border:1px solid white; ">
         <input id="inShopNow" type="radio" name="inShop" value='Check_Out_Date_Time is null' checked="checked">In Shop Now<br>
         <input id = "inShopToday" type="radio" name="inShop" value='' >In Shop Today    
@@ -58,28 +59,34 @@
       <table>
         <header style="text-align: center">FILTER BY</header>
         <tr>
-          <td><input type="radio" name="filterItem" value='Defibrillator_Trained = True'>Defibrillator Trained</td>
-          <td><input type="radio" name="filterItem" value='(isPresident = True or isVP = True)'>President/VP</td>
-          <td><input type="radio" name="filterItem" value='canSellLumber = True'>Lumber Sales</td>
+          <td><input type="radio" name="filterItem" value='Defibrillator_Trained = 1'>Defibrillator Trained</td>
+          <td><input type="radio" name="filterItem" value='(isPresident = 1 or isVP = 1)'>President/VP</td>
+          <td><input type="radio" name="filterItem" value='canSellLumber = 1'>Lumber Sales</td>
         </tr>
         <tr> 
-          <td><input type="radio" name="filterItem" value='Maintenance = True'>Repair/Maint</td>
-          <td><input type="radio" name="filterItem" value='canSellMdse = True'>Merchandise Sales</td>
-          <td><input type="radio" name="filterItem" value='isBODmember = True'>BOD Member</td>
+          <td><input type="radio" name="filterItem" value='Maintenance = 1'>Repair/Maint</td>
+          <td><input type="radio" name="filterItem" value='canSellMdse = 1'>Merchandise Sales</td>
+          <td><input type="radio" name="filterItem" value='isBODmember = 1'>BOD Member</td>
         </tr>
         <tr>
-          <td><input type="radio" name="filterItem" value='isSafetyCommittee = True'>Safety</td>
-          <td><input type="radio" name="filterItem" value='isSpecialProjects = True'>Special Projects</td>
-          <td><input type="radio" name="filterItem" value='isAskMe = True'>Ask Me</td>
+          <td><input type="radio" name="filterItem" value='isSafetyCommittee = 1'>Safety</td>
+          <td><input type="radio" name="filterItem" value='isSpecialProjects = 1'>Special Projects</td>
+          <td><input type="radio" name="filterItem" value='isAskMe = 1'>Ask Me</td>
         </tr>
         <tr>
-          <td><input type="radio" name="filterItem" value='Mentor = True'>Mentors</td>
+          <td><input type="radio" name="filterItem" value='Mentor = 1'>Mentors</td>
           <td><input type="radio" name="filterItem" value='' checked="checked">EVERYONE</td>
         </tr>
       </table>
     </div>
         <input class="btn btn-primary refreshBtn" type='submit' value ='Refresh List'>
-    </form>
+        <input class="form-control nameSearch" id="mySearch" type="text" placeholder="Search..">
+        <!--<div class = "nameSearch" style="border:1px solid navy">
+          <input class="form-control" id="mySearch" type="text" placeholder="Search..">
+          
+        </div>-->
+      </form>
+    
   </div>
   
 </div>
@@ -100,20 +107,18 @@
    
 
   <!-- TWO LINES FOR MESSAGES -->
-  <div class = "message1" style="border:1px solid white; text-align:center;width:500px">
+  <!-- <div class = "message1" style="border:1px solid white; text-align:center;width:500px">
     <label id="msg1">... SHOP(S) TO SHOW ...</label><br>
   </div>
   <div class = "message2" style="border:1px solid white; text-align:center;width:500px">
     <label id="msg2">... IN SHOP NOW/TODAY ...</label>
   </div>
-  
+   -->
   <!-- TEXT SEARCH BOX FOR NAMES -->
-  <div class = "nameSearch" style="border:1px solid navy">
-    <input class="form-control" id="mySearch" type="text" placeholder="Search..">
-  </div>
+  
 
   <!-- TABLE TO DISPLAY MEMBER DATA -->
-  <div class = "displayTable">
+  <div class = "displayTable table-sm">
     <table class="table">
       <thead>
         <tr>   
