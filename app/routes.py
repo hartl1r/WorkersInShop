@@ -179,12 +179,21 @@ def workersInShop():
     # PROCESS POST REQUEST
     if request.method == 'POST':
         # RETRIEVE OPTIONS SELECTED BY USER
-        displayOptions = request.get_json(force=True)
-        shopChoice = displayOptions[0]
-        inShop = displayOptions[1]
-        orderBy = displayOptions[2]
-        filterOption = displayOptions[3]
+        #displayOptions = request.get_json(force=True)
+        # shopChoice = displayOptions[0]
+        # inShop = displayOptions[1]
+        # orderBy = displayOptions[2]
+        # filterOption = displayOptions[3]
+        f = request.form
+        for key in f.keys():
+            for value in f.getlist(key):
+                print (key,":",value)
         
+        #shopChoice = request.form['shopChoice']
+        shopChoice='RA'
+        inShop='InShopToday'
+        orderBy='OrderByCheckInTime'
+        filterOption='All'
         # BUILD INITIAL WHERE CLAUSE TO SELECT TODAY'S ACTIVITY RECORDS
         whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' and"
         # ADD OPTIONS TO WHERE CLAUSE
@@ -199,7 +208,7 @@ def workersInShop():
             whereClause += ' Check_out_Date_Time is null and'
         
         if filterOption == 'Defibrillator':
-            whereClause += ' efinrillator_Trained'
+            whereClause += ' Definrillator_Trained'
 
         if filterOption == 'President':
             whereClause += ' President_VP'
@@ -278,12 +287,14 @@ def workersInShopPOST():
     # PROCESS POST REQUEST
     if request.method == 'POST':
         # RETRIEVE OPTIONS SELECTED BY USER
-        displayOptions = request.get_json(force=True)
-        shopChoice = displayOptions[0]
-        inShop = displayOptions[1]
-        orderBy = displayOptions[2]
-        filterOption = displayOptions[3]
-        
+        # displayOptions = request.get_json(force=True)
+        # shopChoice = displayOptions[0]
+        # inShop = displayOptions[1]
+        # orderBy = displayOptions[2]
+        # filterOption = displayOptions[3]
+        shopChoice='RA'
+        inShop='InShopToday'
+        orderBY='OrderByCheckInTime'
         # BUILD INITIAL WHERE CLAUSE TO SELECT TODAY'S ACTIVITY RECORDS
         whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' and"
         # ADD OPTIONS TO WHERE CLAUSE
@@ -354,7 +365,7 @@ def workersInShopGET(options):
     # PROCESS POST REQUEST
     #if request.method == 'POST':
     # RETRIEVE OPTIONS SELECTED BY USER
-    displayOptions = request.get_json(force=True)
+    #displayOptions = request.get_json(force=True)
     shopChoice = displayOptions[0]
     inShop = displayOptions[1]
     orderBy = displayOptions[2]

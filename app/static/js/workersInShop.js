@@ -25,7 +25,7 @@ $(document).ready(function() {
 
 
   // USER CLICKED REFRESH BUTTON
-  $('#btnRefresh').on('click',function(){
+  $('#btnRefreshx').on('click',function(){
     refreshList()
     // PUT OPTIONS INTO AN ARRAY
     // var optionArray = []
