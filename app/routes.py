@@ -189,32 +189,39 @@ def workersInShop():
         #     for value in f.getlist(key):
         #         print (key,":",value)
         
-        shopChoice = request.form['shopChoice']#shopChoice='RA'
-        inShop=request.form['inShop'] #'InShopToday'
+        # NAMES OF OPTIONS
+        shopChoiceSelected = request.form['shopChoiceOPT']
+        inShopSelected=request.form['inShopOPT'] 
+        orderBySelected=request.form['orderByOPT'] 
+        filterOptionSelected=request.form['filterOptionOPT']
+        print ('POST-Selected |' + shopChoiceSelected + '|' + inShopSelected + '|' + orderBySelected + '|' + filterOptionSelected + '|')
+        # SELECT STATEMENT PHRASES, E.G., 'order by Last_Name, First_Name'
+        shopChoice = request.form['shopChoiceItem']# SHOP_NUMBER = 1
+        inShop=request.form['inShopItem'] #'InShopToday'
         orderBy=request.form['orderByItem'] #'OrderByCheckInTime'
         filterOption=request.form['filterItem'] #'All'
-        print(shopChoice, inShop, orderBy, filterOption)
+        print('POST-value |' + shopChoice + '|' + inShop + '|' + orderBy + '|' + filterOption  + '|')
 
         # BUILD INITIAL WHERE CLAUSE TO SELECT TODAY'S ACTIVITY RECORDS
         whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' and"
         #whereClause = " WHERE"
         whereClause += ' ' + shopChoice
-        print (whereClause)
-
-        if len(whereClause) > 6:
+        #print (whereClause)
+        #print ('|' + whereClause[-4:] + '|')
+        if (len(whereClause) > 6) & (whereClause[-4:] != 'and '):
             whereClause += ' and '
-        print(whereClause)
+        #print(whereClause)
 
         whereClause += inShop
-        print(whereClause)
+        #print(whereClause)
 
         if whereClause[-4:] != 'and ':
             whereClause += ' and '
-        print(whereClause)
+        #print(whereClause)
 
         if len(filterOption) > 0:
             whereClause += filterOption
-        print(whereClause)
+        #print(whereClause)
         
         #whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' and"
         # ADD OPTIONS TO WHERE CLAUSE
@@ -235,10 +242,10 @@ def workersInShop():
         #     whereClause += ' President_VP'
 
         # IF WHERE CLAUSE ENDS WITH 'AND' REMOVE THE 'AND'
-        print(whereClause[-4:])
+        #print(whereClause[-4:])
         if whereClause[-4:] == 'and ':
             whereClause = whereClause[0:-5]
-        print(whereClause)
+        #print(whereClause)
         # BUILD THE ORDER BY CLAUSE
         # if orderBy == 'OrderByCheckInTime':
         #     sortOrderClause = ' order by Check_In_Date_Time'
@@ -256,11 +263,16 @@ def workersInShop():
                 FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID""" 
         # ADD THE WHERE CLAUSE TO THE MAIN QUERY        
         sqlCheckInRecord += whereClause
-        print(sqlCheckInRecord)
+        #print(sqlCheckInRecord)
+
+        # REMOVE 'AND' IF IT EXISTS
+        if whereClause[-4:] == 'and ':
+            whereClause = whereClause[0:-5]
+        #print(whereClause)
 
         # ADD THE ORDER BY CLAUSE TO THE MAIN QUERY 
         sqlCheckInRecord += ' ' + orderBy        
-        print (sqlCheckInRecord)
+        #print (sqlCheckInRecord)
 
         # EXECUTE THE SQL STATEMENT
         workersInShop = None
@@ -268,20 +280,30 @@ def workersInShop():
         # for w in workersInShop:
         #     print(w.memberName, w.Defibrillator_Trained)
         # GET THE SHOP ID COOKIE
-        shopIDcookieValue = ""
-        shopIDcookieValue =  request.cookies.get('SHOPID')
+        # shopIDcookieValue = ""
+        # shopIDcookieValue =  request.cookies.get('SHOPID')
         # for w in workersInShop:
         #     print (w.memberName, w.CheckInTime)
-        return render_template("workersInShop.html",workersInShop=workersInShop,shopID=shopIDcookieValue)
+        return render_template("workersInShop.html",workersInShop=workersInShop,shopChoice=shopChoiceSelected,inShop=inShopSelected,orderBy=orderBySelected,filterOption=filterOptionSelected)
         #return render_template("workersInShop.html",workersInShop=workersInShop,shopID=shopIDcookieValue)
         # END OF POST REQUEST
 
 
 
     # NOT A POST REQUEST        
-    shopIDcookieValue = ""
-    shopIDcookieValue =  request.cookies.get('SHOPID')
+    #shopIDcookieValue = ""
+    #shopIDcookieValue =  request.cookies.get('SHOPID')
+    shopChoiceCookie = request.cookies.get('SHOPID')
+    shopChoice = 'showBoth'
+    if shopChoiceCookie == 'RA':
+        shopChoice='showRA'
+    if shopChoiceCookie == 'BW':
+        shopChoice='showBW'
     
+    inShop="inShopNow"
+    orderBy="orderByName"
+    filterOption="Everyone"
+    print('GET',shopChoice, inShop, orderBy, filterOption)
     # BUILD DEFAULT SQL STATEMENT USED ON FIRST DISPLAY OF THE PAGE
     # sqlCheckInRecord = """SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID,
     #  format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
@@ -302,7 +324,7 @@ def workersInShop():
     # workersInShop = db.engine.execute(sqlCheckInRecord)
       
     #return render_template("workersInShop.html",workersInShop=workersInShop,shopID=shopIDcookieValue)
-    return render_template("workersInShop.html",shopID=shopIDcookieValue)
+    return render_template("workersInShop.html",shopChoice=shopChoice,inShop=inShop,orderBy=orderBy,filterOption=filterOption)
 
 
 

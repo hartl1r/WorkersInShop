@@ -1,16 +1,106 @@
+//var processedOnce = false
 $(document).ready(function() {
   // DO WE HAVE A COOKIE
   var shopIDcookieValue = checkCookie()
   var currentShopChoice = shopIDcookieValue
   
+  // SET OPTIONS BASED ON ROUTE VALUES PASSED IN
+  var shopChoiceOPT = document.getElementById('shopChoiceOPT')
+
+  if (shopChoiceOPT.value = 'RA')
+    document.getElementById('showRA').checked = true
+
+  if (shopChoiceOPT.value = 'BW')  
+    document.getElementById('showBW').checked = true
+
+  if (shopChoiceOPT.value = 'BOTH')  
+    document.getElementById('showBoth').checked = true
+  
+  var inShopOPT = document.getElementById('inShopOPT')
+  if (inShopOPT.value = 'inShopNow')
+    document.getElementById('inShopNow').checked = true
+
+  if (inShopOPT.value = 'inShopToday')
+    document.getElementById('inShopToday').checked = true
+
+//  if (document.getElementById('orderByOPT').val == "orderByName")
+  var orderByOPT = document.getElementById('orderByOPT')  
+  if (orderByOPT.value = 'orderByName')
+    document.getElementById('orderByName').checked = true
+  if (orderByOPT.value = 'orderByTimeIn')
+    document.getElementById('orderByTimeIn').checked = true
+  
+
+  var filterOptionOPT = document.getElementById('filterOptionOPT')
+  if (filterOptionOPT.value = 'Defibrillator')
+    document.getElementById('Defibrillator').checked = true
+  if (filterOptionOPT.value = 'President')
+    document.getElementById('President').checked = true
+    if (filterOptionOPT.value = 'Lumber')
+    document.getElementById('Lumber').checked = true
+    if (filterOptionOPT.value = 'Maintenance')
+    document.getElementById('Maintenance').checked = true
+    if (filterOptionOPT.value = 'Merchandise')
+    document.getElementById('Merchandise').checked = true
+    if (filterOptionOPT.value = 'BOD')
+    document.getElementById('BOD').checked = true
+    if (filterOptionOPT.value = 'Safety')
+    document.getElementById('Safety').checked = true
+    if (filterOptionOPT.value = 'SpecProj')
+    document.getElementById('SpecProj').checked = true
+    if (filterOptionOPT.value = 'AskMe')
+    document.getElementById('AskMe').checked = true
+    if (filterOptionOPT.value = 'Mentors')
+    document.getElementById('Mentors').checked = true
+    if (filterOptionOPT.value = 'Everyone')
+    document.getElementById('Everyone').checked = true
+   
+  msg = shopIDcookieValue + "\n" + shopChoiceOPT.value + "\n" + inShopOPT.value + "\n" + "\n" + filterOptionOPT.value
+  alert(orderByOPT.value)
+
+  // var opt = filterOptionOPT.options[filterOptionOPT.selectedIndex];
+  // console.log( opt.value );
+  // console.log( opt.text );
+
+    // if (document.getElementById(' ').val() == " ")
+    // document.getElementById(' ').checked = true
+    // if (document.getElementById(' ').val() == " ")
+    // document.getElementById(' ').checked = true
+    // if (document.getElementById(' ').val() == " ")
+    // document.getElementById(' ').checked = true
+    // if (document.getElementById(' ').val() == " ")
+    // document.getElementById(' ').checked = true
+    // if (document.getElementById(' ').val() == " ")
+    // document.getElementById(' ').checked = true
+
+
+
+  //alert("Processed once sw - " + processedOnce)
+  //processedOnce=true
+  //alert(processedOnce)
+  //if (processedOnce != true)
+  // var inShop=$('input[name=inShop]:checked').val()
+  // console.log (inShop.length)
+  // console.log (inShop)
+
+  // alert(inShop)
+  // alert("ALERT")
+  // //if (inShop.length == 0)
+  // if (document.getElementById("inShopNow").checked != true && document.getElementById("inShopToday").checked != true)
+  //   document.getElementById("inShopNow").checked=true
+  //   document.getElementById("Everyone").checked=true
+  //   document.getElementById("orderByName").checked=true
+  // //   processedOnce=true
+  //   alert("Processed once switch - " + processedOnce)
+
   // SET SELECTED SHOP TO CHECKED
-  if (shopIDcookieValue == 'RA')
-    document.getElementById("showRA").checked = true
+  // if (shopIDcookieValue == 'RA')
+  //   document.getElementById("showRA").checked = true
   
-  if (shopIDcookieValue == 'BW')
-    document.getElementById("showBW").checked = true
+  // if (shopIDcookieValue == 'BW')
+  //   document.getElementById("showBW").checked = true
   
-  setLocationMsg(shopIDcookieValue)
+  // setLocationMsg(shopIDcookieValue)
 
   //BUILD MESSAGE DURING TESTING TO SHOW STATUS OF OPTIONS
   msg = "Shop location selection is " + currentShopChoice
@@ -26,7 +116,8 @@ $(document).ready(function() {
 
   // USER CLICKED REFRESH BUTTON
   $('#btnRefreshx').on('click',function(){
-    refreshList()
+    
+    //refreshList()
     // PUT OPTIONS INTO AN ARRAY
     // var optionArray = []
     // // START ARRAY WITH SHOP LOCATION ('RA', 'BW' OR 'BOTH')
@@ -58,15 +149,50 @@ $(document).ready(function() {
   });
 
   // CLICK ON ONE OF THREE SHOP CHOICE BUTTONS
-  $('#shopChosen input[type=radio]').click(function(){
+  $('.shopToShow input[type=radio]').click(function(){
       currentShopChoice = this.value
+      shopChoiceOPT.value = this.id
+      //document.getElementById('shopChoiceOPT').innerHTML = this.id 
       if (currentShopChoice != 'BOTH'){
         // CHANGE THE COOKIE SETTING
         setCookie("SHOPID", currentShopChoice, 365);
-        //console.log("Cookie set to " + currentShopChoice)
       }
-      setLocationMsg(currentShopChoice)
+      //setLocationMsg(currentShopChoice)
   })
+  $('.inShop input[type=radio]').click(function(){
+      inShopOPT.value = this.id
+  })
+
+  $('.orderBy input[type=radio]').click(function(){
+    orderByOPT.value = this.id
+  })
+
+  $('.filterBy input[type=radio]').click(function(){
+    filterOptionOPT.value = this.id
+  })
+
+  // $('.shopChoiceItem input[type=radio]').click(function(){
+  //   currentShopChoice = this.value
+  //   console.log (this.id)
+  //   alert (this.id)
+  //   document.getElementById("shopChoiceOPT").innerHTML = this.id 
+  //   if (currentShopChoice != 'BOTH'){
+  //     // CHANGE THE COOKIE SETTING
+  //     setCookie("SHOPID", currentShopChoice, 365);
+  //     //console.log("Cookie set to " + currentShopChoice)
+  //   }
+    //setLocationMsg(currentShopChoice)
+
+
+  var clickedId;
+    $(function(){
+         // When any link is clicked
+         $('a').click(function(){
+              // Set your variable
+              clickedId = this.id; // or clickedId = $(this).attr('id');
+         });
+    });
+
 
   // TEXT ENTERED INTO SEARCH BOX
   $("#nameSearch").on("keyup", function() {
@@ -79,17 +205,17 @@ $(document).ready(function() {
 
 
   // GENERAL FUNCTIONS
-  function setLocationMsg(shopChoice){
-    if (shopChoice == "RA"){
-      document.getElementById("msg1").innerHTML = "ROLLING ACRES LOCATION"
-    }
-    else if (shopChoice == "BW") {
-      document.getElementById("msg1").innerHTML = "BROWNWOOD LOCATION"
-    }
-    else {
-      document.getElementById("msg1").innerHTML = "SHOWING BOTH LOCATIOS"
-    }
-  }
+  // function setLocationMsg(shopChoice){
+  //   if (shopChoice == "RA"){
+  //     document.getElementById("msg1").innerHTML = "ROLLING ACRES LOCATION"
+  //   }
+  //   else if (shopChoice == "BW") {
+  //     document.getElementById("msg1").innerHTML = "BROWNWOOD LOCATION"
+  //   }
+  //   else {
+  //     document.getElementById("msg1").innerHTML = "SHOWING BOTH LOCATIOS"
+  //   }
+  // }
 
   // function refreshList() { 
   //   // PUT OPTIONS INTO AN ARRAY

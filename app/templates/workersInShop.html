@@ -30,27 +30,33 @@
   <div class = hdg>
     <h1>THE VILLAGES WOODWORKERS CLUB</h1>
     <!--<input id="shopID" name="shopID" type="text" style= "background-color: white; color:blue" value={{shopIDcookieValue}}>    -->
+    
     <h2>WORKERS IN SHOP</h2>
   </div>
   
     <!-- TOOLBAR TO SHOW FILTERING/SORTING OPTIONS -->
   <form class = "options btn-toolbar" action = "http://localhost:5000/workersInShop" method = "POST">
+    <input id="shopChoiceOPT" name="shopChoiceOPT" type="text" value={{shopChoice}}>
+    <input id="inShopOPT" name="inShopOPT" type="text" value={{inShop}}>
+    <input id="filterOptionOPT" name="filterOptionOPT" type="text" value={{filterOption}}>
+    <input id="orderByOPT" name="orderByOPT" type="text" value={{orderBy}}>
+    
     <div class = "options btn-toolbar">
      
     <div class="shopToShow"  style="border:1px solid white; "> 
-        <input id = "showRA" type="radio" name="shopChoice" value='Shop_Number=1'>Rolling Acres<br>
-        <input id = "showBW" type="radio" name="shopChoice" value='Shop_Number=2'>Brownwood<br>
-        <input id = "showBoth" type="radio" name="shopChoice" value='' >Show Both<br>
+        <input id = "showRA" type="radio" name="shopChoiceItem" value='Shop_Number=1'>Rolling Acres<br>
+        <input id = "showBW" type="radio" name="shopChoiceItem" value='Shop_Number=2'>Brownwood<br>
+        <input id = "showBoth" type="radio" name="shopChoiceItem" value='' >Show Both<br>
     </div> 
     
     <div class="inShop"  style="border:1px solid white; ">
-        <input id="inShopNow" type="radio" name="inShop" value='Check_Out_Date_Time is null' checked="checked">In Shop Now<br>
-        <input id = "inShopToday" type="radio" name="inShop" value='' >In Shop Today    
+        <input id="inShopNow" type="radio" name="inShopItem" value='Check_Out_Date_Time is null'>In Shop Now<br>
+        <input id = "inShopToday" type="radio" name="inShopItem" value='' >In Shop Today    
     </div>
   
     <div>
       <div class="orderBy" style="border:1px solid white">
-          <input id="orderByName" type="radio" name="orderByItem" value='ORDER BY Last_Name, First_Name' checked="checked">Order By Name<br>
+          <input id="orderByName" type="radio" name="orderByItem" value='ORDER BY Last_Name, First_Name'>Order By Name<br>
           <input id="orderByTimeIn" type="radio" name="orderByItem" value='ORDER BY Check_In_Date_Time'>Order By Check In Time
       </div>
     </div>
@@ -59,23 +65,23 @@
       <table>
         <header style="text-align: center">FILTER BY</header>
         <tr>
-          <td><input type="radio" name="filterItem" value='Defibrillator_Trained = 1'>Defibrillator Trained</td>
-          <td><input type="radio" name="filterItem" value='(isPresident = 1 or isVP = 1)'>President/VP</td>
-          <td><input type="radio" name="filterItem" value='canSellLumber = 1'>Lumber Sales</td>
+          <td><input id="Defibrillator" type="radio" name="filterItem" value='Defibrillator_Trained = 1'>Defibrillator Trained</td>
+          <td><input id="President" type="radio" name="filterItem" value='(isPresident = 1 or isVP = 1)'>President/VP</td>
+          <td><input id="Lumber"type="radio" name="filterItem" value='canSellLumber = 1'>Lumber Sales</td>
         </tr>
         <tr> 
-          <td><input type="radio" name="filterItem" value='Maintenance = 1'>Repair/Maint</td>
-          <td><input type="radio" name="filterItem" value='canSellMdse = 1'>Merchandise Sales</td>
-          <td><input type="radio" name="filterItem" value='isBODmember = 1'>BOD Member</td>
+          <td><input id="Maintenance" type="radio" name="filterItem" value='Maintenance = 1'>Repair/Maint</td>
+          <td><input id="Merchandise" type="radio" name="filterItem" value='canSellMdse = 1'>Merchandise Sales</td>
+          <td><input id="BOD" type="radio" name="filterItem" value='isBODmember = 1'>BOD Member</td>
         </tr>
         <tr>
-          <td><input type="radio" name="filterItem" value='isSafetyCommittee = 1'>Safety</td>
-          <td><input type="radio" name="filterItem" value='isSpecialProjects = 1'>Special Projects</td>
-          <td><input type="radio" name="filterItem" value='isAskMe = 1'>Ask Me</td>
+          <td><input id="Safety" type="radio" name="filterItem" value='isSafetyCommittee = 1'>Safety</td>
+          <td><input id="SpecProj" type="radio" name="filterItem" value='isSpecialProjects = 1'>Special Projects</td>
+          <td><input id="AskMe" type="radio" name="filterItem" value='isAskMe = 1'>Ask Me</td>
         </tr>
         <tr>
-          <td><input type="radio" name="filterItem" value='Mentor = 1'>Mentors</td>
-          <td><input type="radio" name="filterItem" value='' checked="checked">EVERYONE</td>
+          <td><input id="Mentors" Type="radio" name="filterItem" value='Mentor = 1'>Mentors</td>
+          <td><input id="Everyone" type="radio" name="filterItem" value=''>EVERYONE</td>
         </tr>
       </table>
     </div>
