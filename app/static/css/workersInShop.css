@@ -28,27 +28,27 @@
   padding-top:10px;
 }
 
-.shopToShow {
+.shopToShowClass {
   color:white;
   width:175px;
   height:75px;
   margin-left: 10px;
 }
 
-.inShop  {
+.inShopClass {
   color:white;
   width:150px;
   height:50px;
   margin-left: 10px;
 }
 
-.orderBy {
+.orderByClass {
   color:white;
   width:225px;
   margin-left: 10px;
 }
 
-.filterBy {
+.filterByClass{
   color:white;
   height:130px;
   margin-left: 10px;

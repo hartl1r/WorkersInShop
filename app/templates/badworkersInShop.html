@@ -36,102 +36,30 @@
   
     <!-- TOOLBAR TO SHOW FILTERING/SORTING OPTIONS -->
   <form class = "options btn-toolbar" action = "http://localhost:5000/workersInShop" method = "POST">
-    <input id="shopChoiceOPT" name="shopChoiceOPT" type="hidden" value={{shopChoice}}>
-    <input id="inShopOPT" name="inShopOPT" type="hidden" value={{inShop}}>
-    <input id="orderByOPT" name="orderByOPT" type="hidden" value={{orderBy}}>
-    <input id="filterOptionOPT" name="filterOptionOPT" type="hidden" value={{filterOption}}>
-    <input id="requestMethod" name="requestMethod" type="hidden" value={{requestMethod}}>
+    <input id="shopChoiceOPT" name="shopChoiceOPT" type="text" value={{shopChoice}}>
+    <input id="inShopOPT" name="inShopOPT" type="text" value={{inShop}}>
+    <input id="filterOptionOPT" name="filterOptionOPT" type="text" value={{filterOption}}>
+    <input id="orderByOPT" name="orderByOPT" type="text" value={{orderBy}}>
     
-    <div class = "options btn-toolbar"> 
-    <div class="shopToShowClass"  style="border:1px solid white; "> 
+    <div class = "options btn-toolbar">
+     
+    <div class="shopToShow"  style="border:1px solid white; "> 
         <input id = "showRA" type="radio" name="shopChoiceItem" value='Shop_Number=1'>Rolling Acres<br>
         <input id = "showBW" type="radio" name="shopChoiceItem" value='Shop_Number=2'>Brownwood<br>
         <input id = "showBoth" type="radio" name="shopChoiceItem" value='' >Show Both<br>
     </div> 
     
-    <div class="inShopClass"  style="border:1px solid white; ">
+    <div class="inShop"  style="border:1px solid white; ">
         <input id="inShopNow" type="radio" name="inShopItem" value='Check_Out_Date_Time is null'>In Shop Now<br>
         <input id = "inShopToday" type="radio" name="inShopItem" value='' >In Shop Today    
     </div>
   
     <div>
-      <div class="orderByClass" style="border:1px solid white">
+      <div class="orderBy" style="border:1px solid white">
           <input id="orderByName" type="radio" name="orderByItem" value='ORDER BY Last_Name, First_Name'>Order By Name<br>
           <input id="orderByTimeIn" type="radio" name="orderByItem" value='ORDER BY Check_In_Date_Time'>Order By Check In Time
       </div>
-    </div>
-  
-    <div class = "filterByClass" style="border:1px solid white">
-      <table>
-        <header style="text-align: center">FILTER BY</header>
-        <tr>
-          <td><input id="Defibrillator" type="radio" name="filterItem" value='Defibrillator_Trained = 1'>Defibrillator Trained</td>
-          <td><input id="President" type="radio" name="filterItem" value='(isPresident = 1 or isVP = 1)'>President/VP</td>
-          <td><input id="Lumber"type="radio" name="filterItem" value='canSellLumber = 1'>Lumber Sales</td>
-        </tr>
-        <tr> 
-          <td><input id="Maintenance" type="radio" name="filterItem" value='Maintenance = 1'>Repair/Maint</td>
-          <td><input id="Merchandise" type="radio" name="filterItem" value='canSellMdse = 1'>Merchandise Sales</td>
-          <td><input id="BOD" type="radio" name="filterItem" value='isBODmember = 1'>BOD Member</td>
-        </tr>
-        <tr>
-          <td><input id="Safety" type="radio" name="filterItem" value='isSafetyCommittee = 1'>Safety</td>
-          <td><input id="SpecProj" type="radio" name="filterItem" value='isSpecialProjects = 1'>Special Projects</td>
-          <td><input id="AskMe" type="radio" name="filterItem" value='isAskMe = 1'>Ask Me</td>
-        </tr>
-        <tr>
-          <td><input id="Mentors" Type="radio" name="filterItem" value='Mentor = 1'>Mentors</td>
-          <td><input id="Everyone" type="radio" name="filterItem" value=''>EVERYONE</td>
-        </tr>
-      </table>
-    </div>
-        <input class="btn btn-primary refreshBtn" type='submit' value ='Refresh List'>
-        <input class="form-control nameSearch" id="mySearch" type="text" placeholder="Search..">
-        <!--<div class = "nameSearch" style="border:1px solid navy">
-          <input class="form-control" id="mySearch" type="text" placeholder="Search..">
-          
-        </div>-->
-      </form>
-    
-  </div>
-  
-</div>
-    <!--
-    <div class = "refresh">
-      <button type="button" id="btnRefresh" class="btn-success mr-3">Refresh (POST))</button>  
-      <input type = "submit" value="submit"/>
-      </form>
-    </div>
-    
-    <div class = "refresh">
-      <button type="button" id="btnRefreshGET" class="btn-success mr-3">Refresh (GET)</button>
-    </div>
-    
-    <div class = "test">
-      <button type="button" id="btnRefresh" onclick = "location.href='test'" class="btn-success mr-3">TEST</button>
-    </div>-->
-   
-
-  <!-- TWO LINES FOR MESSAGES -->
-  <!-- <div class = "message1" style="border:1px solid white; text-align:center;width:500px">
-    <label id="msg1">... SHOP(S) TO SHOW ...</label><br>
-  </div>
-  <div class = "message2" style="border:1px solid white; text-align:center;width:500px">
-    <label id="msg2">... IN SHOP NOW/TODAY ...</label>
-  </div>
-   -->
-  <!-- TEXT SEARCH BOX FOR NAMES -->
-  
-
-  <!-- TABLE TO DISPLAY MEMBER DATA -->
-  <div class = "displayTable table-sm">
-    <table class="table">
-      <thead>
-        <tr>   
-          <th>Name</th>
-          <th>Check In</th>
-          <th>Check Out</th>
-          <th>Type Of Work</th>
+    </div> 
           <th>Emergency Contact</th>
           <th>Emergency Phone</th>
           <th>Shop #</th>

@@ -6,57 +6,61 @@ $(document).ready(function() {
   
   // SET OPTIONS BASED ON ROUTE VALUES PASSED IN
   var shopChoiceOPT = document.getElementById('shopChoiceOPT')
-
-  if (shopChoiceOPT.value = 'RA')
+  //alert( '1. shopChoiceOPT -'+ shopChoiceOPT.value)
+  
+  if (shopChoiceOPT.value == 'showRA')
     document.getElementById('showRA').checked = true
-
-  if (shopChoiceOPT.value = 'BW')  
+  //alert( '2. shopChoiceOPT -'+ shopChoiceOPT.value)
+  if (shopChoiceOPT.value =='showBW')  
     document.getElementById('showBW').checked = true
-
-  if (shopChoiceOPT.value = 'BOTH')  
+  //alert( '3. shopChoiceOPT -'+ shopChoiceOPT.value)
+  if (shopChoiceOPT.value == 'showBoth')  
     document.getElementById('showBoth').checked = true
   
+  //alert( '4. shopChoiceOPT -'+ shopChoiceOPT.value)
+  
   var inShopOPT = document.getElementById('inShopOPT')
-  if (inShopOPT.value = 'inShopNow')
+  if (inShopOPT.value == 'inShopNow')
     document.getElementById('inShopNow').checked = true
 
-  if (inShopOPT.value = 'inShopToday')
+  if (inShopOPT.value == 'inShopToday')
     document.getElementById('inShopToday').checked = true
 
 //  if (document.getElementById('orderByOPT').val == "orderByName")
   var orderByOPT = document.getElementById('orderByOPT')  
-  if (orderByOPT.value = 'orderByName')
+  if (orderByOPT.value == 'orderByName')
     document.getElementById('orderByName').checked = true
-  if (orderByOPT.value = 'orderByTimeIn')
+  if (orderByOPT.value == 'orderByTimeIn')
     document.getElementById('orderByTimeIn').checked = true
   
 
   var filterOptionOPT = document.getElementById('filterOptionOPT')
-  if (filterOptionOPT.value = 'Defibrillator')
+  if (filterOptionOPT.value == 'Defibrillator')
     document.getElementById('Defibrillator').checked = true
-  if (filterOptionOPT.value = 'President')
+  if (filterOptionOPT.value == 'President')
     document.getElementById('President').checked = true
-    if (filterOptionOPT.value = 'Lumber')
+    if (filterOptionOPT.value == 'Lumber')
     document.getElementById('Lumber').checked = true
-    if (filterOptionOPT.value = 'Maintenance')
+    if (filterOptionOPT.value == 'Maintenance')
     document.getElementById('Maintenance').checked = true
-    if (filterOptionOPT.value = 'Merchandise')
+    if (filterOptionOPT.value == 'Merchandise')
     document.getElementById('Merchandise').checked = true
-    if (filterOptionOPT.value = 'BOD')
+    if (filterOptionOPT.value == 'BOD')
     document.getElementById('BOD').checked = true
-    if (filterOptionOPT.value = 'Safety')
+    if (filterOptionOPT.value == 'Safety')
     document.getElementById('Safety').checked = true
-    if (filterOptionOPT.value = 'SpecProj')
+    if (filterOptionOPT.value == 'SpecProj')
     document.getElementById('SpecProj').checked = true
-    if (filterOptionOPT.value = 'AskMe')
+    if (filterOptionOPT.value == 'AskMe')
     document.getElementById('AskMe').checked = true
-    if (filterOptionOPT.value = 'Mentors')
+    if (filterOptionOPT.value == 'Mentors')
     document.getElementById('Mentors').checked = true
-    if (filterOptionOPT.value = 'Everyone')
+    if (filterOptionOPT.value == 'Everyone')
     document.getElementById('Everyone').checked = true
    
-  msg = shopIDcookieValue + "\n" + shopChoiceOPT.value + "\n" + inShopOPT.value + "\n" + "\n" + filterOptionOPT.value
-  alert(orderByOPT.value)
+  msg = shopIDcookieValue + "\n" + shopChoiceOPT.value + "\n" + inShopOPT.value + "\n" + filterOptionOPT.value + "\n" + orderByOPT.value
+  console.log (msg)
+  //alert (msg)
 
   // var opt = filterOptionOPT.options[filterOptionOPT.selectedIndex];
   // console.log( opt.value );
@@ -104,13 +108,13 @@ $(document).ready(function() {
 
   //BUILD MESSAGE DURING TESTING TO SHOW STATUS OF OPTIONS
   msg = "Shop location selection is " + currentShopChoice
-  var inShop=$('input[name=inShop]:checked').val()
+  var inShop=$('input[name=inShopItem]:checked').val()
   msg = msg + "\nIn Shop option selection is " + inShop 
   var orderByItem = $('input[name=orderByItem]:checked').val()
   msg = msg + "\nOrder By option selection is " + orderByItem
   var filterBy=$('input[name=filterItem]:checked').val()
   msg = msg + "\nFilter By option selection is " + filterBy;
-  //alert(msg)
+  //alert (msg)
 //})
 
 
@@ -149,21 +153,25 @@ $(document).ready(function() {
   });
 
   // CLICK ON ONE OF THREE SHOP CHOICE BUTTONS
-  $('.shopToShow input[type=radio]').click(function(){
+  $('.shopToShowClass input[type=radio]').click(function(){
+      //alert ('shopChoiceItem clicked')
       currentShopChoice = this.value
+      //alert ('currentShopChoice - ' + currentShopChoice)
       shopChoiceOPT.value = this.id
+      //alert ('shopChoiceOPG.value - ' + shopChoiceOPT.value)
+      //alert (currentShopChoice + "\n" + shopChoiceOPT.value)
       //document.getElementById('shopChoiceOPT').innerHTML = this.id 
-      if (currentShopChoice != 'BOTH'){
+      if (shopChoiceOPT.value != 'showBoth'){
         // CHANGE THE COOKIE SETTING
-        setCookie("SHOPID", currentShopChoice, 365);
+        setCookie("SHOPID", shopChoiceOPT.value, 365);
       }
       //setLocationMsg(currentShopChoice)
   })
-  $('.inShop input[type=radio]').click(function(){
+  $('.inShopClass input[type=radio]').click(function(){
       inShopOPT.value = this.id
   })
 
-  $('.orderBy input[type=radio]').click(function(){
+  $('.orderByClass input[type=radio]').click(function(){
     orderByOPT.value = this.id
   })
 

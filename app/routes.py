@@ -179,70 +179,35 @@ def workersInShop():
     # PROCESS POST REQUEST
     if request.method == 'POST':
         # RETRIEVE OPTIONS SELECTED BY USER
-        #displayOptions = request.get_json(force=True)
-        # shopChoice = displayOptions[0]
-        # inShop = displayOptions[1]
-        # orderBy = displayOptions[2]
-        # filterOption = displayOptions[3]
-        # f = request.form
-        # for key in f.keys():
-        #     for value in f.getlist(key):
-        #         print (key,":",value)
-        
         # NAMES OF OPTIONS
         shopChoiceSelected = request.form['shopChoiceOPT']
         inShopSelected=request.form['inShopOPT'] 
         orderBySelected=request.form['orderByOPT'] 
         filterOptionSelected=request.form['filterOptionOPT']
-        print ('POST-Selected |' + shopChoiceSelected + '|' + inShopSelected + '|' + orderBySelected + '|' + filterOptionSelected + '|')
+        #print ('POST-Selected |' + shopChoiceSelected + '|' + inShopSelected + '|' + orderBySelected + '|' + filterOptionSelected + '|')
         # SELECT STATEMENT PHRASES, E.G., 'order by Last_Name, First_Name'
+        
         shopChoice = request.form['shopChoiceItem']# SHOP_NUMBER = 1
         inShop=request.form['inShopItem'] #'InShopToday'
         orderBy=request.form['orderByItem'] #'OrderByCheckInTime'
         filterOption=request.form['filterItem'] #'All'
-        print('POST-value |' + shopChoice + '|' + inShop + '|' + orderBy + '|' + filterOption  + '|')
+        #print('POST-value |' + shopChoice + '|' + inShop + '|' + orderBy + '|' + filterOption  + '|')
 
         # BUILD INITIAL WHERE CLAUSE TO SELECT TODAY'S ACTIVITY RECORDS
         whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' and"
-        #whereClause = " WHERE"
         whereClause += ' ' + shopChoice
-        #print (whereClause)
-        #print ('|' + whereClause[-4:] + '|')
         if (len(whereClause) > 6) & (whereClause[-4:] != 'and '):
             whereClause += ' and '
-        #print(whereClause)
 
         whereClause += inShop
         #print(whereClause)
 
         if whereClause[-4:] != 'and ':
             whereClause += ' and '
-        #print(whereClause)
 
         if len(filterOption) > 0:
             whereClause += filterOption
-        #print(whereClause)
         
-        #whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' and"
-        # ADD OPTIONS TO WHERE CLAUSE
-        #if shopChoice == 'RA':
-        #    shopID = 1
-        #    whereClause += ' Shop_Number = 1 and'
-        #if shopChoice == 'BW':
-        #    shopID = 2
-        #    whereClause += ' Shop_Number = 2 and'
-        
-        #if inShop == 'InShopNow':
-        #    whereClause += ' Check_out_Date_Time is null and'
-        
-        # if filterOption == 'Defibrillator':
-        #     whereClause += ' Definrillator_Trained'
-
-        # if filterOption == 'President':
-        #     whereClause += ' President_VP'
-
-        # IF WHERE CLAUSE ENDS WITH 'AND' REMOVE THE 'AND'
-        #print(whereClause[-4:])
         if whereClause[-4:] == 'and ':
             whereClause = whereClause[0:-5]
         #print(whereClause)
@@ -261,70 +226,41 @@ def workersInShop():
                     isPresident, isVP, canSellLumber, canSellMdse, Maintenance, isBODmember, isSafetyCommittee,
                     isSpecialProjects, isAskMe
                 FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID""" 
+        
         # ADD THE WHERE CLAUSE TO THE MAIN QUERY        
         sqlCheckInRecord += whereClause
-        #print(sqlCheckInRecord)
 
         # REMOVE 'AND' IF IT EXISTS
         if whereClause[-4:] == 'and ':
             whereClause = whereClause[0:-5]
-        #print(whereClause)
-
+        
         # ADD THE ORDER BY CLAUSE TO THE MAIN QUERY 
         sqlCheckInRecord += ' ' + orderBy        
-        #print (sqlCheckInRecord)
-
+        
         # EXECUTE THE SQL STATEMENT
         workersInShop = None
         workersInShop = db.engine.execute(sqlCheckInRecord)
-        # for w in workersInShop:
-        #     print(w.memberName, w.Defibrillator_Trained)
-        # GET THE SHOP ID COOKIE
-        # shopIDcookieValue = ""
-        # shopIDcookieValue =  request.cookies.get('SHOPID')
-        # for w in workersInShop:
-        #     print (w.memberName, w.CheckInTime)
-        return render_template("workersInShop.html",workersInShop=workersInShop,shopChoice=shopChoiceSelected,inShop=inShopSelected,orderBy=orderBySelected,filterOption=filterOptionSelected)
-        #return render_template("workersInShop.html",workersInShop=workersInShop,shopID=shopIDcookieValue)
+        
+        return render_template("workersInShop.html",workersInShop=workersInShop,shopChoice=shopChoiceSelected,inShop=inShopSelected,orderBy=orderBySelected,filterOption=filterOptionSelected,requestMethod='POST')
+        
         # END OF POST REQUEST
 
 
 
     # NOT A POST REQUEST        
-    #shopIDcookieValue = ""
-    #shopIDcookieValue =  request.cookies.get('SHOPID')
     shopChoiceCookie = request.cookies.get('SHOPID')
     shopChoice = 'showBoth'
-    if shopChoiceCookie == 'RA':
+    if shopChoiceCookie == 'showRA':
         shopChoice='showRA'
-    if shopChoiceCookie == 'BW':
+    if shopChoiceCookie == 'showBW':
         shopChoice='showBW'
     
     inShop="inShopNow"
     orderBy="orderByName"
     filterOption="Everyone"
-    print('GET',shopChoice, inShop, orderBy, filterOption)
-    # BUILD DEFAULT SQL STATEMENT USED ON FIRST DISPLAY OF THE PAGE
-    # sqlCheckInRecord = """SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID,
-    #  format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
-    #         Check_In_Date_Time, Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, Mentor
-    #         FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID """
-    #         #WHERE Cast(Check_In_Date_Time as DATE) >= '""" + str(todaysDate) + """' and Cast(Check_In_Date_Time as DATE) < '""" + str(tomorrow) + "'"""
-    #         #+ """' AND Check_Out_Date_Time Is Null ORDER BY Last_Name, First_Name"""
+    #print('GET',shopChoice, inShop, orderBy, filterOption)
     
-    # whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' AND Check_Out_Date_Time Is Null"
-    # sqlCheckInRecord += whereClause
-    # print(sqlCheckInRecord)
-    # #sortOrderClause = ' order by last_name, first_name'
-    # sqlCheckInRecord += ' ' + orderBy  #sortOrderClause
-
-    # print (sqlCheckInRecord)
-
-    # # EXECUTE THE SQL STATEMENT
-    # workersInShop = db.engine.execute(sqlCheckInRecord)
-      
-    #return render_template("workersInShop.html",workersInShop=workersInShop,shopID=shopIDcookieValue)
-    return render_template("workersInShop.html",shopChoice=shopChoice,inShop=inShop,orderBy=orderBy,filterOption=filterOption)
+    return render_template("workersInShop.html",shopChoice=shopChoice,inShop=inShop,orderBy=orderBy,filterOption=filterOption,requestMethod='GET')
 
 
 
@@ -403,7 +339,7 @@ def workersInShopPOST():
 
 
 #--------------------------------------------------------------------------------------------------------------------
-#@app.route("/workersInShopGET/<string:options>/",methods=['GET'])
+
 @app.route("/workersInShopGET",methods=['GET'])
 def workersInShopGET(options):
     print (options)
