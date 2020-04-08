@@ -7,7 +7,7 @@
 
 {% block scripts %}
 	{{super()}}
-	<script src="{{ url_for('static', filename='js/workersInShop.js') }}">  </script>
+  <script src="{{ url_for('static', filename='js/workersInShop.js') }}">  </script>
 {% endblock %}
 
 {% block content %}
@@ -42,7 +42,7 @@
     <input id="filterOptionOPT" name="filterOptionOPT" type="hidden" value={{filterOption}}>
     <input id="requestMethod" name="requestMethod" type="hidden" value={{requestMethod}}>
     
-    <div class = "options btn-toolbar"> 
+    <div class = "options btn-toolbar" style="justify-content: center"> 
     <div class="shopToShowClass"  style="border:1px solid white; "> 
         <input id = "showRA" type="radio" name="shopChoiceItem" value='Shop_Number=1'>Rolling Acres<br>
         <input id = "showBW" type="radio" name="shopChoiceItem" value='Shop_Number=2'>Brownwood<br>
@@ -62,7 +62,7 @@
     </div>
   
     <div class = "filterByClass" style="border:1px solid white">
-      <table>
+      <table class="myTable">
         <header style="text-align: center">FILTER BY</header>
         <tr>
           <td><input id="Defibrillator" type="radio" name="filterItem" value='Defibrillator_Trained = 1'>Defibrillator Trained</td>
@@ -85,13 +85,13 @@
         </tr>
       </table>
     </div>
-        <input class="btn btn-primary refreshBtn" type='submit' value ='Refresh List'>
-        <input class="form-control nameSearch" id="mySearch" type="text" placeholder="Search..">
+        <input id='btnRefresh' class="btn btn-primary refreshBtn" type='submit' value ='Refresh List'>
+        <input id="myInput" class="nameSearch btn" type="text" placeholder="Search ...">
         <!--<div class = "nameSearch" style="border:1px solid navy">
           <input class="form-control" id="mySearch" type="text" placeholder="Search..">
           
         </div>-->
-      </form>
+      </form> 
     
   </div>
   
@@ -125,7 +125,7 @@
 
   <!-- TABLE TO DISPLAY MEMBER DATA -->
   <div class = "displayTable table-sm">
-    <table class="table">
+    <table id="myTable" class="table">
       <thead>
         <tr>   
           <th>Name</th>
@@ -139,7 +139,7 @@
         </tr>
       </thead>
 
-      <tbody class = "workersInShop" id="myTable">
+      <tbody class = "workersInShop" id="myTableBody">
         {% for w in workersInShop %}
           <tr>
             <td>{{w.memberName}}</td>
@@ -200,6 +200,6 @@ function refreshList() {
     }
   })
 })
-</script>
--->
+</script>-->
+
 {% endblock %}

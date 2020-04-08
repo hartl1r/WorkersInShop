@@ -1,5 +1,7 @@
-//var processedOnce = false
 $(document).ready(function() {
+
+  //alert ('Document ready')
+
   // DO WE HAVE A COOKIE
   var shopIDcookieValue = checkCookie()
   var currentShopChoice = shopIDcookieValue
@@ -39,72 +41,40 @@ $(document).ready(function() {
     document.getElementById('Defibrillator').checked = true
   if (filterOptionOPT.value == 'President')
     document.getElementById('President').checked = true
-    if (filterOptionOPT.value == 'Lumber')
+  if (filterOptionOPT.value == 'Lumber')
     document.getElementById('Lumber').checked = true
-    if (filterOptionOPT.value == 'Maintenance')
+  if (filterOptionOPT.value == 'Maintenance')
     document.getElementById('Maintenance').checked = true
-    if (filterOptionOPT.value == 'Merchandise')
+  if (filterOptionOPT.value == 'Merchandise')
     document.getElementById('Merchandise').checked = true
-    if (filterOptionOPT.value == 'BOD')
+  if (filterOptionOPT.value == 'BOD')
     document.getElementById('BOD').checked = true
-    if (filterOptionOPT.value == 'Safety')
+  if (filterOptionOPT.value == 'Safety')
     document.getElementById('Safety').checked = true
-    if (filterOptionOPT.value == 'SpecProj')
+  if (filterOptionOPT.value == 'SpecProj')
     document.getElementById('SpecProj').checked = true
-    if (filterOptionOPT.value == 'AskMe')
+  if (filterOptionOPT.value == 'AskMe')
     document.getElementById('AskMe').checked = true
-    if (filterOptionOPT.value == 'Mentors')
+  if (filterOptionOPT.value == 'Mentors')
     document.getElementById('Mentors').checked = true
-    if (filterOptionOPT.value == 'Everyone')
+  if (filterOptionOPT.value == 'Everyone')
     document.getElementById('Everyone').checked = true
    
-  msg = shopIDcookieValue + "\n" + shopChoiceOPT.value + "\n" + inShopOPT.value + "\n" + filterOptionOPT.value + "\n" + orderByOPT.value
-  console.log (msg)
-  //alert (msg)
-
-  // var opt = filterOptionOPT.options[filterOptionOPT.selectedIndex];
-  // console.log( opt.value );
-  // console.log( opt.text );
-
-    // if (document.getElementById(' ').val() == " ")
-    // document.getElementById(' ').checked = true
-    // if (document.getElementById(' ').val() == " ")
-    // document.getElementById(' ').checked = true
-    // if (document.getElementById(' ').val() == " ")
-    // document.getElementById(' ').checked = true
-    // if (document.getElementById(' ').val() == " ")
-    // document.getElementById(' ').checked = true
-    // if (document.getElementById(' ').val() == " ")
-    // document.getElementById(' ').checked = true
-
-
-
-  //alert("Processed once sw - " + processedOnce)
-  //processedOnce=true
-  //alert(processedOnce)
-  //if (processedOnce != true)
-  // var inShop=$('input[name=inShop]:checked').val()
-  // console.log (inShop.length)
-  // console.log (inShop)
-
-  // alert(inShop)
-  // alert("ALERT")
-  // //if (inShop.length == 0)
-  // if (document.getElementById("inShopNow").checked != true && document.getElementById("inShopToday").checked != true)
-  //   document.getElementById("inShopNow").checked=true
-  //   document.getElementById("Everyone").checked=true
-  //   document.getElementById("orderByName").checked=true
-  // //   processedOnce=true
-  //   alert("Processed once switch - " + processedOnce)
-
-  // SET SELECTED SHOP TO CHECKED
-  // if (shopIDcookieValue == 'RA')
-  //   document.getElementById("showRA").checked = true
   
-  // if (shopIDcookieValue == 'BW')
-  //   document.getElementById("showBW").checked = true
-  
-  // setLocationMsg(shopIDcookieValue)
+
+  //alert ('Pause before checking firstTimeSwitch')
+  // FORCE A 'POST' PAGE BY CLICKING THE 'REFRESH LIST' BUTTON
+  // DOES THE SESSION STORAGE VARIABLE 'timesLoaded' EXIST?
+  if (sessionStorage.getItem('timesLoaded'))
+    firstTimeSwitch = sessionStorage.getItem('timesLoaded') + 1
+  else
+    cnt = 0
+    sessionStorage.setItem('timesLoaded',1)
+    firstTimeSwitch = 1
+  var getRequest = document.getElementById('requestMethod');
+  if (getRequest.value == 'GET' && firstTimeSwitch == 1)
+    getRequest.click
+
 
   //BUILD MESSAGE DURING TESTING TO SHOW STATUS OF OPTIONS
   msg = "Shop location selection is " + currentShopChoice
@@ -175,9 +145,34 @@ $(document).ready(function() {
     orderByOPT.value = this.id
   })
 
-  $('.filterBy input[type=radio]').click(function(){
+  $('.filterByClass input[type=radio]').click(function(){
     filterOptionOPT.value = this.id
   })
+
+  // SEARCH FOR A MATCHING NAME
+  $(document).on('keyup','#myInput', function (e) {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+  
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  })
+
+  
 
   // $('.shopChoiceItem input[type=radio]').click(function(){
   //   currentShopChoice = this.value
@@ -203,12 +198,13 @@ $(document).ready(function() {
 
 
   // TEXT ENTERED INTO SEARCH BOX
-  $("#nameSearch").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-    $("myTable tr").filter(function() {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
+  //$("#nameSearch").on("keyup", function() {
+  //  myFunction()
+    // var value = $(this).val().toLowerCase();
+    // $("myTable tr").filter(function() {
+    //   $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    // });
+  //});
 
 
 
@@ -285,7 +281,9 @@ $(document).ready(function() {
 
   //   xhr.send('option=x');
   // }  
+  //$(document).on('click','#myTable td', function(e) {
 
+ 
 
   function setCookie(cname,cvalue,exdays) {
     var d = new Date();
@@ -324,7 +322,7 @@ $(document).ready(function() {
     }
   }
 
-
+  
   // $("button").click(function() {
   //   alert("Button clicked")
   // })
