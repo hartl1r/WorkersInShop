@@ -128,7 +128,7 @@ def stuff():
     #return render_template("workersInShop.html",workersInShop=workersInShop,shopID=shopIDcookieValue)
 
 
-@app.route("/")
+#@app.route("/")
 @app.route("/setCookie", methods = ['POST'])
 def setCookie():
     if request.method == 'POST':
@@ -168,7 +168,7 @@ def test():
         # print(recordObject)
     return redirect(url_for('workersInShop'))
 
-
+@app.route("/")
 @app.route("/workersInShop",methods=['GET','POST'])
 def workersInShop():
     # USING A FIXED DATE FOR TESTING

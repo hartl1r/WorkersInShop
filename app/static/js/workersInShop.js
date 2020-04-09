@@ -62,19 +62,35 @@ $(document).ready(function() {
    
   
 
-  //alert ('Pause before checking firstTimeSwitch')
+  
   // FORCE A 'POST' PAGE BY CLICKING THE 'REFRESH LIST' BUTTON
   // DOES THE SESSION STORAGE VARIABLE 'timesLoaded' EXIST?
-  if (sessionStorage.getItem('timesLoaded'))
-    firstTimeSwitch = sessionStorage.getItem('timesLoaded') + 1
-  else
-    cnt = 0
-    sessionStorage.setItem('timesLoaded',1)
-    firstTimeSwitch = 1
-  var getRequest = document.getElementById('requestMethod');
-  if (getRequest.value == 'GET' && firstTimeSwitch == 1)
-    getRequest.click
+  // DEFINE pageLoadCount AS INTEGER WITH VALUE OF ZERO
+  var pageLoadCount = 0
+  //console.log ('set pageLoadCount = 0')
+  // IF timesLoaded EXISTS ADD 1 TO IT
+  if (sessionStorage.getItem('timesLoaded')) {
+    pageLoadCount = parseInt(sessionStorage.getItem('timesLoaded'),10)
+    pageLoadCount += 1
+    sessionStorage.setItem('timesLoaded',pageLoadCount)
 
+    //console.log ("1. "+ pageLoadCount.toString()) 
+  }
+  else {
+    // CREATE SESSION VARIABLE; INITIALIZE AT 1
+    pageLoadCount = 1
+    sessionStorage.setItem('timesLoaded',pageLoadCount)
+  
+    //console.log ("2. "+ pageLoadCount.toString() )
+  }
+  var getRequestMethod = document.getElementById('requestMethod');
+  
+  // REQUEST 'POST' PAGE
+  //console.log ('before getRequestMethod')
+  if (getRequestMethod.value == 'GET' && pageLoadCount == 1)
+    //console.log ('routine to click ...')
+    document.getElementById('btnRefresh').click()
+    
 
   //BUILD MESSAGE DURING TESTING TO SHOW STATUS OF OPTIONS
   msg = "Shop location selection is " + currentShopChoice
@@ -87,6 +103,22 @@ $(document).ready(function() {
   //alert (msg)
 //})
 
+  //alert ('Pause before window unload')
+
+  window.addEventListener('unload', function (e) {
+    sessionStorage.clear
+  })
+
+  // window.onbeforeunload = function (e) {
+  //   console.log('It worked');
+  //   debugger;
+  // };
+
+  // window.onunload = () => {
+  //   // Clear the local storage
+  //   alert ("Clearing sessionStorage")
+  //   window.sessionStorage.clear()
+  // }
 
   // USER CLICKED REFRESH BUTTON
   $('#btnRefreshx').on('click',function(){
