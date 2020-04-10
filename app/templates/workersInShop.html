@@ -11,26 +11,9 @@
 {% endblock %}
 
 {% block content %}
-<!--<style>
-  .workersInShop {
-  background-color: blue;
-  font-size:3em;
-}
-
-.workersInShop tr td {
-  color: red;
-}
-
-#workersInShop tr td {
-  color: yellow;
-}
-
-</style> -->
 <div class= "container-fluid ">
   <div class = hdg>
     <h1>THE VILLAGES WOODWORKERS CLUB</h1>
-    <!--<input id="shopID" name="shopID" type="text" style= "background-color: white; color:blue" value={{shopIDcookieValue}}>    -->
-    
     <h2>WORKERS IN SHOP</h2>
   </div>
   
@@ -87,40 +70,11 @@
     </div>
         <input id='btnRefresh' class="btn btn-primary refreshBtn" type='submit' value ='Refresh List'>
         <input id="myInput" class="nameSearch btn" type="text" placeholder="Search ...">
-        <!--<div class = "nameSearch" style="border:1px solid navy">
-          <input class="form-control" id="mySearch" type="text" placeholder="Search..">
-          
-        </div>-->
       </form> 
     
   </div>
   
 </div>
-    <!--
-    <div class = "refresh">
-      <button type="button" id="btnRefresh" class="btn-success mr-3">Refresh (POST))</button>  
-      <input type = "submit" value="submit"/>
-      </form>
-    </div>
-    
-    <div class = "refresh">
-      <button type="button" id="btnRefreshGET" class="btn-success mr-3">Refresh (GET)</button>
-    </div>
-    
-    <div class = "test">
-      <button type="button" id="btnRefresh" onclick = "location.href='test'" class="btn-success mr-3">TEST</button>
-    </div>-->
-   
-
-  <!-- TWO LINES FOR MESSAGES -->
-  <!-- <div class = "message1" style="border:1px solid white; text-align:center;width:500px">
-    <label id="msg1">... SHOP(S) TO SHOW ...</label><br>
-  </div>
-  <div class = "message2" style="border:1px solid white; text-align:center;width:500px">
-    <label id="msg2">... IN SHOP NOW/TODAY ...</label>
-  </div>
-   -->
-  <!-- TEXT SEARCH BOX FOR NAMES -->
   
 
   <!-- TABLE TO DISPLAY MEMBER DATA -->
@@ -156,50 +110,5 @@
     </table>
   </div>
 </div>
-
-
-<!-- Modal -->
-<!--    
-<div class="modal fade" id="myModalMsg" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id=modalBody>
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>  
-</div> -->
-
-<!--
-<script src="https://code.jquery.com/jquery-1.12.4.min.js">
-function refreshList() {
-    shopSelected = $('button[name=shopChoice]:checked').val()
-    inShopOptionSelected = $('button[name=inShop]:checked').val()
-    orderByOptionSelected = $('button[name=orderBy]:checked').val()
-    filterOptionSelected = $('button[name=filter]:checked').val()
-    
-    msg = shopSelected + inShopOptionSelected + orderByOptionSelected + filterOptionSelected
-    alert(msg)
-   }
-   $(document).ready(function(){
-   $("input[type='button']").click(function(){
-    var radioValue = $("input[name='shopChoice']:checked").val();
-    if(radioValue){
-      console.log("Selected - " + radioValue)
-        alert("Your are a - " + radioValue);
-    }
-  })
-})
-</script>-->
 
 {% endblock %}
