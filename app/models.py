@@ -3,7 +3,6 @@
 from datetime import datetime 
 from time import time
 from app import db
-from app import ma 
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import select, func, Column, extract, ForeignKey
 from sqlalchemy.orm import column_property, relationship

@@ -7,13 +7,11 @@ from flask import Flask
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
-from flask_marshmallow import Marshmallow
 
 app = Flask(__name__)
 app.config.from_object(Config)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 db = SQLAlchemy(app)
-ma = Marshmallow(app)
 bootstrap = Bootstrap(app)
 
 if not app.debug:

@@ -6,11 +6,8 @@ from werkzeug.urls import url_parse
 from app.models import ShopName, Member , MemberActivity
 from app import app
 from app import db
-from app import ma
 from sqlalchemy import func, case, desc, extract, select, update
 from sqlalchemy.exc import SQLAlchemyError
-#from datatables import ColumnDT
-from flask_marshmallow import Marshmallow
 import datetime
 from datetime import date, timedelta
 @app.route('/index')
