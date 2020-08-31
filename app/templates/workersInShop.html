@@ -2,7 +2,7 @@
 
 {% block styles %}
     {{super()}}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/workersInShop.css') }}">  
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/workersInShop.css') }}">
 {% endblock %}
 
 {% block scripts %}
@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block content %}
+ 
 <div class= "container-fluid ">
   <div class = hdg>
     <h1>THE VILLAGES WOODWORKERS CLUB</h1>
@@ -70,13 +71,8 @@
     </div>
         <input id='btnRefresh' class="btn btn-primary refreshBtn" type='submit' value ='Refresh List'>
         <input id="myInput" class="nameSearch btn" type="text" placeholder="Search ...">
-      </form> 
-    
-  </div>
-  
-</div>
-  
-
+  </form> 
+ 
   <!-- TABLE TO DISPLAY MEMBER DATA -->
   <div class = "displayTable table-sm">
     <table id="myTable" class="table">
@@ -92,18 +88,17 @@
           <th>Door Used</th>
         </tr>
       </thead>
-
-      <tbody class = "workersInShop" id="myTableBody">
-        {% for w in workersInShop %}
+      <tbody class="workersInShop" id="myTableBody">
+        {% for worker in workersInShopArray %}
           <tr>
-            <td>{{w.memberName}}</td>
-            <td>{{w.CheckInTime}}</td>
-            <td>{{w.CheckOutTime}} </td>
-            <td>{{w.Type_Of_Work}}</td>
-            <td>{{w.Emerg_Name}}</td>
-            <td>{{w.Emerg_Phone}}</td>
-            <td>{{w.Shop_Number}}</td>
-            <td>{{w.Door_Used}}</td>
+            <td>{{worker['name']}}</td>
+            <td>{{worker['checkIn']}}</td>
+            <td>{{worker['checkOut']}}</td>
+            <td>{{worker['typeOfWork']}}</td>
+            <td>{{worker['emergName']}}</td>
+            <td>{{worker['emergPhone']}}</td>
+            <td>{{worker['shopNumber']}}</td>
+            <td>{{worker['doorUsed']}}</td>
           </tr>
         {% endfor %}
       </tbody>
