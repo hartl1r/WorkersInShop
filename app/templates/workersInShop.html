@@ -1,4 +1,4 @@
-{% extends 'bootstrap/base.html' %}
+{% extends "base.html" %}
 
 {% block styles %}
     {{super()}}
@@ -71,6 +71,12 @@
     </div>
         <input id='btnRefresh' class="btn btn-primary refreshBtn" type='submit' value ='Refresh List'>
         <input id="myInput" class="nameSearch btn" type="text" placeholder="Search ...">
+        <!-- <button id="showTodaysMonitorsID" class="btn btn-primary">Show Today's Monitors</button> -->
+        <!-- <button id="settingsIcon"><i class="fas fa-bars" data-toggle='modal' data-target='#todaysMonitorsID'></i></button> -->
+        <button id="showTodaysMonitorsID" type='button' style=padding-top:10px; class = 'btn btn-primary' data-toggle = 'modal' data-target = '#todaysMonitorsID'>
+          MONITORS 
+          </button>
+          
   </form> 
  
   <!-- TABLE TO DISPLAY MEMBER DATA -->
@@ -103,6 +109,61 @@
         {% endfor %}
       </tbody>
     </table>
+  </div>
+</div>
+
+<!-- MODAL FORM FOR TODAYS MONITORS -->
+<!-- MODAL FORM FOR DISPLAYING MONITOR NOTES FOR A SPECIFIC WEEK -->
+<!-- <div id="todaysMonitorsModal" class="bg-modal-monitors">
+	<div class="modal-content">
+		<div class="closeModal">+</div>
+			<div class="modal-header">
+        
+				<div class="modal-title">
+					<div>TODAY'S MONITORS </div>
+					
+			    <div id="modalBody">
+          </div>
+        </div>
+		</div>
+	</div>
+</div> -->
+ <!-- MODAL FORM FOR APPLICATION START UP SETTINGS  (bootstrap?)-->
+ <div id="todaysMonitorsID" class="modal fade"  tabindex="-1" role="dialog" >
+  <div class="modal-dialog modal-xl" ">
+      <div class="modal-content">
+          <div class="modal-header">
+              <div class='modal-title'>  
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h5 style="text-decoration: underline;text-align:center">TODAY'S MONITORS</h5>              
+              </div>
+          </div>
+          <div class="modal-body">
+            <div class="modal-col-hdgs">
+              <span>LOC</span>
+              <span>SFT</span>
+              <span>DUTY</span>
+              <span>NAME</span>
+              <span>IN</span>
+              <span>OUT</span>
+              <span>CELL</span>
+              <span>HOME</span>
+              <span>TRAINING</span>
+              <span></span>
+              <span style='text-align:center'>NS</span>
+            </div>  
+          
+            <div id="detailID" class="modal-detail">
+            </div>  
+              
+          </div>
+          <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+          </div> 
+      </div>
   </div>
 </div>
 
