@@ -267,6 +267,11 @@ $(document).ready(function() {
       {
         todaysMonitors = data.todaysMonitorsArray
         detailParent = document.getElementById('detailID')
+        // REMOVE ANY EXISTING DETAIL LINES
+        // REMOVE CURRENT DAY ASSIGNMENTS FOR SELECTED SCHEDULE DAY
+        while (detailParent.firstChild) {
+          detailParent.removeChild(detailParent.lastChild);
+        }
         
         // ADD DETAIL LINES
         for (i=0; i<todaysMonitors.length; i++) {
@@ -342,11 +347,16 @@ $(document).ready(function() {
           inputNoShow.id=rowID+'NoShow'
           inputNoShow.classList.add('NoShow')
           inputNoShow.type='checkbox'
+          inputNoShow.value = rowID
+          //inputNoShow.innerHTML = "type='checkbox'; onclick='NoShowRtn()'"
           if (todaysMonitors[i]['noShow'] == true) {
             inputNoShow.checked = true
           }
           else {
             inputNoShow.checked = false
+          }
+          inputNoShow.onclick = function() {
+            NoShowRtn(this.id);
           }
           detailParent.appendChild(inputNoShow)
           
@@ -367,7 +377,43 @@ $(document).ready(function() {
         }
       
    });
-      
-  });
+
+   function NoShowRtn(clicked_id) {
+    console.log('clicked_id - ', clicked_id)
+    rowID = clicked_id.slice(0,-6)
+    recordID = rowID + "RecordID"
+    scheduleRecordID = document.getElementById(recordID).value
+  
+    $.ajax({
+      url : "/updateNoShow",
+      type: "GET",
+      data:{
+        recordID:scheduleRecordID},
+      success: function(data, textStatus, jqXHR)
+      {
+        // alert('No Show updated.' + scheduleRecordID)
+      },
+      error: function (jqXHR, textStatus, errorThrown)
+        {
+          alert('Could not update No Show. \n errorThrown - '+errorThrown)
+        }
+    });
+  }  
+  
+});  
+$.ajax({
+  url : "/updateNoShow",
+  type: "GET",
+  data:{
+    recordID:scheduleRecordID},
+  success: function(data, textStatus, jqXHR)
+  {
+    // alert('No Show updated.' + scheduleRecordID)
+  },
+  error: function (jqXHR, textStatus, errorThrown)
+    {
+      alert('Could not update No Show. \n errorThrown - '+errorThrown)
+    }
+});
   
 

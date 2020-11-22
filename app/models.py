@@ -74,6 +74,18 @@ class MemberActivity(db.Model):
     Shop_Number = db.Column(db.Integer)
     Door_Used = db.Column(db.String(5))
 
+class MonitorSchedule(db.Model):
+    __tablename__ = 'tblMonitor_Schedule'
+    __table_args__ = {"schema": "dbo"}
+    ID = db.Column(db.Integer,autoincrement=True)
+    Member_ID = db.Column(db.String(6), primary_key=True)
+    Date_Scheduled = db.Column(db.DateTime, primary_key=True)
+    AM_PM = db.Column(db.String(2), primary_key=True)
+    Shop_Number = db.Column(db.Integer, primary_key=True)
+    Monitor_Notes = db.Column(db.String(255))
+    Duty = db.Column(db.String(20))
+    No_Show = db.Column(db.Boolean)
+    Optional = db.Column(db.Boolean)
     
 
 # class MemberSchema(ma.ModelSchema):

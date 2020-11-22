@@ -14,8 +14,10 @@
  
 <div class= "container-fluid ">
   <div class = hdg>
-    <h1>THE VILLAGES WOODWORKERS CLUB</h1>
     <h2>WORKERS IN SHOP</h2>
+    <div class='version'> 
+      <h6>  ver. 11/22/2022</h6>
+    </div>  
   </div>
   
     <!-- TOOLBAR TO SHOW FILTERING/SORTING OPTIONS -->
@@ -69,16 +71,18 @@
         </tr>
       </table>
     </div>
-        <input id='btnRefresh' class="btn btn-primary refreshBtn" type='submit' value ='Refresh List'>
+    <div class='btnArea'>
+        <input id='btnRefresh' class="btn btn-primary btn-sm refreshBtn" type='submit' value ='Refresh List'>
         <input id="myInput" class="nameSearch btn" type="text" placeholder="Search ...">
-        <!-- <button id="showTodaysMonitorsID" class="btn btn-primary">Show Today's Monitors</button> -->
-        <!-- <button id="settingsIcon"><i class="fas fa-bars" data-toggle='modal' data-target='#todaysMonitorsID'></i></button> -->
-        <button id="showTodaysMonitorsID" type='button' style=padding-top:10px; class = 'btn btn-primary' data-toggle = 'modal' data-target = '#todaysMonitorsID'>
-          MONITORS 
-          </button>
-          
-  </form> 
- 
+    </div>       
+  </form>
+  <div class="btnArea">
+    <button id="showTodaysMonitorsID" type='button' style=padding-top:10px; class = 'btn btn-primary btn-sm' data-toggle = 'modal' data-target = '#todaysMonitorsID'>
+      MONITORS 
+      </button>
+    <button onclick="location.href='printTodaysMonitors'">PRINT MONITORS</button>
+  </div> 
+  
   <!-- TABLE TO DISPLAY MEMBER DATA -->
   <div class = "displayTable table-sm">
     <table id="myTable" class="table">

@@ -40,3 +40,4 @@ Traceback (most recent call last):
   File "/Users/richardhartley/Projects/AzureWorkersInShop/venv/lib/python3.7/site-packages/flask/templating.py", line 89, in _get_source_fast
     raise TemplateNotFound(template)
 jinja2.exceptions.TemplateNotFound: 404.html
+2020-09-07 13:17:40,875 INFO: Check In startup [in /Users/richardhartley/Projects/AzureWorkersInShop/app/__init__.py:29]
