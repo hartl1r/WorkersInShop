@@ -12,77 +12,85 @@
 
 {% block content %}
  
-<div class= "container-fluid ">
+<!-- <div class= "container-fluid "> -->
+<div class="parent">
+  <!-- ------------------------------------------------------------ -->
   <div class = hdg>
-    <h2>WORKERS IN SHOP</h2>
+    <div class="title">
+      <h2>WORKERS IN SHOP</h2>
+    </div>
     <div class='version'> 
       <h6>  ver. 11/22/2022</h6>
     </div>  
-  </div>
-  
-    <!-- TOOLBAR TO SHOW FILTERING/SORTING OPTIONS -->
-  <form class = "options btn-toolbar" action = "/workersInShop" method = "POST">
-    <input id="shopChoiceOPT" name="shopChoiceOPT" type="hidden" value={{shopChoice}}>
-    <input id="inShopOPT" name="inShopOPT" type="hidden" value={{inShop}}>
-    <input id="orderByOPT" name="orderByOPT" type="hidden" value={{orderBy}}>
-    <input id="filterOptionOPT" name="filterOptionOPT" type="hidden" value={{filterOption}}>
-    <input id="requestMethod" name="requestMethod" type="hidden" value={{requestMethod}}>
-    
-    <div class = "options btn-toolbar" style="justify-content: center"> 
-    <div class="shopToShowClass"  style="border:1px solid white; "> 
-        <input id = "showRA" type="radio" name="shopChoiceItem" value='Shop_Number=1'>Rolling Acres<br>
-        <input id = "showBW" type="radio" name="shopChoiceItem" value='Shop_Number=2'>Brownwood<br>
-        <input id = "showBoth" type="radio" name="shopChoiceItem" value='' >Show Both<br>
-    </div> 
-    
-    <div class="inShopClass"  style="border:1px solid white; ">
-        <input id="inShopNow" type="radio" name="inShopItem" value='Check_Out_Date_Time is null'>In Shop Now<br>
-        <input id = "inShopToday" type="radio" name="inShopItem" value='' >In Shop Today    
-    </div>
-  
-    <div>
-      <div class="orderByClass" style="border:1px solid white">
-          <input id="orderByName" type="radio" name="orderByItem" value='ORDER BY Last_Name, First_Name'>Order By Name<br>
-          <input id="orderByTimeIn" type="radio" name="orderByItem" value='ORDER BY Check_In_Date_Time'>Order By Check In Time
-      </div>
-    </div>
-  
-    <div class = "filterByClass" style="border:1px solid white">
-      <table class="myTable">
-        <header style="text-align: center">FILTER BY</header>
-        <tr>
-          <td><input id="Defibrillator" type="radio" name="filterItem" value='Defibrillator_Trained = 1'>Defibrillator Trained</td>
-          <td><input id="President" type="radio" name="filterItem" value='(isPresident = 1 or isVP = 1)'>President/VP</td>
-          <td><input id="Lumber"type="radio" name="filterItem" value='canSellLumber = 1'>Lumber Sales</td>
-        </tr>
-        <tr> 
-          <td><input id="Maintenance" type="radio" name="filterItem" value='Maintenance = 1'>Repair/Maint</td>
-          <td><input id="Merchandise" type="radio" name="filterItem" value='canSellMdse = 1'>Merchandise Sales</td>
-          <td><input id="BOD" type="radio" name="filterItem" value='isBODmember = 1'>BOD Member</td>
-        </tr>
-        <tr>
-          <td><input id="Safety" type="radio" name="filterItem" value='isSafetyCommittee = 1'>Safety</td>
-          <td><input id="SpecProj" type="radio" name="filterItem" value='isSpecialProjects = 1'>Special Projects</td>
-          <td><input id="AskMe" type="radio" name="filterItem" value='isAskMe = 1'>Ask Me</td>
-        </tr>
-        <tr>
-          <td><input id="Mentors" Type="radio" name="filterItem" value='Mentor = 1'>Mentors</td>
-          <td><input id="Everyone" type="radio" name="filterItem" value=''>EVERYONE</td>
-        </tr>
-      </table>
-    </div>
-    <div class='btnArea'>
-        <input id='btnRefresh' class="btn btn-primary btn-sm refreshBtn" type='submit' value ='Refresh List'>
-        <input id="myInput" class="nameSearch btn" type="text" placeholder="Search ...">
-    </div>       
-  </form>
-  <div class="btnArea">
-    <button id="showTodaysMonitorsID" type='button' style=padding-top:10px; class = 'btn btn-primary btn-sm' data-toggle = 'modal' data-target = '#todaysMonitorsID'>
-      MONITORS 
+    <div class="monitorBtns">
+      <button id="showTodaysMonitorsID" type='button' style=padding-top:5px; class = 'btn btn-primary btn-sm' data-toggle = 'modal' data-target = '#todaysMonitorsID'>
+        TODAY'S MONITORS 
       </button>
-    <button onclick="location.href='printTodaysMonitors'">PRINT MONITORS</button>
-  </div> 
-  
+      <button class='btn btn-secondary btn-sm' onclick="location.href='/printTodaysMonitors'">PRINT MONITORS</button>
+    </div>
+  </div>  <!-- END OF MONITOR BTNS -->
+
+  <!-- ------------------------------------------------------------ -->
+  <div class="options">
+    <!-- TOOLBAR TO SHOW FILTERING/SORTING OPTIONS -->
+    <form class = "options btn-toolbar" action = "/workersInShop" method = "POST">
+      <input id="shopChoiceOPT" name="shopChoiceOPT" type="hidden" value={{shopChoice}}>
+      <input id="inShopOPT" name="inShopOPT" type="hidden" value={{inShop}}>
+      <input id="orderByOPT" name="orderByOPT" type="hidden" value={{orderBy}}>
+      <input id="filterOptionOPT" name="filterOptionOPT" type="hidden" value={{filterOption}}>
+      <input id="requestMethod" name="requestMethod" type="hidden" value={{requestMethod}}>
+      
+      <div class = "options btn-toolbar" style="justify-content: center"> 
+      <div class="shopToShowClass"  style="border:1px solid white; "> 
+          <input id = "showRA" type="radio" name="shopChoiceItem" value='Shop_Number=1'>Rolling Acres<br>
+          <input id = "showBW" type="radio" name="shopChoiceItem" value='Shop_Number=2'>Brownwood<br>
+          <input id = "showBoth" type="radio" name="shopChoiceItem" value='' >Show Both<br>
+      </div> 
+      
+      <div class="inShopClass"  style="border:1px solid white; ">
+          <input id="inShopNow" type="radio" name="inShopItem" value='Check_Out_Date_Time is null'>In Shop Now<br>
+          <input id = "inShopToday" type="radio" name="inShopItem" value='' >In Shop Today    
+      </div>
+    
+      <div>
+        <div class="orderByClass" style="border:1px solid white">
+            <input id="orderByName" type="radio" name="orderByItem" value='ORDER BY Last_Name, First_Name'>Order By Name<br>
+            <input id="orderByTimeIn" type="radio" name="orderByItem" value='ORDER BY Check_In_Date_Time'>Order By Check In Time
+        </div>
+      </div>
+    
+      <div class = "filterByClass" style="border:1px solid white">
+        <table class="myTable">
+          <header style="text-align: center">FILTER BY</header>
+          <tr>
+            <td><input id="Defibrillator" type="radio" name="filterItem" value='Defibrillator_Trained = 1'>Defibrillator Trained</td>
+            <td><input id="President" type="radio" name="filterItem" value='(isPresident = 1 or isVP = 1)'>President/VP</td>
+            <td><input id="Lumber"type="radio" name="filterItem" value='canSellLumber = 1'>Lumber Sales</td>
+          </tr>
+          <tr> 
+            <td><input id="Maintenance" type="radio" name="filterItem" value='Maintenance = 1'>Repair/Maint</td>
+            <td><input id="Merchandise" type="radio" name="filterItem" value='canSellMdse = 1'>Merchandise Sales</td>
+            <td><input id="BOD" type="radio" name="filterItem" value='isBODmember = 1'>BOD Member</td>
+          </tr>
+          <tr>
+            <td><input id="Safety" type="radio" name="filterItem" value='isSafetyCommittee = 1'>Safety</td>
+            <td><input id="SpecProj" type="radio" name="filterItem" value='isSpecialProjects = 1'>Special Projects</td>
+            <td><input id="AskMe" type="radio" name="filterItem" value='isAskMe = 1'>Ask Me</td>
+          </tr>
+          <tr>
+            <td><input id="Mentors" Type="radio" name="filterItem" value='Mentor = 1'>Mentors</td>
+            <td><input id="Everyone" type="radio" name="filterItem" value=''>EVERYONE</td>
+          </tr>
+        </table>
+      </div>
+      <div class='btnArea'>
+          <input id='btnRefresh' class="btn btn-primary btn-sm refreshBtn" type='submit' value ='Refresh List'>
+          <input id="myInput" class="nameSearch btn" type="text" placeholder="Search ...">
+      </div>       
+    </form>
+  </div> <!-- END OF OPTIONS -->
+
+  <!-- ------------------------------------------------------------ -->
   <!-- TABLE TO DISPLAY MEMBER DATA -->
   <div class = "displayTable table-sm">
     <table id="myTable" class="table">
@@ -94,7 +102,7 @@
           <th>Type Of Work</th>
           <th>Emergency Contact</th>
           <th>Emergency Phone</th>
-          <th>Shop #</th>
+          <th style=text-align:center>Shop</th>
           <th>Door Used</th>
         </tr>
       </thead>
@@ -107,32 +115,16 @@
             <td>{{worker['typeOfWork']}}</td>
             <td>{{worker['emergName']}}</td>
             <td>{{worker['emergPhone']}}</td>
-            <td>{{worker['shopNumber']}}</td>
+            <td style=text-align:center>{% if worker['shopNumber'] == 1 %}RA{%endif%}{% if worker['shopNumber'] == 2 %}BW{% endif %}</td>
             <td>{{worker['doorUsed']}}</td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
-</div>
+</div>  <!-- END OF PARENT -->
 
-<!-- MODAL FORM FOR TODAYS MONITORS -->
-<!-- MODAL FORM FOR DISPLAYING MONITOR NOTES FOR A SPECIFIC WEEK -->
-<!-- <div id="todaysMonitorsModal" class="bg-modal-monitors">
-	<div class="modal-content">
-		<div class="closeModal">+</div>
-			<div class="modal-header">
-        
-				<div class="modal-title">
-					<div>TODAY'S MONITORS </div>
-					
-			    <div id="modalBody">
-          </div>
-        </div>
-		</div>
-	</div>
-</div> -->
- <!-- MODAL FORM FOR APPLICATION START UP SETTINGS  (bootstrap?)-->
+ <!-- MODAL FORM FOR TODAYS MONITORS DISPLAY -->
  <div id="todaysMonitorsID" class="modal fade"  tabindex="-1" role="dialog" >
   <div class="modal-dialog modal-xl" ">
       <div class="modal-content">
@@ -155,7 +147,7 @@
               <span>CELL</span>
               <span>HOME</span>
               <span>TRAINING</span>
-              <span></span>
+              <span>&nbsp</span>
               <span style='text-align:center'>NS</span>
             </div>  
           

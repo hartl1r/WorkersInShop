@@ -11,77 +11,9 @@ from sqlalchemy import func, case, desc, extract, select, update
 from sqlalchemy.exc import SQLAlchemyError
 import datetime
 from datetime import date, timedelta
-#@app.route('/index')
-#def index():
-#    return
-#     data = {
-#         "data": [
-#             {
-#                 "name": "Abbot, Jim",
-#                 "checkInTime": "08:30 am"
-#             },
-#             {
-#                 "name": "Smith, Sara",
-#                 "checkInTime": "08:00 am"
-#             }]
-#     }
-#     print(type(data))
-#     member = Member.query.limit(5).all()
-#     for m in member:
-#         print(m.fullName, m.Member_ID)
-#     return m.fullName
-    #jsonStr = json.dumps(member.__dict__)
-    #print(jsonStr)
-    #return jsonStr
-    #member_schema = MemberSchema(many=true)
-    #output = member_schema.dump(member).data
-    #return jsonify({'member' : output})
-
-    #return render_template('index.html')
-
-# @app.route('/index_get_data')
-# def stuff():
-#     # NOT A POST REQUEST        
-#     shopIDcookieValue = ""
-#     shopIDcookieValue =  request.cookies.get('SHOPID')
-#     todaysDate = datetime.date(2019,3,22)
-#     tomorrow = todaysDate + timedelta(days=1)
-#     # BUILD DEFAULT SQL STATEMENT USED ON FIRST DISPLAY OF THE PAGE
-#     sqlCheckInRecord = """SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID,
-#      format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
-#             Check_In_Date_Time, Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, Mentor
-#             FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID """
-#             #WHERE Cast(Check_In_Date_Time as DATE) >= '""" + str(todaysDate) + """' and Cast(Check_In_Date_Time as DATE) < '""" + str(tomorrow) + "'"""
-#             #+ """' AND Check_Out_Date_Time Is Null ORDER BY Last_Name, First_Name"""
-    
-#     whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' AND Check_Out_Date_Time Is Null"
-#     sqlCheckInRecord += whereClause
-
-#     sortOrderClause = ' order by last_name, first_name'
-#     sqlCheckInRecord += sortOrderClause
-
-    #print (sqlCheckInRecord)
-
-    # EXECUTE THE SQL STATEMENT
-    # workersInShop = db.engine.execute(sqlCheckInRecord)
-
-    
-    # data = {
-    #     "data": [
-    #         {
-    #             "name": "Abbot, Jim",
-    #             "checkInTime": "08:30 am"
-    #         },
-    #         {
-    #             "name": "Smith, Sara",
-    #             "checkInTime": "08:00 am"
-    #         }]
-    # }
-    # print (type(data))
-    
-
 
 @app.route("/")
+@app.route('/index')
 @app.route('/index/')
 @app.route("/workersInShop",methods=['GET','POST'])
 def workersInShop():
@@ -92,6 +24,11 @@ def workersInShop():
 
     # PROCESS POST REQUEST
     if request.method == 'POST':
+        
+        # data = request.form
+        # for key, value in data.items():
+        #     print("received", key, "with value", value)
+        
         # RETRIEVE OPTIONS SELECTED BY USER
         # NAMES OF OPTIONS
         shopChoiceSelected = request.form['shopChoiceOPT']
@@ -192,6 +129,7 @@ def workersInShop():
     FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID""" 
     
     whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "'"
+    whereClause += " and Check_Out_Date_Time is null"
     sqlCheckInRecord += whereClause
     
     workersInShop = None
@@ -230,8 +168,8 @@ def getTodaysMonitors():
     if (shopChoice == 'showBW'):
         shopNumber = '2'
     
-    #todays_date = date.today()
-    todaysDate = datetime.date(2020,5,23)
+    todaysDate = date.today()
+    #todaysDate = datetime.date(2020,5,23)
 
     todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
     tomorrow = todaysDate + timedelta(days=1)
@@ -340,8 +278,9 @@ def updateNoShow():
 
 @app.route('/printTodaysMonitors')
 def printTodaysMonitors():
-# (AN EXACT COPY OF getTodaysMonitors; HOW CAN I MAKE A FUNCTION OUT OF THIS?)
-   #shopChoice=request.args.get('shopChoice')
+    print('/printTodaysMonitors')
+    # (AN EXACT COPY OF getTodaysMonitors; HOW CAN I MAKE A FUNCTION OUT OF THIS?)
+    #shopChoice=request.args.get('shopChoice')
     shopChoice = '1'
     shopNumber = 'BOTH'
     if (shopChoice == 'showRA'):
@@ -350,7 +289,7 @@ def printTodaysMonitors():
         shopNumber = '2'
     
     #todays_date = date.today()
-    todaysDate = datetime.date(2020,5,23)
+    todaysDate = date.today()  # datetime.date(2020,5,23)
 
     todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
     tomorrow = todaysDate + timedelta(days=1)
@@ -432,8 +371,8 @@ def printTodaysMonitors():
             'trainingNeeded':trainingMsg,
             'recordID':m.recordID}
         todaysMonitorsArray.append(todaysMonitor)
-        
+        print('m.memberName -',m.memberName)
     # GET COORDINATOR DATA FOR BOTH SHOPS
-
-    return render_template('rptTodaysMonitors',todaysMonitorsArray=todaysMonitorsArray)
+    print('render rptTodaysMonitors')
+    return render_template("rptTodaysMonitors.html",todaysMonitorsArray=todaysMonitorsArray)
  

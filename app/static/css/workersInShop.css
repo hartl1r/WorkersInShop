@@ -1,5 +1,5 @@
 
-.container-fluid {
+/* .container-fluid {
   display: grid;
   grid-template-columns:1fr 2fr auto;
   grid-template-rows: 120px 75px 30px 50px auto;
@@ -7,27 +7,43 @@
   background-color:lightgrey;
   padding:0px,0px,0px,0px;
   margin:0px,0px,0px,0px;
+} */
+
+.parent {
+  display:grid;
+  width:100%;
+  grid-template-rows: 35px 125px auto;
+  grid-template-columns: 1fr;
+  grid-template-areas:  'hdg',
+                        'options',
+                        'displayTable';
+  background-color: yellow;
 }
 
 .hdg {
-  grid-column: 1 / 3;
-  grid-row: 1;
-  text-align: center;
-  background-color: navy;
+  width:100%;
+  display:grid;
+  grid-template-columns: 4fr 6fr 2fr;
+  grid-template-areas: "titleArea    monitorBtnsArea  versionArea ";
+  background-color:navy;
   color:white; 
-  width: 100%;
-  margin-left:0px;
-  margin-right:0px;
-  padding-right:0px;
-  padding-left:0px; 
-}
-.version {
-  font-size:small;
-}
-.btnArea {
-  float:right;
   
 }
+.title {
+  grid-area:titleArea;
+  text-align:left;
+}
+.monitorBtns {
+  grid-area:monitorBtnsArea;
+  text-align:right;
+}
+
+.version {
+  grid-area:versionArea;
+  text-align:right;
+  font-size:small;
+}
+
 form {
   padding-bottom:20px;
   margin-bottom:20px;
@@ -179,13 +195,6 @@ input[type='radio']:checked:after {
   margin-top:20px;
 }
 
-/* table {
-  width: 80%;
-  margin:0 auto;
-} */
-/* .displayTable {
-  padding-left:20px;
-} */
 .displayTable tbody tr:hover td {
   background-color: gray;
 }
@@ -208,9 +217,20 @@ tr.highlighted td {
   width:100%;
   color:blue;
 }
+.modal-content {
+  background-color:white;
+  color:brown;
+}
 .modal-header button {
   float: right;
   }
+.modal-body {
+  width:100%;
+}
+.modal-xl {
+  width: 95%;
+  max-width:1200px;
+}
 .modal-title {
   width:100%;
   text-align:left;
@@ -222,12 +242,18 @@ tr.highlighted td {
 
 .modal-col-hdgs {
     display:grid;
-    grid-template-columns:40px 40px 110px 200px 80px 80px 150px 150px 100px 130px 50px;
- 
+    grid-template-columns:40px 40px 110px 250px 80px 80px 150px 150px 100px 130px 55px;
+    text-align:center;
   } 
 .modal-detail {
   display:grid;
-  grid-template-columns:40px 40px 110px 200px 80px 80px 150px 150px 100px 130px 50px;
+  grid-template-columns:40px 40px 110px 250px 80px 80px 150px 150px 100px 130px 55px;
+  margin-right:2em;
+  border: 1px solid black;
+  text-align:center;
+}
+.modal-detail span {
+  border: 1px solid black;
 }
 .modal-footer {
   margin:10px;
@@ -248,21 +274,8 @@ tr.highlighted td {
   }
   
 
-#modalBody {
-  display:grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-}
 
-.modal-col-hdgs {
-  text-align:center;
-}
-.modal-detail {
-  border: 1px solid black;
-  text-align:center;
-}
-.modal-detail span {
-  border: 1px solid black;
-}
+
 .Name {
   text-align:left !important;
 }

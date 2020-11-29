@@ -13,34 +13,27 @@ $(document).ready(function() {
       currentShopChoice = 'show' + localStorage.getItem('clientLocation')
     }
     else {
-      currentShopChoice = 'showBOTH'
+      currentShopChoice = 'showBoth'
     }
     
   }
-  //alert('currentShopChoice - ' + currentShopChoice)
+  
+  // SET OPTIONS BASED ON ROUTE VALUES PASSED IN
+
+  // SET SHOP LOCATION
   var shopChoiceOPT = document.getElementById('shopChoiceOPT')
   shopChoiceOPT.value = currentShopChoice
 
-  // $('.shopToShowClass').click(function(){
-  //   alert('jquery shopToShow clicked\nvalue - ',shopToShowChoiceOPT.value)
-  //   currentShopChoice = shopChoiceOPT.value
-  //   sessionStorage.setItem('shopChoice',shopChoiceOPT.value)
-  // })
-  
-  //var shopIDcookieValue = checkCookie()
-  //var currentShopChoice = shopIDcookieValue
-  
-  // SET OPTIONS BASED ON ROUTE VALUES PASSED IN
-  //var shopChoiceOPT = document.getElementById('shopChoiceOPT')  
   if (shopChoiceOPT.value == 'showRA')
     document.getElementById('showRA').checked = true
-  
-  if (shopChoiceOPT.value =='showBW')  
-    document.getElementById('showBW').checked = true
+  else
+    if (shopChoiceOPT.value =='showBW')  
+      document.getElementById('showBW').checked = true
+    else
+      document.getElementById('showBoth').checked = true
     
-  if (shopChoiceOPT.value == 'showBoth')  
-    document.getElementById('showBoth').checked = true
-    
+
+  // SET 'IN SHOP NOW' OR 'IN SHOP SOMETIME TODAY'
   var inShopOPT = document.getElementById('inShopOPT')
   if (inShopOPT.value == 'inShopNow')
     document.getElementById('inShopNow').checked = true
@@ -48,12 +41,15 @@ $(document).ready(function() {
   if (inShopOPT.value == 'inShopToday')
     document.getElementById('inShopToday').checked = true
 
+  // SET SORT ORDER FOR LIST
   var orderByOPT = document.getElementById('orderByOPT')  
   if (orderByOPT.value == 'orderByName')
     document.getElementById('orderByName').checked = true
   if (orderByOPT.value == 'orderByTimeIn')
     document.getElementById('orderByTimeIn').checked = true
   
+
+  // SET FILTERS
   var filterOptionOPT = document.getElementById('filterOptionOPT')
   if (filterOptionOPT.value == 'Defibrillator')
     document.getElementById('Defibrillator').checked = true
@@ -77,9 +73,6 @@ $(document).ready(function() {
     document.getElementById('Mentors').checked = true
   if (filterOptionOPT.value == 'Everyone')
     document.getElementById('Everyone').checked = true
-   
-  
-
   
   // FORCE A 'POST' PAGE BY CLICKING THE 'REFRESH LIST' BUTTON
   // DOES THE SESSION STORAGE VARIABLE 'timesLoaded' EXIST?
