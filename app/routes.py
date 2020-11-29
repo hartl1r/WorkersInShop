@@ -284,7 +284,8 @@ def printTodaysMonitors(shopChoice):
         shopNumber = '2'
         shopName = 'Brownwood'
     
-    todaysDate = date.today() 
+    todaysDate = date.today()
+
 
     todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
     hdgDate = todaysDate.strftime('%-b %-d, %Y')
