@@ -371,12 +371,11 @@ $(document).ready(function() {
       
    });
 
-   function NoShowRtn(clicked_id) {
+  function NoShowRtn(clicked_id) {
     console.log('clicked_id - ', clicked_id)
     rowID = clicked_id.slice(0,-6)
     recordID = rowID + "RecordID"
     scheduleRecordID = document.getElementById(recordID).value
-  
     $.ajax({
       url : "/updateNoShow",
       type: "GET",
@@ -394,19 +393,6 @@ $(document).ready(function() {
   }  
   
 });  
-$.ajax({
-  url : "/updateNoShow",
-  type: "GET",
-  data:{
-    recordID:scheduleRecordID},
-  success: function(data, textStatus, jqXHR)
-  {
-    // alert('No Show updated.' + scheduleRecordID)
-  },
-  error: function (jqXHR, textStatus, errorThrown)
-    {
-      alert('Could not update No Show. \n errorThrown - '+errorThrown)
-    }
-});
+
   
 

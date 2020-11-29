@@ -24,11 +24,6 @@ def workersInShop():
 
     # PROCESS POST REQUEST
     if request.method == 'POST':
-        
-        # data = request.form
-        # for key, value in data.items():
-        #     print("received", key, "with value", value)
-        
         # RETRIEVE OPTIONS SELECTED BY USER
         # NAMES OF OPTIONS
         shopChoiceSelected = request.form['shopChoiceOPT']
@@ -159,15 +154,17 @@ def workersInShop():
     inShop=inShop,orderBy=orderBy,filterOption=filterOption)
     
 
-@app.route("/getTodaysMonitors")
+@app.route("/getTodaysMonitors/")
 def getTodaysMonitors():
     shopChoice=request.args.get('shopChoice')
     shopNumber = 'BOTH'
+    shopName = 'Both Locations'
     if (shopChoice == 'showRA'):
         shopNumber = '1'
+        shopName = 'Rolling Acres'
     if (shopChoice == 'showBW'):
         shopNumber = '2'
-    
+        shopName = 'Brownwood'
     todaysDate = date.today()
     #todaysDate = datetime.date(2020,5,23)
 
@@ -253,7 +250,7 @@ def getTodaysMonitors():
         todaysMonitorsArray.append(todaysMonitor)
         
     # GET COORDINATOR DATA FOR BOTH SHOPS
-    return jsonify(todaysMonitorsArray=todaysMonitorsArray)
+    return jsonify(todaysMonitorsArray=todaysMonitorsArray,shopName=shopName)
 
 
 @app.route('/updateNoShow')
@@ -276,22 +273,21 @@ def updateNoShow():
         return "SUCCESS - Data has been saved."
 
 
-@app.route('/printTodaysMonitors')
-def printTodaysMonitors():
-    print('/printTodaysMonitors')
-    # (AN EXACT COPY OF getTodaysMonitors; HOW CAN I MAKE A FUNCTION OUT OF THIS?)
-    #shopChoice=request.args.get('shopChoice')
-    shopChoice = '1'
+@app.route('/printTodaysMonitors/<shopChoice>')
+def printTodaysMonitors(shopChoice):
     shopNumber = 'BOTH'
+    shopName = 'Both Locations'
     if (shopChoice == 'showRA'):
         shopNumber = '1'
+        shopName = 'Rolling Acres'
     if (shopChoice == 'showBW'):
         shopNumber = '2'
+        shopName = 'Brownwood'
     
-    #todays_date = date.today()
-    todaysDate = date.today()  # datetime.date(2020,5,23)
+    todaysDate = date.today() 
 
     todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
+    hdgDate = todaysDate.strftime('%-b %-d, %Y')
     tomorrow = todaysDate + timedelta(days=1)
     
     tomorrowSTR = tomorrow.strftime('%-m-%-d-%Y')
@@ -357,21 +353,36 @@ def printTodaysMonitors():
         else:
             trainingMsg = ''
 
+        if m.No_Show == True:
+            noShow = 'No Show'
+        else:
+            noShow = ''
 
-        todaysMonitor = {'name':m.memberName + ' (' + m.memberID + ')',
+        if m.Home_Phone == None:
+            homePhone = ''
+        else:
+            homePhone = m.Home_Phone
+
+        if m.Cell_Phone == None:
+            cellPhone = ''
+        else:
+            cellPhone = m.Cell_Phone
+
+        todaysMonitor = {'name':m.memberName,
+            'memberID':m.memberID,
             'shopInitials':shopInitials,
             'shift':m.AM_PM,
             'duty':m.Duty,
             'checkIn':checkInTime,
             'checkOut':checkOutTime,
-            'noShow':m.No_Show,
-            'homePhone':m.Home_Phone,
-            'cellPhone':m.Cell_Phone,
+            'noShow':noShow,
+            'homePhone':homePhone,
+            'cellPhone':cellPhone,
             'lastTrainingDate':m.Last_Monitor_Training.strftime('%b %Y'),
             'trainingNeeded':trainingMsg,
             'recordID':m.recordID}
         todaysMonitorsArray.append(todaysMonitor)
-        print('m.memberName -',m.memberName)
+    
     # GET COORDINATOR DATA FOR BOTH SHOPS
     coordinatorArray=[]
     coordinator=[]
@@ -404,6 +415,4 @@ def printTodaysMonitors():
     else:
         coordinatorArray = []
 
-    print('render rptTodaysMonitors')
-    return render_template("rptTodaysMonitors.html",todaysMonitorsArray=todaysMonitorsArray,coordinatorArray=coordinatorArray)
- 
+    return render_template("rptMonitors.html",shopName=shopName,hdgDate=hdgDate,todaysMonitors=todaysMonitorsArray,coordinators=coordinatorArray)
