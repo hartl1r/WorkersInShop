@@ -4,7 +4,7 @@
 from flask import session, render_template, flash, redirect, url_for, request, jsonify, json, make_response
 from flask_bootstrap import Bootstrap
 from werkzeug.urls import url_parse
-from app.models import ShopName, Member , MemberActivity, MonitorSchedule
+from app.models import ShopName, Member , MemberActivity, MonitorSchedule, CoordinatorsSchedule
 from app import app
 from app import db
 from sqlalchemy import func, case, desc, extract, select, update
@@ -373,6 +373,37 @@ def printTodaysMonitors():
         todaysMonitorsArray.append(todaysMonitor)
         print('m.memberName -',m.memberName)
     # GET COORDINATOR DATA FOR BOTH SHOPS
+    coordinatorArray=[]
+    coordinator=[]
+    coordinators = db.session.query(CoordinatorsSchedule)\
+        .filter(CoordinatorsSchedule.Start_Date <= todaysDate)\
+        .filter(CoordinatorsSchedule.End_Date >= todaysDate)
+    if coordinators:
+        for c in coordinators:
+            shopLocation=''
+            if c.Shop_Number == 1:
+                shopLocation = 'Rolling Acres'
+            else:
+                if c.Shop_Number == 2:
+                    shopLocation = 'Brownwood'
+                else:
+                    shopLocation = '??'
+            # GET COORDINATORS NAME, PHONES, EMAIL FROM MEMBER TABLE
+            coordData = db.session.query(Member).filter(Member.Member_ID==c.Coordinator_ID).first()
+            if coordData:
+                coordinator = {'name':coordData.fullName,
+                    'cellPhone':coordData.Cell_Phone,
+                    'homePhone':coordData.Home_Phone,
+                    'email':coordData.eMail,
+                    'shop':shopLocation}
+                coordinatorArray.append(coordinator)
+                for ca in coordinatorArray:
+                    print(ca['name'],ca['cellPhone'],ca['homePhone'],ca['email'],ca['shop'])
+            else:
+                flash('Missing member data for '+c.Coordinator_ID,'danger')
+    else:
+        coordinatorArray = []
+
     print('render rptTodaysMonitors')
-    return render_template("rptTodaysMonitors.html",todaysMonitorsArray=todaysMonitorsArray)
+    return render_template("rptTodaysMonitors.html",todaysMonitorsArray=todaysMonitorsArray,coordinatorArray=coordinatorArray)
  

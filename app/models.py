@@ -7,25 +7,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import select, func, Column, extract, ForeignKey
 from sqlalchemy.orm import column_property, relationship
 from sqlalchemy.ext.hybrid import hybrid_property
-#from flask_login import UserMixin
-#import jwt
 from app import app
-
-#@login.user_loader
-#def load_user(id):
-#    return User.query.get(int(id))
-
-    
-
-# @staticmethod
-# def verify_reset_password_token(token):
-#     try:
-#         id = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])['reset_password']
-#     except:
-#         return
-#     return User.query.get(id)
-
-        
+     
 
 class Member(db.Model):
     __tablename__ = 'tblMember_Data'
@@ -46,7 +29,7 @@ class Member(db.Model):
     Certification_Training_Date_2 = db.Column(db.DateTime)
     Home_Phone = db.Column(db.String(14))
     Cell_Phone = db.Column(db.String(14))
-    #Email = db.Column(db.String(255))
+    eMail = db.Column(db.String(255))
     Dues_Paid=db.Column(db.Boolean)
     NonMember_Volunteer=db.Column(db.Boolean)
     Restricted_From_Shop = db.Column(db.Boolean)
@@ -87,12 +70,12 @@ class MonitorSchedule(db.Model):
     No_Show = db.Column(db.Boolean)
     Optional = db.Column(db.Boolean)
     
-
-# class MemberSchema(ma.ModelSchema):
-#     class Meta:
-#         model = Member
-
-# class MemberActivitySchema(ma.ModelSchema):
-#     class Meta:
-#         model = MemberActivity
+class CoordinatorsSchedule(db.Model):
+	__tablename__ = 'coordinatorsSchedule'
+	__table_args__ = {"schema":"dbo"}
+	ID = db.Column(db.Integer)
+	Shop_Number = db.Column(db.Integer, primary_key=True)
+	Start_Date = db.Column(db.DateTime, primary_key=True)
+	End_Date = db.Column(db.DateTime)
+	Coordinator_ID = db.Column(db.String(6))
 

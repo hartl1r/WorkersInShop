@@ -2,10 +2,10 @@
 {% extends "base.html" %}
 {% block app_content %} 
 <!-- Include Print CSS -->
- <div>
+<div>
     <title>TODAYS MONITORS - {{ shopName }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/print.css') }}">
- </div>
+</div>
 <div class="prtTodaysMonitors">
     <button id="printPageButton" onClick="window.print();">PRINT</button>
     <h1 class="text-center">THE VILLAGES WOODWORKERS CLUB</h1>
@@ -37,9 +37,22 @@
                 </tr>    
             {% endfor %}
         </tbody>
-        <tfoot>
-            Record count -  {{recordCount}}
-        </tfoot> 
     </table>
-</div>  
+</div> 
+
+<div>
+    {% for c in coordinatorArray %}
+        <label>Shop:</label>
+        <span>c.['shop'</span>
+        <label>Coordinator:</label>
+        <span>c.['name']</span>
+        <label>Cell Phone:</label>
+        <span>c.['cellPhone'</span>
+        <label>Home Phone:</label>
+        <span>c.['homePhone'</span>
+        <label>E-Mail:</label>
+        <span>c.['email'</span>
+    {% endfor %}
+</div>
+
 {% endblock %} 
