@@ -387,7 +387,7 @@ def printTodaysMonitors():
                 if c.Shop_Number == 2:
                     shopLocation = 'Brownwood'
                 else:
-                    shopLocation = '??'
+                    shopLocation = '???'
             # GET COORDINATORS NAME, PHONES, EMAIL FROM MEMBER TABLE
             coordData = db.session.query(Member).filter(Member.Member_ID==c.Coordinator_ID).first()
             if coordData:
