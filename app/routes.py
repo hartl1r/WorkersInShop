@@ -11,6 +11,7 @@ from sqlalchemy import func, case, desc, extract, select, update
 from sqlalchemy.exc import SQLAlchemyError
 import datetime
 from datetime import date, timedelta
+from pytz import timezone
 
 @app.route("/")
 @app.route('/index')
@@ -233,7 +234,10 @@ def getTodaysMonitors():
             trainingMsg = 'Training needed.'
         else:
             trainingMsg = ''
-
+        if (m.Last_Monitor_Training != None and m.Last_Monitor_Training != ''):
+            lastTrainingDate = m.Last_Monitor_Training.strftime('%b %Y')
+        else:
+            lastTrainingDate = ''
 
         todaysMonitor = {'name':m.memberName + ' (' + m.memberID + ')',
             'shopInitials':shopInitials,
@@ -244,7 +248,7 @@ def getTodaysMonitors():
             'noShow':m.No_Show,
             'homePhone':m.Home_Phone,
             'cellPhone':m.Cell_Phone,
-            'lastTrainingDate':m.Last_Monitor_Training.strftime('%b %Y'),
+            'lastTrainingDate':lastTrainingDate,
             'trainingNeeded':trainingMsg,
             'recordID':m.recordID}
         todaysMonitorsArray.append(todaysMonitor)
