@@ -101,7 +101,13 @@ $(document).ready(function() {
   })
 
  
+  // HAS USER RETURNED TO THIS TAB?  IF SO, REFRESH PAGE
+  window.addEventListener('focus',refresh)
 
+  // REFRESH PAGE
+  function refresh() {
+    document.getElementById('btnRefresh').click()
+  }
   // USER CLICKED REFRESH BUTTON
   //$('#btnRefreshx').on('click',function(){
     
