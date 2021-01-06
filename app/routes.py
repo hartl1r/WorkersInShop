@@ -81,9 +81,14 @@ def workersInShop():
         workersInShopItem=''
 
         for w in workersInShop:
+            if (w.CheckOutTime == None or w.CheckOutTime == ''):
+                checkOutTime = '-------'
+            else:
+                checkOutTime = w.CheckOutTime
+            
             workersInShopItem = {'name':w.memberName,
                 'checkIn':w.CheckInTime,
-                'checkOut':w.CheckOutTime,
+                'checkOut':checkOutTime,
                 'typeOfWork':w.Type_Of_Work,
                 'emergName':w.Emerg_Name,
                 'emergPhone':w.Emerg_Phone,
@@ -209,10 +214,10 @@ def getTodaysMonitors():
         else:
             format = '%I:%M %p'
             checkInTime = activity.Check_In_Date_Time.strftime(format)
-            if activity.Check_Out_Date_Time != None:
+            if (activity.Check_Out_Date_Time != None and activity.Check_Out_Date_Time != ''):
                 checkOutTime = activity.Check_Out_Date_Time.strftime(format)
             else:
-                checkOutTime = ''
+                checkOutTime = '--------'
                 
         # REFORMAT DATA AS NEEDED
         if m.Shop_Number == 1:
@@ -332,10 +337,10 @@ def printTodaysMonitors(shopChoice):
         else:
             format = '%I:%M %p'
             checkInTime = activity.Check_In_Date_Time.strftime(format)
-            if activity.Check_Out_Date_Time != None:
+            if activity.Check_Out_Date_Time != None and activity.Check_Out_Date_Time != '':
                 checkOutTime = activity.Check_Out_Date_Time.strftime(format)
             else:
-                checkOutTime = ''
+                checkOutTime = '-------'
                 
         # REFORMAT DATA AS NEEDED
         if m.Shop_Number == 1:
@@ -413,8 +418,6 @@ def printTodaysMonitors(shopChoice):
                     'email':coordData.eMail,
                     'shop':shopLocation}
                 coordinatorArray.append(coordinator)
-                for ca in coordinatorArray:
-                    print(ca['name'],ca['cellPhone'],ca['homePhone'],ca['email'],ca['shop'])
             else:
                 flash('Missing member data for '+c.Coordinator_ID,'danger')
     else:

@@ -1,6 +1,5 @@
 $(document).ready(function() {
-  // document.getElementById('todaysMonitorsID').style.display='block'
-  //$('#todaysMonitorsID').modal('show')
+ 
   var currentShopChoice = 'BOTH'
   // DO WE HAVE A COOKIE
   // IF sessionStorage FOR shopID DOES NOT EXIST, USE clientLocation
@@ -18,8 +17,6 @@ $(document).ready(function() {
     
   }
   
-  // SET OPTIONS BASED ON ROUTE VALUES PASSED IN
-
   // SET SHOP LOCATION
   var shopChoiceOPT = document.getElementById('shopChoiceOPT')
   shopChoiceOPT.value = currentShopChoice
@@ -124,25 +121,31 @@ $(document).ready(function() {
   $('.shopToShowClass input[type=radio]').click(function(){
       currentShopChoice = this.value
       shopChoiceOPT.value = this.id
-      if (shopChoiceOPT.value != 'showBoth'){
-        // CHANGE THE COOKIE SETTING
-        sessionStorage.setItem('shopChoice',this.id)
-        //alert('shop choice - '+this.value)
-        setCookie("SHOPID", shopChoiceOPT.value, 365);
-      }
-      //setLocationMsg(currentShopChoice)
+      sessionStorage.setItem('shopChoice',this.id)
+      refresh()
+      console.log('shopToShowClass end')
   })
+      //if (shopChoiceOPT.value != 'showBoth'){
+        // CHANGE THE COOKIE SETTING
+      
+      //setCookie("SHOPID", shopChoiceOPT.value, 365);
+      //}
+      
+  
 
   $('.inShopClass input[type=radio]').click(function(){
       inShopOPT.value = this.id
+      refresh()
   })
 
   $('.orderByClass input[type=radio]').click(function(){
     orderByOPT.value = this.id
+    refresh()
   })
 
   $('.filterByClass input[type=radio]').click(function(){
     filterOptionOPT.value = this.id
+    refresh()
   })
 
   // SEARCH FOR A MATCHING NAME
@@ -168,90 +171,7 @@ $(document).ready(function() {
     }
   })
 
-
-  // var clickedId;
-  //   $(function(){
-  //        // When any link is clicked
-  //        $('a').click(function(){
-  //             // Set your variable
-  //             clickedId = this.id; // or clickedId = $(this).attr('id');
-  //        });
-  //   });
-
-
-
-  // GENERAL FUNCTIONS
-  
-
-  // function setCookie(cname,cvalue,exdays) {
-  //   var d = new Date();
-  //   d.setTime(d.getTime() + (exdays*24*60*60*1000));
-  //   var expires = "expires=" + d.toGMTString();
-  //   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-  // }
-
-  // function getCookie(cname) {
-  //   var name = cname + "=";
-  //   var decodedCookie = decodeURIComponent(document.cookie);
-  //   var ca = decodedCookie.split(';');
-  //   for(var i = 0; i < ca.length; i++) {
-  //     var c = ca[i];
-  //     while (c.charAt(0) == ' ') {
-  //       c = c.substring(1);
-  //     }
-  //     if (c.indexOf(name) == 0) {
-  //       return c.substring(name.length, c.length);
-  //     }
-  //   }
-  //   return "";
-  // }
-
-  // function checkCookie() {
-  //   var shopID=getCookie("SHOPID");
-  //   if (shopID != "") {
-  //     return shopID
-  //   }
-  //   else {
-  //       shopID = prompt("Please enter your shopID ('RA' or 'BW'):","");
-  //       if (shopID != "" && shopID != null) {
-  //         setCookie("SHOPID", shopID, 365);
-  //         return shopID
-  //       }
-  //   }
-  // }
 })
-
-// // MODAL PROCESSING
-// $('#showTodaysMonitorsID').click(function(){
-//   var shopChoiceOPT = document.getElementById('shopChoiceOPT').value
-//   // GET MEMBERS SCHEDULED FOR MONITOR DUTY TODAY
-//   $.ajax({
-//     url : "/getTodaysMonitors",
-//     type: "GET",
-//     data:{
-//       shopChoice:shopChoiceOPT},
-//     success: function(data, textStatus, jqXHR)
-//     {
-//       todaysMonitors = data.todaysMonitorsArray
-      
-//       msg = ''
-//       for (i=0; i<todaysMonitors.length; i++) {
-//         msg +=todaysMonitors[i]['name'] +' '+ todaysMonitors[i]['shift']+' '+todaysMonitors[i]['duty']+' '+todaysMonitors[i]['noShow']+'\n'
-//         }
-//       alert('Monitors: ' + msg)
-//       // POPULATE MODAL FORM
-
-//       // SHOW MODAL FORM
-//       //document.getElementById('todaysMonitorsModal').style.display='flex'
-//       //document.querySelector('.bg-modal-monitors').style.display='flex';
-//       //$('#todaysMonitors').modal('show');
-//     },
-//       error: function (jqXHR, textStatus, errorThrown)
-//       {
-//         alert('No monitors scheduled')
-//       }
-//     });
-//   })
 
   $('#todaysMonitorsID').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
