@@ -21,6 +21,7 @@ def workersInShop():
     # USING A FIXED DATE FOR TESTING
     #todaysDate = datetime.date
     todaysDate = date.today()
+    displayDate = todaysDate.strftime('%-b %-d, %Y')
     tomorrow = todaysDate + timedelta(days=1)
 
     # PROCESS POST REQUEST
@@ -56,12 +57,20 @@ def workersInShop():
             whereClause = whereClause[0:-5]
         
         # BUILD MAIN QUERY
-        sqlCheckInRecord = """SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID,
-        format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
-                    Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, Mentor, Defibrillator_Trained, 
-                    isPresident, isVP, canSellLumber, canSellMdse, Maintenance, isBODmember, isSafetyCommittee,
-                    isSpecialProjects, isAskMe
-                FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID""" 
+        # sqlCheckInRecord = """SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID as memberID,
+        # format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
+        #             Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, Mentor, Defibrillator_Trained, 
+        #             isPresident, isVP, canSellLumber, canSellMdse, Maintenance, isBODmember, isSafetyCommittee,
+        #             isSpecialProjects, isAskMe
+        #         FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID""" 
+        sqlCheckInRecord =  "SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID as memberID, "
+        sqlCheckInRecord += "format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, "
+        sqlCheckInRecord += "Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime, "
+        sqlCheckInRecord += "Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, Mentor, Defibrillator_Trained, "
+        sqlCheckInRecord += "isPresident, isVP, canSellLumber, canSellMdse, Maintenance, isBODmember, isSafetyCommittee, "
+        sqlCheckInRecord += "isSpecialProjects, isAskMe, tblMember_Activity.ID as recordID "
+        sqlCheckInRecord += "FROM tblMember_Activity "
+        sqlCheckInRecord += "left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID""" 
 
         
         # REMOVE 'AND' IF IT EXISTS
@@ -86,7 +95,10 @@ def workersInShop():
             else:
                 checkOutTime = w.CheckOutTime
             
-            workersInShopItem = {'name':w.memberName,
+            workersInShopItem = {
+                'recordID':w.recordID,
+                'memberID':w.memberID,
+                'name':w.memberName,
                 'checkIn':w.CheckInTime,
                 'checkOut':checkOutTime,
                 'typeOfWork':w.Type_Of_Work,
@@ -104,7 +116,7 @@ def workersInShop():
             workersInShopArray.append(workersInShopItem)
         
         return render_template("workersInShop.html",workersInShopArray=workersInShopArray,shopChoice=shopChoiceSelected,\
-        inShop=inShopSelected,orderBy=orderBySelected,filterOption=filterOptionSelected,requestMethod='POST')
+        inShop=inShopSelected,orderBy=orderBySelected,filterOption=filterOptionSelected,displayDate=displayDate,requestMethod='POST')
         
         # END OF POST REQUEST
 
@@ -157,7 +169,7 @@ def workersInShop():
         workersInShopArray.append(workersInShopItem)
     
     return render_template("workersInShop.html",workersInShopArray=workersInShopArray,shopChoice=shopChoice,\
-    inShop=inShop,orderBy=orderBy,filterOption=filterOption)
+    inShop=inShop,orderBy=orderBy,filterOption=filterOption,displayDate=displayDate)
     
 
 @app.route("/getTodaysMonitors/")
@@ -424,3 +436,45 @@ def printTodaysMonitors(shopChoice):
         coordinatorArray = []
 
     return render_template("rptMonitors.html",shopName=shopName,hdgDate=hdgDate,todaysMonitors=todaysMonitorsArray,coordinators=coordinatorArray)
+
+
+@app.route('/checkOutMember')
+def checkOutMember():
+    print('/checkOutMember')
+    
+    recordID = request.args.get('recordID')
+    print('recordID - ',recordID)
+    est = timezone('EST')
+    checkOutDateTime = datetime.datetime.now(est)
+    currentDateTime = checkOutDateTime.strftime('%-m-%-d-%Y %H:%M')
+    print('currentDateTime - ',currentDateTime)
+    # SQLALCHEMY APPROACE (is not updating)
+    # try:
+    #     recordToUpdate = db.session.query(MemberActivity)\
+    #         .filter(MemberActivity.ID == recordID)\
+    #         .first()
+    #     print('Current member ID - ', recordToUpdate.Member_ID)
+    #     print('Current checkout time - ',recordToUpdate.Check_Out_Date_Time)
+    #     recordToUpdate.Check_Out_Date_Time = checkOutDateTime
+    #     print('New checkout time - ',recordToUpdate.Check_Out_Date_Time)
+    #     db.session.commit()
+    #     return "SUCCESS - Member checked out."
+    # except SQLAlchemyError as e:
+    #     error = str(e.__dict__['orig'])
+    #     db.session.rollback()
+    #     flash("Check out could not be completed.\n"+error,"danger")
+    #     return "ERROR - Member could not be checked out."
+    
+    sqlUpdate = "UPDATE tblMember_Activity SET Check_Out_Date_Time = '" + currentDateTime + "' "
+    sqlUpdate += "WHERE ID = " + recordID + ";"
+    print(sqlUpdate)
+    try:
+        db.session.execute(sqlUpdate)
+        return "SUCCESS - Member checked out"
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        db.session.rollback()
+        flash("Check out could not be completed.\n"+error,"danger")
+        return "ERROR - Member could not be checked out."
+        
+    

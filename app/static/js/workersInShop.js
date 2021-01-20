@@ -1,5 +1,5 @@
 $(document).ready(function() {
- 
+  
   var currentShopChoice = 'BOTH'
   // DO WE HAVE A COOKIE
   // IF sessionStorage FOR shopID DOES NOT EXIST, USE clientLocation
@@ -159,7 +159,7 @@ $(document).ready(function() {
   
     // Loop through all table rows, and hide those who don't match the search query
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("td")[0];
+      td = tr[i].getElementsByTagName("td")[1];
       if (td) {
         txtValue = td.textContent || td.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -320,5 +320,38 @@ $(document).ready(function() {
   
 });  
 
+$(".checkOut").click(function() {
+  console.log('checkOut routine')
+  checkOutCell = this
   
+  console.log('record ID - '+ this.id)
+  parentTR = checkOutCell.parentElement
+  tds = parentTR.getElementsByTagName('td')
+  recordID = tds[0].innerHTML
+  console.log('recordID - '+ recordID)
+  response = confirm('Confirm check out?')
+  if (response != true){
+    return
+  }
+  else {
+    console.log('ok to proceed')
+  }
+
+  console.log('begin ajax')
+  $.ajax({
+    url : "/checkOutMember",
+    type: "GET",
+    data:{
+      recordID:recordID},
+    success: function(data, textStatus, jqXHR)
+    {
+      alert('Check out complete.')
+    },
+    error: function (jqXHR, textStatus, errorThrown)
+      {
+        alert('Could not check out member. \n errorThrown - '+errorThrown)
+      }
+  })
+  refresh()
+})
 
