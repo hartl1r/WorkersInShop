@@ -91,7 +91,7 @@ def workersInShop():
 
         for w in workersInShop:
             if (w.CheckOutTime == None or w.CheckOutTime == ''):
-                checkOutTime = '-------'
+                checkOutTime = '_______'
             else:
                 checkOutTime = w.CheckOutTime
             
@@ -151,9 +151,14 @@ def workersInShop():
     workersInShopItem=''
 
     for w in workersInShop:
+        if (w.CheckOutTime == None or w.CheckOutTime == ''):
+            checkOutTime = '-------'
+        else:
+            checkOutTime = w.CheckOutTime
+            
         workersInShopItem = {'name':w.memberName,
             'checkIn':w.CheckInTime,
-            'checkOut':w.CheckOutTime,
+            'checkOut':checkOutTime,
             'typeOfWork':w.Type_Of_Work,
             'emergName':w.Emerg_Name,
             'emergPhone':w.Emerg_Phone,
@@ -473,8 +478,7 @@ def checkOutMember():
         return "SUCCESS - Member checked out"
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
-        db.session.rollback()
-        flash("Check out could not be completed.\n"+error,"danger")
-        return "ERROR - Member could not be checked out."
+        print('Error - ',error)
+        return error
         
     

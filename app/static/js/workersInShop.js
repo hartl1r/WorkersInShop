@@ -74,28 +74,28 @@ $(document).ready(function() {
   // FORCE A 'POST' PAGE BY CLICKING THE 'REFRESH LIST' BUTTON
   // DOES THE SESSION STORAGE VARIABLE 'timesLoaded' EXIST?
   // DEFINE pageLoadCount AS INTEGER WITH VALUE OF ZERO
-  var pageLoadCount = 0
+  // var pageLoadCount = 0
   // IF timesLoaded EXISTS ADD 1 TO IT
-  if (sessionStorage.getItem('timesLoaded')) {
-    pageLoadCount = parseInt(sessionStorage.getItem('timesLoaded'),10)
-    pageLoadCount += 1
-    sessionStorage.setItem('timesLoaded',pageLoadCount)
-  }
-  else {
+  // if (sessionStorage.getItem('timesLoaded')) {
+  //   pageLoadCount = parseInt(sessionStorage.getItem('timesLoaded'),10)
+  //   pageLoadCount += 1
+  //   sessionStorage.setItem('timesLoaded',pageLoadCount)
+  // }
+  // else {
     // CREATE SESSION VARIABLE; INITIALIZE AT 1
-    pageLoadCount = 1
-    sessionStorage.setItem('timesLoaded',pageLoadCount)
-  }
-  var getRequestMethod = document.getElementById('requestMethod');
+  //   pageLoadCount = 1
+  //   sessionStorage.setItem('timesLoaded',pageLoadCount)
+  // }
+  // var getRequestMethod = document.getElementById('requestMethod');
   
   // REQUEST 'POST' PAGE
-  if (getRequestMethod.value == 'GET' && pageLoadCount == 1)
-    document.getElementById('btnRefresh').click()
+  // if (getRequestMethod.value == 'GET' && pageLoadCount == 1)
+  //   document.getElementById('btnRefresh').click()
     
   // AT PAGE 'UNLOAD' CLEAR THE sessionStorage VARIABLE
-  window.addEventListener('unload', function (e) {
-    sessionStorage.removeItem('timesLoaded')
-  })
+  // window.addEventListener('unload', function (e) {
+  //   sessionStorage.removeItem('timesLoaded')
+  // })
 
  
   // HAS USER RETURNED TO THIS TAB?  IF SO, REFRESH PAGE
@@ -109,13 +109,13 @@ $(document).ready(function() {
   //$('#btnRefreshx').on('click',function(){
     
   // CLICK ON TABLE ROW EVENT  (NO LOGIC REQUEST YET)
-  $(document).on('click','#myTable td', function(e) {
-    if ($(this).is('td')) {
-      $(this).closest('tr').toggleClass('highlighted');
-    } else {
-      $('#myTable tr').toggleClass('highlighted');
-    }
-  });
+  // $(document).on('click','#myTable td', function(e) {
+  //   if ($(this).is('td')) {
+  //     $(this).closest('tr').toggleClass('highlighted');
+  //   } else {
+  //     $('#myTable tr').toggleClass('highlighted');
+  //   }
+  // });
 
   // CLICK ON ONE OF THREE SHOP CHOICE BUTTONS
   $('.shopToShowClass input[type=radio]').click(function(){
@@ -267,7 +267,6 @@ $(document).ready(function() {
           inputNoShow.classList.add('NoShow')
           inputNoShow.type='checkbox'
           inputNoShow.value = rowID
-          //inputNoShow.innerHTML = "type='checkbox'; onclick='NoShowRtn()'"
           if (todaysMonitors[i]['noShow'] == true) {
             inputNoShow.checked = true
           }
@@ -345,13 +344,16 @@ $(".checkOut").click(function() {
       recordID:recordID},
     success: function(data, textStatus, jqXHR)
     {
-      alert('Check out complete.')
+      alert(data)
+      refresh()
     },
     error: function (jqXHR, textStatus, errorThrown)
       {
-        alert('Could not check out member. \n errorThrown - '+errorThrown)
+        console.log('Could not check out member.')
+        console.log('textStatus - '+ textStatus)
+        console.log('errorThrown - '+errorThrown)
       }
   })
-  refresh()
+
 })
 
