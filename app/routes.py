@@ -9,6 +9,8 @@ from app import app
 from app import db
 from sqlalchemy import func, case, desc, extract, select, update
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.sql import text as SQLQuery
+
 import datetime
 from datetime import date, timedelta
 from pytz import timezone
@@ -447,8 +449,8 @@ def printTodaysMonitors(shopChoice):
 def checkOutMember():
     print('/checkOutMember')
     
-    recordID = request.args.get('recordID')
-    print('recordID - ',recordID)
+    activityID = request.args.get('recordID')
+    print('activityID - ',activityID)
     est = timezone('EST')
     checkOutDateTime = datetime.datetime.now(est)
     currentDateTime = checkOutDateTime.strftime('%-m-%-d-%Y %H:%M')
@@ -456,7 +458,7 @@ def checkOutMember():
     # SQLALCHEMY APPROACE (is not updating)
     # try:
     #     recordToUpdate = db.session.query(MemberActivity)\
-    #         .filter(MemberActivity.ID == recordID)\
+    #         .filter(MemberActivity.ID == activityID)\
     #         .first()
     #     print('Current member ID - ', recordToUpdate.Member_ID)
     #     print('Current checkout time - ',recordToUpdate.Check_Out_Date_Time)
@@ -470,11 +472,21 @@ def checkOutMember():
     #     flash("Check out could not be completed.\n"+error,"danger")
     #     return "ERROR - Member could not be checked out."
     
-    sqlUpdate = "UPDATE tblMember_Activity SET Check_Out_Date_Time = '" + currentDateTime + "' "
-    sqlUpdate += "WHERE ID = " + recordID + ";"
-    print(sqlUpdate)
+     
+    
+    # RAW SQL APPROACH
+    # sqlUpdate = "UPDATE tblMember_Activity SET Check_Out_Date_Time = '" + currentDateTime + "' "
+    # sqlUpdate += "WHERE ID = " + activityID + ";"
+    # print(sqlUpdate)
+
+    # STORED PROCEDURE APPROACH
     try:
-        db.session.execute(sqlUpdate)
+        sp = "EXEC checkOutMember " + activityID 
+        sql = SQLQuery(sp)
+        print('sql - ',sql)
+        result = db.engine.execute(sql)
+        print('result - ', result)
+        #db.session.execute(sqlUpdate)
         return "SUCCESS - Member checked out"
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
