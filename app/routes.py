@@ -1,4 +1,3 @@
-
 # routes.py
 
 from flask import session, render_template, flash, redirect, url_for, request, jsonify, json, make_response
@@ -7,8 +6,10 @@ from werkzeug.urls import url_parse
 from app.models import ShopName, Member , MemberActivity, MonitorSchedule, CoordinatorsSchedule
 from app import app
 from app import db
+#from app import error_handler
+
 from sqlalchemy import func, case, desc, extract, select, update
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError, IntegrityError, DBAPIError
 from sqlalchemy.sql import text as SQLQuery
 
 import datetime
@@ -20,6 +21,7 @@ from pytz import timezone
 @app.route('/index/')
 @app.route("/workersInShop",methods=['GET','POST'])
 def workersInShop():
+    #abort(500)
     # USING A FIXED DATE FOR TESTING
     #todaysDate = datetime.date
     todaysDate = date.today()
@@ -453,44 +455,22 @@ def checkOutMember():
     print('activityID - ',activityID)
     est = timezone('EST')
     checkOutDateTime = datetime.datetime.now(est)
-    currentDateTime = checkOutDateTime.strftime('%-m-%-d-%Y %H:%M')
-    print('currentDateTime - ',currentDateTime)
-    # SQLALCHEMY APPROACE (is not updating)
-    # try:
-    #     recordToUpdate = db.session.query(MemberActivity)\
-    #         .filter(MemberActivity.ID == activityID)\
-    #         .first()
-    #     print('Current member ID - ', recordToUpdate.Member_ID)
-    #     print('Current checkout time - ',recordToUpdate.Check_Out_Date_Time)
-    #     recordToUpdate.Check_Out_Date_Time = checkOutDateTime
-    #     print('New checkout time - ',recordToUpdate.Check_Out_Date_Time)
-    #     db.session.commit()
-    #     return "SUCCESS - Member checked out."
-    # except SQLAlchemyError as e:
-    #     error = str(e.__dict__['orig'])
-    #     db.session.rollback()
-    #     flash("Check out could not be completed.\n"+error,"danger")
-    #     return "ERROR - Member could not be checked out."
-    
-     
-    
-    # RAW SQL APPROACH
-    # sqlUpdate = "UPDATE tblMember_Activity SET Check_Out_Date_Time = '" + currentDateTime + "' "
-    # sqlUpdate += "WHERE ID = " + activityID + ";"
-    # print(sqlUpdate)
 
-    # STORED PROCEDURE APPROACH
     try:
-        sp = "EXEC checkOutMember " + activityID 
-        sql = SQLQuery(sp)
-        print('sql - ',sql)
-        result = db.engine.execute(sql)
-        print('result - ', result)
-        #db.session.execute(sqlUpdate)
-        return "SUCCESS - Member checked out"
-    except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        print('Error - ',error)
-        return error
-        
-    
+        activity = db.session.query(MemberActivity)\
+            .filter(MemberActivity.ID == activityID).one()
+        print('activity member ID - ',activity.Member_ID)
+        activity.Check_Out_Date_Time = checkOutDateTime
+        db.session.commit()
+        print("SUCCESS")
+        msg = "SUCCESS - member checked out."
+        return make_response(f"SUCCESS - member was checked out.")
+        #return jsonify(msg=msg)
+        #return redirect(url_for('workersInShop'))
+    except Exception as e:
+        print("ERROR -",e)
+        msg="ERROR - member NOT checked out."
+        return make_response(f"ERROR - member was NOT checked out.")
+        #return jsonify(msg=msg)
+    return make_response(f"SUCCESS 2 - member was checked out.")
+ 

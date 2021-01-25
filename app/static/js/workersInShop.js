@@ -320,40 +320,32 @@ $(document).ready(function() {
 });  
 
 $(".checkOut").click(function() {
-  console.log('checkOut routine')
   checkOutCell = this
-  
-  console.log('record ID - '+ this.id)
   parentTR = checkOutCell.parentElement
   tds = parentTR.getElementsByTagName('td')
   recordID = tds[0].innerHTML
-  console.log('recordID - '+ recordID)
   response = confirm('Confirm check out?')
   if (response != true){
     return
   }
-  else {
-    console.log('ok to proceed')
-  }
 
-  console.log('begin ajax')
+  // SEND REQUEST TO SERVER
   $.ajax({
-    url : "/checkOutMember",
+    url: "/checkOutMember",
     type: "GET",
     data:{
       recordID:recordID},
     success: function(data, textStatus, jqXHR)
     {
-      alert(data)
-      refresh()
+      alert("SUCCESS" + data)
+      location.reload()
     },
-    error: function (jqXHR, textStatus, errorThrown)
+    error: function (result)
       {
-        console.log('Could not check out member.')
-        console.log('textStatus - '+ textStatus)
-        console.log('errorThrown - '+errorThrown)
+        alert("ERROR - " + result)
+       
       }
   })
-
+  location.reload()
 })
 

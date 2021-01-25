@@ -50,7 +50,7 @@ class MemberActivity(db.Model):
     __tablename__ = 'tblMember_Activity'
     __table_args__ = {"schema": "dbo"}
     ID = db.Column(db.Integer, primary_key=True)
-    Member_ID = db.Column(db.String(6), db.ForeignKey('member.Member_ID'))
+    Member_ID = db.Column(db.String(6))
     Check_In_Date_Time = db.Column(db.DateTime)
     Check_Out_Date_Time = db.Column(db.DateTime)
     Type_Of_Work = db.Column(db.String(20))
