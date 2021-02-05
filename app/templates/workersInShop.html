@@ -20,7 +20,7 @@
       <h2>WORKERS IN SHOP  -   {{displayDate}}</h2>
     </div>
     <div class='version'> 
-      <h6>ver. Jan 25, 2021</h6>
+      <h6>ver. Feb 5, 2021</h6>
     </div>  
     <div class="monitorBtns">
       <button id="showTodaysMonitorsID" type='button' style=padding-top:5px; class = 'btn btn-primary btn-sm' data-toggle = 'modal' data-target = '#todaysMonitorsID'>
@@ -99,7 +99,7 @@
     <table id="myTable" class="table">
       <thead>
         <tr>   
-          <th>ID</th>
+          <th></th>
           <th>Name</th>
           <th>Check In</th>
           <th>Check Out</th>
@@ -113,7 +113,14 @@
       <tbody class="workersInShop" id="myTableBody">
         {% for worker in workersInShopArray %}
           <tr>
-            <td>{{worker['recordID']}}</td>
+            <td>
+              <button 
+                id="{{worker['memberID']}}{{worker['recordID']}}"
+                class='memberID'>
+                SHOW
+              </button>
+            </td>
+
             <td>{{worker['name']}}</td>
             <td>{{worker['checkIn']}}</td>
             <td id={{worker['recordID']}} class='checkOut'>{{worker['checkOut']}}</td>

@@ -349,3 +349,8 @@ $(".checkOut").click(function() {
   location.reload()
 })
 
+$(".memberID").click(function() {
+  memberID = this.id.slice(0,6)
+  link = "https://fd.thevwc.org:42734/?villageID=" + memberID
+  window.location.href = link
+})
