@@ -286,7 +286,7 @@ def getTodaysMonitors():
 @app.route('/updateNoShow')
 def updateNoShow():
     recordID=request.args.get('recordID')
-    
+    print('recordID - ',recordID)
     try:
         schedule = db.session.query(MonitorSchedule)\
                     .filter(MonitorSchedule.ID == recordID).first()
@@ -467,6 +467,9 @@ def checkOutMember():
         return make_response(f"SUCCESS - member was checked out.")
         #return jsonify(msg=msg)
         #return redirect(url_for('workersInShop'))
+    except (SQLAlchemyError, DBAPIError) as e:
+        print("ERROR -",e)
+        return make_response(f"ERROR - member was NOT checked out.")
     except Exception as e:
         print("ERROR -",e)
         msg="ERROR - member NOT checked out."

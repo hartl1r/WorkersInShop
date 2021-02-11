@@ -194,58 +194,58 @@ $(document).ready(function() {
         
         // ADD DETAIL LINES
         for (i=0; i<todaysMonitors.length; i++) {
-          rowID = 'row'+i
+          //rowID = 'row'+i
 
           var spanShop = document.createElement('span')
-          spanShop.id=rowID+'Shop'
+          //spanShop.id=rowID+'Shop'
           spanShop.classList.add('Shop')
           spanShop.innerHTML = todaysMonitors[i]['shopInitials']
           detailParent.appendChild(spanShop)
 
           var spanShift = document.createElement('span')
-          spanShift.id=rowID+'Shift'
+          //spanShift.id=rowID+'Shift'
           spanShift.classList.add('Shift')
           spanShift.innerHTML = todaysMonitors[i]['shift']
           detailParent.appendChild(spanShift)
   
           var spanDuty = document.createElement('span')
-          spanDuty.id=rowID+'Duty'
+          //spanDuty.id=rowID+'Duty'
           spanDuty.classList.add('Duty')
           spanDuty.innerHTML = todaysMonitors[i]['duty']
           detailParent.appendChild(spanDuty)
   
           var spanName = document.createElement('span')
-          spanName.id=rowID+'Name'
+          //spanName.id=rowID+'Name'
           spanName.classList.add('Name')
           spanName.innerHTML = todaysMonitors[i]['name']
           detailParent.appendChild(spanName)
         
           var spanCheckIn = document.createElement('span')
-          spanCheckIn.id=rowID+'CheckIn'
+          //spanCheckIn.id=rowID+'CheckIn'
           spanCheckIn.classList.add('CheckIn')
           spanCheckIn.innerHTML = todaysMonitors[i]['checkIn']
           detailParent.appendChild(spanCheckIn)
   
           var spanCheckOut = document.createElement('span')
-          spanCheckOut.id=rowID+'CheckOut'
+          //spanCheckOut.id=rowID+'CheckOut'
           spanCheckOut.classList.add('CheckOut')
           spanCheckOut.innerHTML = todaysMonitors[i]['checkOut']
           detailParent.appendChild(spanCheckOut)
   
           var spanHomePhone = document.createElement('span')
-          spanHomePhone.id=rowID+'HomePhone'
+          //spanHomePhone.id=rowID+'HomePhone'
           spanHomePhone.classList.add('HomePhone')
           spanHomePhone.innerHTML = todaysMonitors[i]['homePhone']
           detailParent.appendChild(spanHomePhone)
   
           var spanCellPhone = document.createElement('span')
-          spanCellPhone.id=rowID+'CellPhone'
+          //spanCellPhone.id=rowID+'CellPhone'
           spanCellPhone.classList.add('CellPhone')
           spanCellPhone.innerHTML = todaysMonitors[i]['cellPhone']
           detailParent.appendChild(spanCellPhone)
   
           var spanLastTraining = document.createElement('span')
-          spanLastTraining.id=rowID+'LastTraining'
+          //spanLastTraining.id=rowID+'LastTraining'
           spanLastTraining.classList.add('LastTraining')
           spanLastTraining.innerHTML = todaysMonitors[i]['lastTrainingDate']
           if (todaysMonitors[i]['trainingNeeded'] == 'Training needed.') {
@@ -257,21 +257,23 @@ $(document).ready(function() {
           detailParent.appendChild(spanLastTraining)
   
           var spanTrainingNeeded = document.createElement('span')
-          spanTrainingNeeded.id=rowID+'TrainingNeeded'
+          //spanTrainingNeeded.id=rowID+'TrainingNeeded'
           spanTrainingNeeded.classList.add('TrainingNeeded')
           spanTrainingNeeded.innerHTML = todaysMonitors[i]['trainingNeeded']
           detailParent.appendChild(spanTrainingNeeded)
   
           var inputNoShow = document.createElement('input')
-          inputNoShow.id=rowID+'NoShow'
+          inputNoShow.id='R'+todaysMonitors[i]['recordID']
           inputNoShow.classList.add('NoShow')
           inputNoShow.type='checkbox'
-          inputNoShow.value = rowID
+          //inputNoShow.value = rowID
           if (todaysMonitors[i]['noShow'] == true) {
             inputNoShow.checked = true
+            inputNoShow.value = 'True'
           }
           else {
             inputNoShow.checked = false
+            inputNoShow.value = 'False'
           }
           inputNoShow.onclick = function() {
             NoShowRtn(this.id);
@@ -279,13 +281,13 @@ $(document).ready(function() {
           detailParent.appendChild(inputNoShow)
           
 
-          var inputRecordID = document.createElement('input')
-          inputRecordID.id=rowID+'RecordID'
-          inputRecordID.classList.add('RecordID')
-          inputRecordID.type='hidden'
-          inputRecordID.value = todaysMonitors[i]['recordID']
-          inputRecordID.innerHTML= todaysMonitors[i]['recordID']
-          detailParent.appendChild(inputRecordID)
+          // var inputRecordID = document.createElement('input')
+          // inputRecordID.id=rowID+'RecordID'
+          // inputRecordID.classList.add('RecordID')
+          // inputRecordID.type='hidden'
+          // inputRecordID.value = todaysMonitors[i]['recordID']
+          // inputRecordID.innerHTML= todaysMonitors[i]['recordID']
+          // detailParent.appendChild(inputRecordID)
           
           }
         },
@@ -298,14 +300,16 @@ $(document).ready(function() {
 
   function NoShowRtn(clicked_id) {
     console.log('clicked_id - ', clicked_id)
-    rowID = clicked_id.slice(0,-6)
-    recordID = rowID + "RecordID"
-    scheduleRecordID = document.getElementById(recordID).value
+    //rowID = clicked_id.slice(6)
+    //recordID = rowID + "RecordID"
+    recordID = clicked_id.slice(1)
+    console.log('recordID = '+ recordID)
+    //scheduleRecordID = document.getElementById(recordID).value
     $.ajax({
       url : "/updateNoShow",
       type: "GET",
       data:{
-        recordID:scheduleRecordID},
+        recordID:recordID},
       success: function(data, textStatus, jqXHR)
       {
         // alert('No Show updated.' + scheduleRecordID)
@@ -324,6 +328,7 @@ $(".checkOut").click(function() {
   parentTR = checkOutCell.parentElement
   tds = parentTR.getElementsByTagName('td')
   recordID = tds[0].innerHTML
+  console.log('recordID - '+recordID)
   response = confirm('Confirm check out?')
   if (response != true){
     return
@@ -350,7 +355,15 @@ $(".checkOut").click(function() {
 })
 
 $(".memberID").click(function() {
+  alert('this.id - '+this.id)
   memberID = this.id.slice(0,6)
+  alert('memberID - '+ memberID)
   link = "https://fd.thevwc.org:42734/?villageID=" + memberID
+  alert('link - '+ link)
   window.location.href = link
 })
+
+// function linkToMemberApp(memberID) {
+//   link = "https://fd.thevwc.org:42734?villageID=" + memberID 
+//   window.location.href= link
+// }
