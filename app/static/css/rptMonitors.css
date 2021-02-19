@@ -58,15 +58,18 @@
 	}
 	
 	table {
-		width:90%;
+		width:80%;
 		margin: 0 auto;
+		padding-left:3em;
+		padding-right:3em;
+		font-size:.75rem;
 	} 
 
 
 	th, td {
 		border:1px solid black;
 		color: black;
-		font-size: 12pt;
+		font-size: .75rem;
 	}
 
 	td {

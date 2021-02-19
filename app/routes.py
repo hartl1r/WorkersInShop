@@ -193,13 +193,11 @@ def getTodaysMonitors():
         shopNumber = '2'
         shopName = 'Brownwood'
     todaysDate = date.today()
-    #todaysDate = datetime.date(2020,5,23)
 
+    #todaysDate = date(2021,2,17)
+  
     todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
-    tomorrow = todaysDate + timedelta(days=1)
-    
-    tomorrowSTR = tomorrow.strftime('%-m-%-d-%Y')
-    whereClause = " WHERE Date_Scheduled >= '" + todays_dateSTR + "' and Date_Scheduled <= '" + tomorrowSTR + "' "
+    whereClause = " WHERE Date_Scheduled = '" + todays_dateSTR + "'"
     if (shopNumber == '1' or shopNumber == '2'):
         whereClause += " AND Shop_Number = " + shopNumber
     
@@ -209,7 +207,7 @@ def getTodaysMonitors():
     sqlSelect += " DATEPART(year,Date_Scheduled) as scheduleYear "
     sqlSelect += " FROM tblMonitor_Schedule LEFT JOIN tblMember_Data ON tblMonitor_Schedule.Member_ID = tblMember_Data.member_ID "
     sqlSelect += whereClause    
-    sqlSelect += " ORDER BY AM_PM, Duty,Last_Name,First_Name"
+    sqlSelect += " ORDER BY Shop_Number, AM_PM, Duty,Last_Name,First_Name"
     
     todaysMonitors = db.engine.execute(sqlSelect)
     todaysMonitorsArray=[]
@@ -221,13 +219,11 @@ def getTodaysMonitors():
                 .filter(MemberActivity.Member_ID == m.memberID)\
                 .filter(MemberActivity.Shop_Number == shopNumber)\
                 .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-                .filter(MemberActivity.Check_In_Date_Time < tomorrow)\
                 .first()
         else:
            activity = db.session.query(MemberActivity)\
                 .filter(MemberActivity.Member_ID == m.memberID)\
                 .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-                .filter(MemberActivity.Check_In_Date_Time < tomorrow)\
                 .first()
         if (activity == None) :
             checkInTime='--------'
@@ -256,10 +252,10 @@ def getTodaysMonitors():
             intTrainingYear = int(m.trainingYear) +2 # int of last training year
             intScheduleYear = int(m.scheduleYear) # int of schedule year
 
-        if (intTrainingYear <= intScheduleYear):
-            trainingMsg = 'Training needed.'
-        else:
-            trainingMsg = ''
+            if (intTrainingYear <= intScheduleYear):
+                trainingMsg = 'Training needed.'
+            else:
+                trainingMsg = ''
         if (m.Last_Monitor_Training != None and m.Last_Monitor_Training != ''):
             lastTrainingDate = m.Last_Monitor_Training.strftime('%b %Y')
         else:
@@ -286,7 +282,6 @@ def getTodaysMonitors():
 @app.route('/updateNoShow')
 def updateNoShow():
     recordID=request.args.get('recordID')
-    print('recordID - ',recordID)
     try:
         schedule = db.session.query(MonitorSchedule)\
                     .filter(MonitorSchedule.ID == recordID).first()
@@ -316,23 +311,22 @@ def printTodaysMonitors(shopChoice):
     
     todaysDate = date.today()
 
+    #todaysDate = date(2021,2,17)
 
     todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
     hdgDate = todaysDate.strftime('%-b %-d, %Y')
-    tomorrow = todaysDate + timedelta(days=1)
-    
-    tomorrowSTR = tomorrow.strftime('%-m-%-d-%Y')
-    whereClause = " WHERE Date_Scheduled >= '" + todays_dateSTR + "' and Date_Scheduled <= '" + tomorrowSTR + "' "
+   
+    whereClause = " WHERE Date_Scheduled = '" + todays_dateSTR + "'"
     if (shopNumber == '1' or shopNumber == '2'):
         whereClause += " AND Shop_Number = " + shopNumber
     
     sqlSelect = "SELECT tblMonitor_Schedule.ID as recordID, tblMonitor_Schedule.Member_ID as memberID, (Last_Name + ', ' +  First_Name) as memberName, "
-    sqlSelect += " Home_Phone, Cell_Phone, format(Last_Monitor_Training,'MM-dd-yy') as lastTrainingDate, Last_Monitor_Training, "
+    sqlSelect += " Home_Phone, Cell_Phone, format(Last_Monitor_Training,'MMM yyyy') as lastTrainingDate, Last_Monitor_Training, "
     sqlSelect += " DATEPART(year,Last_Monitor_Training) as trainingYear, Date_Scheduled, AM_PM, Duty, No_Show, Shop_Number, "
     sqlSelect += " DATEPART(year,Date_Scheduled) as scheduleYear "
     sqlSelect += " FROM tblMonitor_Schedule LEFT JOIN tblMember_Data ON tblMonitor_Schedule.Member_ID = tblMember_Data.member_ID "
     sqlSelect += whereClause    
-    sqlSelect += " ORDER BY AM_PM, Duty,Last_Name,First_Name"
+    sqlSelect += " ORDER BY Shop_Number, AM_PM, Duty,Last_Name,First_Name"
     
     todaysMonitors = db.engine.execute(sqlSelect)
     todaysMonitorsArray=[]
@@ -344,13 +338,11 @@ def printTodaysMonitors(shopChoice):
                 .filter(MemberActivity.Member_ID == m.memberID)\
                 .filter(MemberActivity.Shop_Number == shopNumber)\
                 .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-                .filter(MemberActivity.Check_In_Date_Time < tomorrow)\
                 .first()
         else:
            activity = db.session.query(MemberActivity)\
                 .filter(MemberActivity.Member_ID == m.memberID)\
                 .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-                .filter(MemberActivity.Check_In_Date_Time < tomorrow)\
                 .first()
         if (activity == None) :
             checkInTime='--------'
@@ -378,11 +370,15 @@ def printTodaysMonitors(shopChoice):
         else:
             intTrainingYear = int(m.trainingYear) +2 # int of last training year
             intScheduleYear = int(m.scheduleYear) # int of schedule year
+            if (intTrainingYear <= intScheduleYear):
+                trainingMsg = 'Training needed.'
+            else:
+                trainingMsg = ''
 
-        if (intTrainingYear <= intScheduleYear):
-            trainingMsg = 'Training needed.'
+        if (m.Last_Monitor_Training != None and m.Last_Monitor_Training != ''):
+            lastTrainingDate = m.Last_Monitor_Training.strftime('%b %Y')
         else:
-            trainingMsg = ''
+            lastTrainingDate = ''
 
         if m.No_Show == True:
             noShow = 'No Show'
@@ -398,7 +394,7 @@ def printTodaysMonitors(shopChoice):
             cellPhone = ''
         else:
             cellPhone = m.Cell_Phone
-
+    
         todaysMonitor = {'name':m.memberName,
             'memberID':m.memberID,
             'shopInitials':shopInitials,
@@ -409,7 +405,7 @@ def printTodaysMonitors(shopChoice):
             'noShow':noShow,
             'homePhone':homePhone,
             'cellPhone':cellPhone,
-            'lastTrainingDate':m.Last_Monitor_Training.strftime('%b %Y'),
+            'lastTrainingDate':lastTrainingDate,
             'trainingNeeded':trainingMsg,
             'recordID':m.recordID}
         todaysMonitorsArray.append(todaysMonitor)
@@ -449,20 +445,15 @@ def printTodaysMonitors(shopChoice):
 
 @app.route('/checkOutMember')
 def checkOutMember():
-    print('/checkOutMember')
-    
     activityID = request.args.get('recordID')
-    print('activityID - ',activityID)
     est = timezone('EST')
     checkOutDateTime = datetime.datetime.now(est)
 
     try:
         activity = db.session.query(MemberActivity)\
             .filter(MemberActivity.ID == activityID).one()
-        print('activity member ID - ',activity.Member_ID)
         activity.Check_Out_Date_Time = checkOutDateTime
         db.session.commit()
-        print("SUCCESS")
         msg = "SUCCESS - member checked out."
         return make_response(f"SUCCESS - member was checked out.")
         #return jsonify(msg=msg)

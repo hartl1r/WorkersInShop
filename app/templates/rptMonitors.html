@@ -9,8 +9,8 @@
 <div class='wholePage'>
 
     <div class="pageButtons">
-        <button id="printPageButton" style=margin-right:20px; onClick="window.print();">PRINT</button>
-        <button id="closePageButton" style=margin-right:20px; onclick="window.history.back()" >CLOSE PAGE</button>
+        <button id="printPageButton" class='btn btn-primary btn-sm' style=margin-right:20px; onClick="window.print();">PRINT</button>
+        <button id="closePageButton" class='btn btn-secondary btn-sm' style=margin-right:20px; onclick="window.history.back()" >CLOSE PAGE</button>
     </div> 
     <br> 
     
@@ -23,9 +23,10 @@
     </div>
     
     <div>
-        <table style="display: inline block;">                      
+        <table>                      
             <thead>
                 <tr>
+                    <th style="text-align:center">Loc</th>
                     <th style="text-align:center">Shift</th>
                     <th style="text-align:center">Duty</th>
                     <th style="text-align:center">Name</th>
@@ -41,14 +42,15 @@
             <tbody>
                 {% for t in todaysMonitors %}
                     <tr>
+                        <td style="text-align:center">{{t['shopInitials']}}</td>
                         <td style="text-align:center">{{t['shift']}}</td>
                         <td style="text-align:left">{{t['duty']}} </td>
                         <td style="text-align:left">{{t['name']}} </td>
                         <td style="text-align:center">{{t['memberID']}} </td>
                         <td style="text-align:center">{{t['checkIn']}} </td> 
                         <td style="text-align:center">{{t['checkOut']}} </td> 
-                        <td style="text-align:left">{{t['homePhone']}} </td> 
-                        <td style="text-align:left">{{t['cellPhone']}} </td> 
+                        <td style="text-align:center">{{t['homePhone']}} </td> 
+                        <td style="text-align:center">{{t['cellPhone']}} </td> 
                         <td style="text-align:center">{{t['lastTrainingDate']}} </td> 
                         <td style="text-align:center; color:red">{{t['noShow']}} </td>
                     </tr>    
