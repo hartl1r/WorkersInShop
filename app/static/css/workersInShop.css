@@ -13,7 +13,7 @@
   grid-area: hdgArea;
   width:100%;
   display:grid;
-  grid-template-columns: 4fr 6fr 2fr;
+  grid-template-columns: 5fr 5fr 2fr;
   grid-template-areas: "titleArea    monitorBtnsArea  versionArea ";
   background-color:navy;
   color:white; 

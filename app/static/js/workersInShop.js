@@ -355,12 +355,17 @@ $(".checkOut").click(function() {
 })
 
 $(".memberID").click(function() {
-  alert('this.id - '+this.id)
   memberID = this.id.slice(0,6)
-  alert('memberID - '+ memberID)
-  link = "https://fd.thevwc.org:42734/?villageID=" + memberID
-  alert('link - '+ link)
+  if (memberID != '') {
+    link = "https://fd.thevwc.org:42734/?villageID=" + memberID
+  }
+  else {
+    link = "https://fd.thevwc.org:42734/"
+  }
   window.location.href = link
+  
+  //var memberWindow = window.open("https://icloud.thevwc.org:42734/?villageID=484424");
+  //memberWindow.focus();
 })
 
 // function linkToMemberApp(memberID) {
