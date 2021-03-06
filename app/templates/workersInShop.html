@@ -20,7 +20,7 @@
       <h2>WORKERS IN SHOP  -   {{displayDate}}</h2>
     </div>
     <div class='version'> 
-      <h6>ver. Mar 3, 2021</h6>
+      <h6>ver. Mar 6, 2021</h6>
     </div>  
     <div class="monitorBtns">
       <button id="showTodaysMonitorsID" type='button' style=padding-top:5px; class = 'btn btn-primary btn-sm' data-toggle = 'modal' data-target = '#todaysMonitorsID'>
@@ -44,8 +44,12 @@
       
       <div class = "options btn-toolbar" style="justify-content: center"> 
       <div class="shopToShowClass"  style="border:1px solid white; "> 
-          <input id = "showRA" type="radio" name="shopChoiceItem" value='Shop_Number=1'>Rolling Acres<br>
-          <input id = "showBW" type="radio" name="shopChoiceItem" value='Shop_Number=2'>Brownwood<br>
+          <input id = "showRA" type="radio" name="shopChoiceItem" value='Shop_Number=1'>Rolling Acres
+          <span style='border:1px solid black;width:20px'>({{nbrInRA}})</span>
+          <br>
+          <input id = "showBW" type="radio" name="shopChoiceItem" value='Shop_Number=2'>Brownwood
+          <span style='border:1px solid black;width:20px'>({{nbrInBW}})</span>
+          <br>
           <input id = "showBoth" type="radio" name="shopChoiceItem" value='' >Show Both<br>
       </div> 
       
@@ -123,7 +127,18 @@
 
             <td>{{worker['name']}}</td>
             <td>{{worker['checkIn']}}</td>
-            <td id={{worker['recordID']}} class='checkOut'>{{worker['checkOut']}}</td>
+            <td 
+              id="{{worker['recordID']}}"
+              class='checkOut'
+              data-toggle="tooltip" data-placement="left" title="Click to check out."  
+            >{{worker['checkOut']}}</td>
+            <div 
+              class="tooltip" 
+              role="tooltip">
+              <div class="arrow"></div>
+              <div class="tooltip-inner"></div>
+            </div>
+
             <td>{{worker['typeOfWork']}}</td>
             <td>{{worker['emergName']}}</td>
             <td>{{worker['emergPhone']}}</td>

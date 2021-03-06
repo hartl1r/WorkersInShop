@@ -27,6 +27,16 @@ def workersInShop():
     todaysDate = date.today()
     displayDate = todaysDate.strftime('%-b %-d, %Y')
     tomorrow = todaysDate + timedelta(days=1)
+    
+    nbrInRA = db.session.query(func.count(MemberActivity.Member_ID))\
+        .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+        .filter(MemberActivity.Check_Out_Date_Time == None)\
+        .filter(MemberActivity.Shop_Number == 1).scalar()
+
+    nbrInBW = db.session.query(func.count(MemberActivity.Member_ID))\
+        .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+        .filter(MemberActivity.Check_Out_Date_Time == None)\
+        .filter(MemberActivity.Shop_Number == 2).scalar()
 
     # PROCESS POST REQUEST
     if request.method == 'POST':
@@ -120,7 +130,9 @@ def workersInShop():
             workersInShopArray.append(workersInShopItem)
         
         return render_template("workersInShop.html",workersInShopArray=workersInShopArray,shopChoice=shopChoiceSelected,\
-        inShop=inShopSelected,orderBy=orderBySelected,filterOption=filterOptionSelected,displayDate=displayDate,requestMethod='POST')
+        inShop=inShopSelected,orderBy=orderBySelected,filterOption=filterOptionSelected,displayDate=displayDate,\
+        nbrInRA=nbrInRA,nbrInBW=nbrInBW,\
+        requestMethod='POST')
         
         # END OF POST REQUEST
 
@@ -142,7 +154,7 @@ def workersInShop():
     format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
     Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, Mentor, Defibrillator_Trained, 
     isPresident, isVP, canSellLumber, canSellMdse, Maintenance, isBODmember, isSafetyCommittee,
-    isSpecialProjects, isAskMe
+    isSpecialProjects, isAskMe, tblMember_Activity.ID as recordID 
     FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID""" 
     
     whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "'"
@@ -161,6 +173,7 @@ def workersInShop():
             checkOutTime = w.CheckOutTime
             
         workersInShopItem = {'name':w.memberName,
+            'recordID':w.recordID,
             'checkIn':w.CheckInTime,
             'checkOut':checkOutTime,
             'typeOfWork':w.Type_Of_Work,
@@ -178,7 +191,7 @@ def workersInShop():
         workersInShopArray.append(workersInShopItem)
     
     return render_template("workersInShop.html",workersInShopArray=workersInShopArray,shopChoice=shopChoice,\
-    inShop=inShop,orderBy=orderBy,filterOption=filterOption,displayDate=displayDate)
+    inShop=inShop,orderBy=orderBy,filterOption=filterOption,displayDate=displayDate,nbrInRA=nbrInRA,nbrInBW=nbrInBW,)
     
 
 @app.route("/getTodaysMonitors/")
@@ -448,23 +461,22 @@ def checkOutMember():
     activityID = request.args.get('recordID')
     est = timezone('EST')
     checkOutDateTime = datetime.datetime.now(est)
-
+    
     try:
         activity = db.session.query(MemberActivity)\
             .filter(MemberActivity.ID == activityID).one()
         activity.Check_Out_Date_Time = checkOutDateTime
         db.session.commit()
         msg = "SUCCESS - member checked out."
-        return make_response(f"SUCCESS - member was checked out.")
-        #return jsonify(msg=msg)
-        #return redirect(url_for('workersInShop'))
+        return jsonify(msg=msg)
+        
     except (SQLAlchemyError, DBAPIError) as e:
         print("ERROR -",e)
-        return make_response(f"ERROR - member was NOT checked out.")
+        msg = "ERROR - member was NOT checked out."
+        return jsonify(msg=msg)
+        
     except Exception as e:
         print("ERROR -",e)
         msg="ERROR - member NOT checked out."
-        return make_response(f"ERROR - member was NOT checked out.")
-        #return jsonify(msg=msg)
-    return make_response(f"SUCCESS 2 - member was checked out.")
- 
+        return jsonify(msg=msg)
+   

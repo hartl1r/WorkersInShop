@@ -1,5 +1,10 @@
 $(document).ready(function() {
+  // INITIATE TOOLTIPS
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
   
+
   var currentShopChoice = 'BOTH'
   // DO WE HAVE A COOKIE
   // IF sessionStorage FOR shopID DOES NOT EXIST, USE clientLocation
@@ -71,52 +76,6 @@ $(document).ready(function() {
   if (filterOptionOPT.value == 'Everyone')
     document.getElementById('Everyone').checked = true
   
-  // FORCE A 'POST' PAGE BY CLICKING THE 'REFRESH LIST' BUTTON
-  // DOES THE SESSION STORAGE VARIABLE 'timesLoaded' EXIST?
-  // DEFINE pageLoadCount AS INTEGER WITH VALUE OF ZERO
-  // var pageLoadCount = 0
-  // IF timesLoaded EXISTS ADD 1 TO IT
-  // if (sessionStorage.getItem('timesLoaded')) {
-  //   pageLoadCount = parseInt(sessionStorage.getItem('timesLoaded'),10)
-  //   pageLoadCount += 1
-  //   sessionStorage.setItem('timesLoaded',pageLoadCount)
-  // }
-  // else {
-    // CREATE SESSION VARIABLE; INITIALIZE AT 1
-  //   pageLoadCount = 1
-  //   sessionStorage.setItem('timesLoaded',pageLoadCount)
-  // }
-  // var getRequestMethod = document.getElementById('requestMethod');
-  
-  // REQUEST 'POST' PAGE
-  // if (getRequestMethod.value == 'GET' && pageLoadCount == 1)
-  //   document.getElementById('btnRefresh').click()
-    
-  // AT PAGE 'UNLOAD' CLEAR THE sessionStorage VARIABLE
-  // window.addEventListener('unload', function (e) {
-  //   sessionStorage.removeItem('timesLoaded')
-  // })
-
- 
-  // HAS USER RETURNED TO THIS TAB?  IF SO, REFRESH PAGE
-  window.addEventListener('focus',refresh)
-
-  // REFRESH PAGE
-  function refresh() {
-    document.getElementById('btnRefresh').click()
-  }
-  // USER CLICKED REFRESH BUTTON
-  //$('#btnRefreshx').on('click',function(){
-    
-  // CLICK ON TABLE ROW EVENT  (NO LOGIC REQUEST YET)
-  // $(document).on('click','#myTable td', function(e) {
-  //   if ($(this).is('td')) {
-  //     $(this).closest('tr').toggleClass('highlighted');
-  //   } else {
-  //     $('#myTable tr').toggleClass('highlighted');
-  //   }
-  // });
-
   // CLICK ON ONE OF THREE SHOP CHOICE BUTTONS
   $('.shopToShowClass input[type=radio]').click(function(){
       currentShopChoice = this.value
@@ -125,14 +84,7 @@ $(document).ready(function() {
       refresh()
       console.log('shopToShowClass end')
   })
-      //if (shopChoiceOPT.value != 'showBoth'){
-        // CHANGE THE COOKIE SETTING
-      
-      //setCookie("SHOPID", shopChoiceOPT.value, 365);
-      //}
-      
-  
-
+     
   $('.inShopClass input[type=radio]').click(function(){
       inShopOPT.value = this.id
       refresh()
@@ -194,58 +146,48 @@ $(document).ready(function() {
         
         // ADD DETAIL LINES
         for (i=0; i<todaysMonitors.length; i++) {
-          //rowID = 'row'+i
 
           var spanShop = document.createElement('span')
-          //spanShop.id=rowID+'Shop'
           spanShop.classList.add('Shop')
           spanShop.innerHTML = todaysMonitors[i]['shopInitials']
           detailParent.appendChild(spanShop)
 
-          var spanShift = document.createElement('span')
-          //spanShift.id=rowID+'Shift'
+          var spanShift = document.createElement('span')          
           spanShift.classList.add('Shift')
           spanShift.innerHTML = todaysMonitors[i]['shift']
           detailParent.appendChild(spanShift)
   
           var spanDuty = document.createElement('span')
-          //spanDuty.id=rowID+'Duty'
           spanDuty.classList.add('Duty')
           spanDuty.innerHTML = todaysMonitors[i]['duty']
           detailParent.appendChild(spanDuty)
   
           var spanName = document.createElement('span')
-          //spanName.id=rowID+'Name'
           spanName.classList.add('Name')
           spanName.innerHTML = todaysMonitors[i]['name']
           detailParent.appendChild(spanName)
         
           var spanCheckIn = document.createElement('span')
-          //spanCheckIn.id=rowID+'CheckIn'
           spanCheckIn.classList.add('CheckIn')
           spanCheckIn.innerHTML = todaysMonitors[i]['checkIn']
           detailParent.appendChild(spanCheckIn)
   
           var spanCheckOut = document.createElement('span')
-          //spanCheckOut.id=rowID+'CheckOut'
           spanCheckOut.classList.add('CheckOut')
           spanCheckOut.innerHTML = todaysMonitors[i]['checkOut']
           detailParent.appendChild(spanCheckOut)
   
           var spanHomePhone = document.createElement('span')
-          //spanHomePhone.id=rowID+'HomePhone'
           spanHomePhone.classList.add('HomePhone')
           spanHomePhone.innerHTML = todaysMonitors[i]['homePhone']
           detailParent.appendChild(spanHomePhone)
   
           var spanCellPhone = document.createElement('span')
-          //spanCellPhone.id=rowID+'CellPhone'
           spanCellPhone.classList.add('CellPhone')
           spanCellPhone.innerHTML = todaysMonitors[i]['cellPhone']
           detailParent.appendChild(spanCellPhone)
   
           var spanLastTraining = document.createElement('span')
-          //spanLastTraining.id=rowID+'LastTraining'
           spanLastTraining.classList.add('LastTraining')
           spanLastTraining.innerHTML = todaysMonitors[i]['lastTrainingDate']
           if (todaysMonitors[i]['trainingNeeded'] == 'Training needed.') {
@@ -257,7 +199,6 @@ $(document).ready(function() {
           detailParent.appendChild(spanLastTraining)
   
           var spanTrainingNeeded = document.createElement('span')
-          //spanTrainingNeeded.id=rowID+'TrainingNeeded'
           spanTrainingNeeded.classList.add('TrainingNeeded')
           spanTrainingNeeded.innerHTML = todaysMonitors[i]['trainingNeeded']
           detailParent.appendChild(spanTrainingNeeded)
@@ -266,7 +207,6 @@ $(document).ready(function() {
           inputNoShow.id='R'+todaysMonitors[i]['recordID']
           inputNoShow.classList.add('NoShow')
           inputNoShow.type='checkbox'
-          //inputNoShow.value = rowID
           if (todaysMonitors[i]['noShow'] == true) {
             inputNoShow.checked = true
             inputNoShow.value = 'True'
@@ -280,15 +220,6 @@ $(document).ready(function() {
           }
           detailParent.appendChild(inputNoShow)
           
-
-          // var inputRecordID = document.createElement('input')
-          // inputRecordID.id=rowID+'RecordID'
-          // inputRecordID.classList.add('RecordID')
-          // inputRecordID.type='hidden'
-          // inputRecordID.value = todaysMonitors[i]['recordID']
-          // inputRecordID.innerHTML= todaysMonitors[i]['recordID']
-          // detailParent.appendChild(inputRecordID)
-          
           }
         },
         error: function (jqXHR, textStatus, errorThrown)
@@ -300,11 +231,8 @@ $(document).ready(function() {
 
   function NoShowRtn(clicked_id) {
     console.log('clicked_id - ', clicked_id)
-    //rowID = clicked_id.slice(6)
-    //recordID = rowID + "RecordID"
     recordID = clicked_id.slice(1)
     console.log('recordID = '+ recordID)
-    //scheduleRecordID = document.getElementById(recordID).value
     $.ajax({
       url : "/updateNoShow",
       type: "GET",
@@ -325,15 +253,18 @@ $(document).ready(function() {
 
 $(".checkOut").click(function() {
   checkOutCell = this
+  console.log('checkOutCell - '+checkOutCell)
   parentTR = checkOutCell.parentElement
+  console.log('parentTR - '+parentTR.id)
+
   tds = parentTR.getElementsByTagName('td')
-  recordID = tds[0].innerHTML
+  recordID = this.id
   console.log('recordID - '+recordID)
   response = confirm('Confirm check out?')
   if (response != true){
     return
   }
-
+  
   // SEND REQUEST TO SERVER
   $.ajax({
     url: "/checkOutMember",
@@ -342,17 +273,16 @@ $(".checkOut").click(function() {
       recordID:recordID},
     success: function(data, textStatus, jqXHR)
     {
-      alert("SUCCESS" + data)
-      location.reload()
+      location.reload()  
     },
     error: function (result)
       {
-        alert("ERROR - " + result)
-       
+        alert("ERROR - " + result) 
       }
   })
-  location.reload()
+
 })
+
 
 $(".memberID").click(function() {
   memberID = this.id.slice(0,6)
@@ -364,11 +294,4 @@ $(".memberID").click(function() {
   }
   window.location.href = link
   
-  //var memberWindow = window.open("https://icloud.thevwc.org:42734/?villageID=484424");
-  //memberWindow.focus();
 })
-
-// function linkToMemberApp(memberID) {
-//   link = "https://fd.thevwc.org:42734?villageID=" + memberID 
-//   window.location.href= link
-// }

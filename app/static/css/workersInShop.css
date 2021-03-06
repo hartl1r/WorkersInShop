@@ -55,6 +55,7 @@
   grid-area:versionArea;
   text-align:right;
   font-size:small;
+  padding-top:.75em;
 }
 
 form {
@@ -64,11 +65,15 @@ form {
 
 .shopToShowClass {
   color:white;
-  width:175px;
+  width:225px;
   height:75px;
   margin-left: 10px;
 }
-
+.tooltip-inner {
+  background-color:white;
+  color:navy;
+  }
+  
 .inShopClass {
   color:white;
   width:150px;
