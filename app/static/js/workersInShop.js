@@ -82,7 +82,6 @@ $(document).ready(function() {
       shopChoiceOPT.value = this.id
       sessionStorage.setItem('shopChoice',this.id)
       refresh()
-      console.log('shopToShowClass end')
   })
      
   $('.inShopClass input[type=radio]').click(function(){

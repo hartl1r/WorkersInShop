@@ -28,16 +28,6 @@ def workersInShop():
     displayDate = todaysDate.strftime('%-b %-d, %Y')
     tomorrow = todaysDate + timedelta(days=1)
     
-    nbrInRA = db.session.query(func.count(MemberActivity.Member_ID))\
-        .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-        .filter(MemberActivity.Check_Out_Date_Time == None)\
-        .filter(MemberActivity.Shop_Number == 1).scalar()
-
-    nbrInBW = db.session.query(func.count(MemberActivity.Member_ID))\
-        .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-        .filter(MemberActivity.Check_Out_Date_Time == None)\
-        .filter(MemberActivity.Shop_Number == 2).scalar()
-
     # PROCESS POST REQUEST
     if request.method == 'POST':
         # RETRIEVE OPTIONS SELECTED BY USER
@@ -52,6 +42,27 @@ def workersInShop():
         inShop=request.form['inShopItem'] #'InShopToday'
         orderBy=request.form['orderByItem'] #'OrderByCheckInTime'
         filterOption=request.form['filterItem'] #'All'
+
+        if inShop == 'inShopNow':
+            # COUNT THOSE IN SHOP NOW
+            nbrInRA = db.session.query(func.count(MemberActivity.Member_ID))\
+                .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+                .filter(MemberActivity.Check_Out_Date_Time == None)\
+                .filter(MemberActivity.Shop_Number == 1).scalar()
+
+            nbrInBW = db.session.query(func.count(MemberActivity.Member_ID))\
+                .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+                .filter(MemberActivity.Check_Out_Date_Time == None)\
+                .filter(MemberActivity.Shop_Number == 2).scalar()
+        else:
+            nbrInRA = db.session.query(func.count(MemberActivity.Member_ID))\
+                .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+                .filter(MemberActivity.Shop_Number == 1).scalar()
+
+            nbrInBW = db.session.query(func.count(MemberActivity.Member_ID))\
+                .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+                .filter(MemberActivity.Shop_Number == 2).scalar()
+
 
         # BUILD INITIAL WHERE CLAUSE TO SELECT TODAY'S ACTIVITY RECORDS
         whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' and"
@@ -150,6 +161,17 @@ def workersInShop():
     orderBy="orderByName"
     filterOption="Everyone"
     
+    # COUNT THOSE IN SHOP NOW
+    nbrInRA = db.session.query(func.count(MemberActivity.Member_ID))\
+        .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+        .filter(MemberActivity.Check_Out_Date_Time == None)\
+        .filter(MemberActivity.Shop_Number == 1).scalar()
+
+    nbrInBW = db.session.query(func.count(MemberActivity.Member_ID))\
+        .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+        .filter(MemberActivity.Check_Out_Date_Time == None)\
+        .filter(MemberActivity.Shop_Number == 2).scalar()
+
     sqlCheckInRecord = """SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID,
     format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
     Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, Mentor, Defibrillator_Trained, 
