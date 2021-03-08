@@ -3,7 +3,7 @@
 from flask import session, render_template, flash, redirect, url_for, request, jsonify, json, make_response
 from flask_bootstrap import Bootstrap
 from werkzeug.urls import url_parse
-from app.models import ShopName, Member , MemberActivity, MonitorSchedule, CoordinatorsSchedule
+from app.models import ControlVariables, ShopName, Member , MemberActivity, MonitorSchedule, CoordinatorsSchedule
 from app import app
 from app import db
 #from app import error_handler
@@ -227,17 +227,30 @@ def getTodaysMonitors():
     if (shopChoice == 'showBW'):
         shopNumber = '2'
         shopName = 'Brownwood'
-    todaysDate = date.today()
 
-    #todaysDate = date(2021,2,17)
-  
+    # GET TODAYS DATE IN EST    
+    
+    est = timezone('EST')
+    
+    todaysDate = date.today()
     todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
+
+    # GET LAST ACCEPTABLE TRAINING DATE
+    lastAcceptableTrainingDate = db.session.query(ControlVariables.Last_Acceptable_Monitor_Training_Date).filter(ControlVariables.Shop_Number == '1').scalar()
+
+    # lastAcceptableTrainingDate = db.session.query(ControlVariables.Last_Acceptable_Monitor_Training_Date).first().scalar()
+    if lastAcceptableTrainingDate == None:
+        flash ('Missing Last Acceptable Training Date in Control Variables table','danger')
+        return redirect(url_for('workersInShop.html'))
+   
+    # BUILD WHERE CLAUSE
     whereClause = " WHERE Date_Scheduled = '" + todays_dateSTR + "'"
     if (shopNumber == '1' or shopNumber == '2'):
         whereClause += " AND Shop_Number = " + shopNumber
     
     sqlSelect = "SELECT tblMonitor_Schedule.ID as recordID, tblMonitor_Schedule.Member_ID as memberID, (Last_Name + ', ' +  First_Name) as memberName, "
-    sqlSelect += " Home_Phone, Cell_Phone, format(Last_Monitor_Training,'MM-dd-yy') as lastTrainingDate, Last_Monitor_Training, "
+    sqlSelect += " Home_Phone, Cell_Phone, "
+    sqlSelect += "format(Last_Monitor_Training,'MM-dd-yy') as lastTrainingDate, cast(Last_Monitor_Training as DATE) as LastMonitorTraining, "
     sqlSelect += " DATEPART(year,Last_Monitor_Training) as trainingYear, Date_Scheduled, AM_PM, Duty, No_Show, Shop_Number, "
     sqlSelect += " DATEPART(year,Date_Scheduled) as scheduleYear "
     sqlSelect += " FROM tblMonitor_Schedule LEFT JOIN tblMember_Data ON tblMonitor_Schedule.Member_ID = tblMember_Data.member_ID "
@@ -281,21 +294,20 @@ def getTodaysMonitors():
                 shopInitials = '--'
         
         # IS TRAINING NEEDED?
-        if (m.trainingYear == None): # if last training year is blank
-            trainingMsg = 'Training needed.'
+        LastMonitorTrainingDisplay=''
+        trainingMsg = ''
+       
+        
+        if m.LastMonitorTraining == None or m.LastMonitorTraining == '':
+            trainingMsg = 'Training Needed'
         else:
-            intTrainingYear = int(m.trainingYear) +2 # int of last training year
-            intScheduleYear = int(m.scheduleYear) # int of schedule year
+            LastMonitorTrainingDisplay = m.LastMonitorTraining.strftime('%-b %Y')
+            #LastMonitorTraining = date(m.LastMonitorTraining)
+            #print('LastMonitorTraining - ',m.LastMonitorTraining)
+            if m.LastMonitorTraining < lastAcceptableTrainingDate:
+                trainingMsg = 'Training Needed'
 
-            if (intTrainingYear <= intScheduleYear):
-                trainingMsg = 'Training needed.'
-            else:
-                trainingMsg = ''
-        if (m.Last_Monitor_Training != None and m.Last_Monitor_Training != ''):
-            lastTrainingDate = m.Last_Monitor_Training.strftime('%b %Y')
-        else:
-            lastTrainingDate = ''
-
+       
         todaysMonitor = {'name':m.memberName + ' (' + m.memberID + ')',
             'shopInitials':shopInitials,
             'shift':m.AM_PM,
@@ -305,7 +317,7 @@ def getTodaysMonitors():
             'noShow':m.No_Show,
             'homePhone':m.Home_Phone,
             'cellPhone':m.Cell_Phone,
-            'lastTrainingDate':lastTrainingDate,
+            'lastTrainingDate':LastMonitorTrainingDisplay,
             'trainingNeeded':trainingMsg,
             'recordID':m.recordID}
         todaysMonitorsArray.append(todaysMonitor)
@@ -401,12 +413,12 @@ def printTodaysMonitors(shopChoice):
         
         # IS TRAINING NEEDED?
         if (m.trainingYear == None): # if last training year is blank
-            trainingMsg = 'Training needed.'
+            trainingMsg = 'Training needed'
         else:
             intTrainingYear = int(m.trainingYear) +2 # int of last training year
             intScheduleYear = int(m.scheduleYear) # int of schedule year
             if (intTrainingYear <= intScheduleYear):
-                trainingMsg = 'Training needed.'
+                trainingMsg = 'Training needed'
             else:
                 trainingMsg = ''
 

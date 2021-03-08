@@ -212,7 +212,7 @@ input[type='radio']:checked:after {
 }
 .modal-content {
   background-color:white;
-  color:brown;
+  color:navy;
 }
 .modal-header button {
   float: right;

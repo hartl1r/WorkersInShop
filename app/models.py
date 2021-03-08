@@ -10,6 +10,22 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from app import app
      
 
+class ControlVariables(db.Model):
+    __tablename__ = 'tblControl_Variables'
+    __table_args__ = {"schema": "dbo"}
+    Shop_Number = db.Column(db.Integer, primary_key=True)
+    Current_Dues_Year = db.Column(db.String(4))
+    Current_Dues_Amount = db.Column(db.Numeric)
+    Current_Initiation_Fee = db.Column(db.Numeric)
+    Date_To_Begin_New_Dues_Collection = db.Column(db.Date)
+    Date_To_Accept_New_Members = db.Column(db.Date)
+    Last_Acceptable_Monitor_Training_Date = db.Column(db.Date)
+    AcceptingNewMembers = db.Column(db.Boolean)
+    Dues_Account = db.Column(db.String(10))
+    Initiation_Fee_Account = db.Column(db.String(10))
+    WaitingListApplicantNote = db.Column(db.String(255))
+    Message_Board = db.Column(db.String(max))
+
 class Member(db.Model):
     __tablename__ = 'tblMember_Data'
     __table_args__ = {"schema": "dbo"}
