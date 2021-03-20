@@ -24,12 +24,9 @@ $(document).ready(function() {
   
   // SET SHOP LOCATION
   defaultShopID = document.getElementById('defaultShopID').value
-  console.log('defaultShopID - '+ defaultShopID)
-
+  
   var shopChoiceOPT = document.getElementById('shopChoiceOPT')
-  console.log('shopChoiceOPT - '+shopChoiceOPT.value)
-
-  //shopChoiceOPT.value = currentShopChoice
+  
   currentShopChoice = shopChoiceOPT
 
   if (shopChoiceOPT.value == 'RA')
@@ -86,8 +83,6 @@ $(document).ready(function() {
   $('.shopToShowClass input[type=radio]').click(function(){
       currentShopChoice = this.value
       shopChoiceOPT.value = this.value
-      console.log('shopToShowClass value - '+this.value)
-      console.log('shopToShowClass id - '+ this.id)
       sessionStorage.setItem('shopChoice',this.id)
       refresh()
   })
@@ -302,9 +297,7 @@ $(document).ready(function() {
    });
 
   function NoShowRtn(clicked_id) {
-    console.log('clicked_id - ', clicked_id)
     recordID = clicked_id.slice(1)
-    console.log('recordID = '+ recordID)
     $.ajax({
       url : "/updateNoShow",
       type: "GET",
@@ -325,13 +318,10 @@ $(document).ready(function() {
 
 $(".checkOut").click(function() {
   checkOutCell = this
-  console.log('checkOutCell - '+checkOutCell)
   parentTR = checkOutCell.parentElement
-  console.log('parentTR - '+parentTR.id)
 
   tds = parentTR.getElementsByTagName('td')
   recordID = this.id
-  console.log('recordID - '+recordID)
   response = confirm('Confirm check out?')
   if (response != true){
     return

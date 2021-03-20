@@ -6,7 +6,6 @@ from werkzeug.urls import url_parse
 from app.models import ControlVariables, ShopName, Member , MemberActivity, MonitorSchedule, CoordinatorsSchedule
 from app import app
 from app import db
-#from app import error_handler
 
 from sqlalchemy import func, case, desc, extract, select, update
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError, DBAPIError
@@ -36,8 +35,6 @@ def workersInShop():
         # RETRIEVE OPTIONS SELECTED BY USER
         # NAMES OF OPTIONS
         shopChoiceSelected = request.form['shopChoiceOPT']
-        print('shopChoiceSelected - ',shopChoiceSelected)
-
         inShopSelected=request.form['inShopOPT'] 
         orderBySelected=request.form['orderByOPT'] 
         filterOptionSelected=request.form['filterOptionOPT']
@@ -51,21 +48,15 @@ def workersInShop():
             else:
                 shopChoice = ''
 
-        #shopChoice = request.form['shopChoiceItem'] # SHOP_NUMBER = 1
         inShop=request.form['inShopItem'] #'InShopToday'
         orderBy=request.form['orderByItem'] #'OrderByCheckInTime'
         filterOption=request.form['filterItem'] #'All'
-
-        # inShopNowCount = countMembersInShopNow(shopChoiceSelected)
-        # inShopTodayCount = countMembersInShopToday(shopChoiceSelected)
 
         # BUILD INITIAL WHERE CLAUSE TO SELECT TODAY'S ACTIVITY RECORDS
         whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' and"
         whereClause += ' ' + shopChoice
         if (len(whereClause) > 6) & (whereClause[-4:] != 'and '):
             whereClause += ' and '
-
-        print('shopChoice clause - ',shopChoice)
 
         whereClause += inShop
         
@@ -79,12 +70,6 @@ def workersInShop():
             whereClause = whereClause[0:-5]
         
         # BUILD MAIN QUERY
-        # sqlCheckInRecord = """SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID as memberID,
-        # format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
-        #             Type_Of_Work, Emerg_Name, Emerg_Phone, Shop_Number, Door_Used, Mentor, Defibrillator_Trained, 
-        #             isPresident, isVP, canSellLumber, canSellMdse, Maintenance, isBODmember, isSafetyCommittee,
-        #             isSpecialProjects, isAskMe
-        #         FROM tblMember_Activity left join tblMember_Data on tblMember_Activity.Member_ID = tblMember_Data.Member_ID""" 
         sqlCheckInRecord =  "SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID as memberID, "
         sqlCheckInRecord += "format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, "
         sqlCheckInRecord += "Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime, "
@@ -137,19 +122,6 @@ def workersInShop():
                 'isSpecialProjects':w.isSpecialProjects,'isAskMe':w.isAskMe}
             workersInShopArray.append(workersInShopItem)
 
-        
-        # # COUNT THOSE IN SHOP NOW
-        # if shopID == 'RA'
-        # nbrInRA = db.session.query(func.count(MemberActivity.Member_ID))\
-        #     .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-        #     .filter(MemberActivity.Check_Out_Date_Time == None)\
-        #     .filter(MemberActivity.Shop_Number == 1).scalar()
-
-        # nbrInBW = db.session.query(func.count(MemberActivity.Member_ID))\
-        #     .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-        #     .filter(MemberActivity.Check_Out_Date_Time == None)\
-        #     .filter(MemberActivity.Shop_Number == 2).scalar()
-
         inShopNowCount = countMembersInShopNow(shopChoiceSelected)
         inShopTodayCount = countMembersInShopToday(shopChoiceSelected)
 
@@ -170,17 +142,6 @@ def workersInShop():
     else:
         shopID = ''
 
-    print('shopID - ',shopID)
-    #shopChoice = 'showBoth'
-    # if shopID == 'RA':
-    #     shopChoice = 'showRA'
-    # else:
-    #     if shopID == 'BW':
-    #         shopChoice = 'showBW'
-    #     else:
-    #         flash('Missing shop ID, BOTH assumed.','info')
-    #         shopChoice = 'showBoth'
-   
     inShop="inShopNow"
     orderBy="orderByName"
     filterOption="Everyone"
@@ -250,7 +211,6 @@ def getTodaysMonitors():
         shopName = 'Brownwood'
 
     # GET TODAYS DATE IN EST    
-    
     est = timezone('EST')
     
     todaysDate = date.today()
@@ -323,8 +283,6 @@ def getTodaysMonitors():
             trainingMsg = 'Training Needed'
         else:
             LastMonitorTrainingDisplay = m.LastMonitorTraining.strftime('%-b %Y')
-            #LastMonitorTraining = date(m.LastMonitorTraining)
-            #print('LastMonitorTraining - ',m.LastMonitorTraining)
             if m.LastMonitorTraining < lastAcceptableTrainingDate:
                 trainingMsg = 'Training Needed'
 
@@ -378,8 +336,6 @@ def printTodaysMonitors(shopChoice):
         shopName = 'Brownwood'
     
     todaysDate = date.today()
-
-    #todaysDate = date(2021,2,17)
 
     todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
     hdgDate = todaysDate.strftime('%-b %-d, %Y')
