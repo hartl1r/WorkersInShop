@@ -9,27 +9,33 @@ $(document).ready(function() {
   // DO WE HAVE A COOKIE
   // IF sessionStorage FOR shopID DOES NOT EXIST, USE clientLocation
   // IF clientLocation DOES NOT EXIST USE 'BOTH'
-  if (sessionStorage.getItem('shopChoice')) {
-    currentShopChoice = sessionStorage.getItem('shopChoice')
-  }
-  else {
-    if (localStorage.getItem('clientLocation')) {
-      currentShopChoice = 'show' + localStorage.getItem('clientLocation')
-    }
-    else {
-      currentShopChoice = 'showBoth'
-    }
+  // if (sessionStorage.getItem('shopChoice')) {
+  //   currentShopChoice = sessionStorage.getItem('shopChoice')
+  // }
+  // else {
+  //   if (localStorage.getItem('clientLocation')) {
+  //     currentShopChoice = 'show' + localStorage.getItem('clientLocation')
+  //   }
+  //   else {
+  //     currentShopChoice = 'showBoth'
+  //   }
     
-  }
+  // }
   
   // SET SHOP LOCATION
-  var shopChoiceOPT = document.getElementById('shopChoiceOPT')
-  shopChoiceOPT.value = currentShopChoice
+  defaultShopID = document.getElementById('defaultShopID').value
+  console.log('defaultShopID - '+ defaultShopID)
 
-  if (shopChoiceOPT.value == 'showRA')
+  var shopChoiceOPT = document.getElementById('shopChoiceOPT')
+  console.log('shopChoiceOPT - '+shopChoiceOPT.value)
+
+  //shopChoiceOPT.value = currentShopChoice
+  currentShopChoice = shopChoiceOPT
+
+  if (shopChoiceOPT.value == 'RA')
     document.getElementById('showRA').checked = true
   else
-    if (shopChoiceOPT.value =='showBW')  
+    if (shopChoiceOPT.value =='BW')  
       document.getElementById('showBW').checked = true
     else
       document.getElementById('showBoth').checked = true
@@ -79,7 +85,9 @@ $(document).ready(function() {
   // CLICK ON ONE OF THREE SHOP CHOICE BUTTONS
   $('.shopToShowClass input[type=radio]').click(function(){
       currentShopChoice = this.value
-      shopChoiceOPT.value = this.id
+      shopChoiceOPT.value = this.value
+      console.log('shopToShowClass value - '+this.value)
+      console.log('shopToShowClass id - '+ this.id)
       sessionStorage.setItem('shopChoice',this.id)
       refresh()
   })
@@ -254,6 +262,12 @@ $(document).ready(function() {
           spanTrainingNeeded.innerHTML = todaysMonitors[i]['trainingNeeded']
           detailParent.appendChild(spanTrainingNeeded)
   
+          // checkbox within span; span has border
+          var spanNoShow = document.createElement('span')
+          spanNoShow.classList.add('spanNoShow')
+          detailParent.appendChild(spanNoShow)
+
+          // checkbox child of spanNoShow
           var inputNoShow = document.createElement('input')
           inputNoShow.id='R'+todaysMonitors[i]['recordID']
           inputNoShow.classList.add('NoShow')
@@ -275,9 +289,10 @@ $(document).ready(function() {
           else {
             inputNoShow.style.color = 'Brown'
           }
-          detailParent.appendChild(inputNoShow)
+          spanNoShow.appendChild(inputNoShow)
           
           }
+          
         },
         error: function (jqXHR, textStatus, errorThrown)
         {

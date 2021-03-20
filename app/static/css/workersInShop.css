@@ -65,7 +65,7 @@ form {
 
 .shopToShowClass {
   color:white;
-  width:225px;
+  width:160px;
   height:75px;
   margin-left: 10px;
 }
@@ -76,7 +76,7 @@ form {
   
 .inShopClass {
   color:white;
-  width:150px;
+  width:200px;
   height:50px;
   margin-left: 10px;
 }
@@ -207,18 +207,21 @@ input[type='radio']:checked:after {
 /* MODAL FORM FOR SHOWING TODAYS MONITORS */
 #modal {
   display:block;
-  width:100%;
+  width:90%;
   color:blue;
 }
+
 .modal-content {
-  background-color:white;
+  background-color:lightgray;
   color:navy;
+  margin:0 auto;
 }
 .modal-header button {
   float: right;
   }
 .modal-body {
   width:100%;
+  padding-right:10px;
 }
 .modal-xl {
   width: 95%;
@@ -248,6 +251,9 @@ input[type='radio']:checked:after {
 .modal-detail span {
   border: 1px solid black;
 }
+.spanNoShow {
+  background-color: lightgray;
+}
 .modal-footer {
   margin:10px;
   padding:0px;
@@ -274,10 +280,11 @@ input[type='radio']:checked:after {
 }
 .TrainingNeeded {
   color:red;
+  border:1px solid red !important;
+  margin-right:5px;
 }
 .NoShow {
   text-align:center;
-  border:1px solid black;
 }
 .RecordID {
   background-color: yellow;

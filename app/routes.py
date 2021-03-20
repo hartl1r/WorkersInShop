@@ -15,15 +15,18 @@ from sqlalchemy.sql import text as SQLQuery
 import datetime
 from datetime import date, timedelta
 from pytz import timezone
+app.secret_key = "anysecretkey"
 
 @app.route("/")
 @app.route('/index')
 @app.route('/index/')
 @app.route("/workersInShop",methods=['GET','POST'])
 def workersInShop():
-    #abort(500)
+    
     # USING A FIXED DATE FOR TESTING
     #todaysDate = datetime.date
+
+    # USING CURRENT DATE FOR PRODUCTION
     todaysDate = date.today()
     displayDate = todaysDate.strftime('%-b %-d, %Y')
     tomorrow = todaysDate + timedelta(days=1)
@@ -33,42 +36,36 @@ def workersInShop():
         # RETRIEVE OPTIONS SELECTED BY USER
         # NAMES OF OPTIONS
         shopChoiceSelected = request.form['shopChoiceOPT']
+        print('shopChoiceSelected - ',shopChoiceSelected)
+
         inShopSelected=request.form['inShopOPT'] 
         orderBySelected=request.form['orderByOPT'] 
         filterOptionSelected=request.form['filterOptionOPT']
         
         # SELECT STATEMENT PHRASES, E.G., 'order by Last_Name, First_Name'
-        shopChoice = request.form['shopChoiceItem'] # SHOP_NUMBER = 1
+        if (shopChoiceSelected == 'RA'):
+            shopChoice = ' Shop_Number = 1'
+        else:
+            if (shopChoiceSelected == 'BW'):
+                shopChoice = ' Shop_Number = 2'
+            else:
+                shopChoice = ''
+
+        #shopChoice = request.form['shopChoiceItem'] # SHOP_NUMBER = 1
         inShop=request.form['inShopItem'] #'InShopToday'
         orderBy=request.form['orderByItem'] #'OrderByCheckInTime'
         filterOption=request.form['filterItem'] #'All'
 
-        if inShop == 'inShopNow':
-            # COUNT THOSE IN SHOP NOW
-            nbrInRA = db.session.query(func.count(MemberActivity.Member_ID))\
-                .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-                .filter(MemberActivity.Check_Out_Date_Time == None)\
-                .filter(MemberActivity.Shop_Number == 1).scalar()
-
-            nbrInBW = db.session.query(func.count(MemberActivity.Member_ID))\
-                .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-                .filter(MemberActivity.Check_Out_Date_Time == None)\
-                .filter(MemberActivity.Shop_Number == 2).scalar()
-        else:
-            nbrInRA = db.session.query(func.count(MemberActivity.Member_ID))\
-                .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-                .filter(MemberActivity.Shop_Number == 1).scalar()
-
-            nbrInBW = db.session.query(func.count(MemberActivity.Member_ID))\
-                .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-                .filter(MemberActivity.Shop_Number == 2).scalar()
-
+        # inShopNowCount = countMembersInShopNow(shopChoiceSelected)
+        # inShopTodayCount = countMembersInShopToday(shopChoiceSelected)
 
         # BUILD INITIAL WHERE CLAUSE TO SELECT TODAY'S ACTIVITY RECORDS
         whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' and"
         whereClause += ' ' + shopChoice
         if (len(whereClause) > 6) & (whereClause[-4:] != 'and '):
             whereClause += ' and '
+
+        print('shopChoice clause - ',shopChoice)
 
         whereClause += inShop
         
@@ -139,10 +136,26 @@ def workersInShop():
                 'canSellMdse':w.canSellMdse,'maintenance':w.Maintenance,'isBODmember':w.isBODmember,'isSafetyCommittee':w.isSafetyCommittee,
                 'isSpecialProjects':w.isSpecialProjects,'isAskMe':w.isAskMe}
             workersInShopArray.append(workersInShopItem)
+
         
+        # # COUNT THOSE IN SHOP NOW
+        # if shopID == 'RA'
+        # nbrInRA = db.session.query(func.count(MemberActivity.Member_ID))\
+        #     .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+        #     .filter(MemberActivity.Check_Out_Date_Time == None)\
+        #     .filter(MemberActivity.Shop_Number == 1).scalar()
+
+        # nbrInBW = db.session.query(func.count(MemberActivity.Member_ID))\
+        #     .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+        #     .filter(MemberActivity.Check_Out_Date_Time == None)\
+        #     .filter(MemberActivity.Shop_Number == 2).scalar()
+
+        inShopNowCount = countMembersInShopNow(shopChoiceSelected)
+        inShopTodayCount = countMembersInShopToday(shopChoiceSelected)
+
         return render_template("workersInShop.html",workersInShopArray=workersInShopArray,shopChoice=shopChoiceSelected,\
         inShop=inShopSelected,orderBy=orderBySelected,filterOption=filterOptionSelected,displayDate=displayDate,\
-        nbrInRA=nbrInRA,nbrInBW=nbrInBW,\
+        inShopNowCount=inShopNowCount,inShopTodayCount=inShopTodayCount,\
         requestMethod='POST')
         
         # END OF POST REQUEST
@@ -150,27 +163,27 @@ def workersInShop():
 
 
     # GET REQUEST (NOT A POST REQUEST)        
-    shopChoiceCookie = request.cookies.get('SHOPID')
-    shopChoice = 'showBoth'
-    if shopChoiceCookie == 'showRA':
-        shopChoice='showRA'
-    if shopChoiceCookie == 'showBW':
-        shopChoice='showBW'
-    
+
+    # GET SHOP ID
+    if 'shopID' in session:
+        shopID = session['shopID']
+    else:
+        shopID = ''
+
+    print('shopID - ',shopID)
+    #shopChoice = 'showBoth'
+    # if shopID == 'RA':
+    #     shopChoice = 'showRA'
+    # else:
+    #     if shopID == 'BW':
+    #         shopChoice = 'showBW'
+    #     else:
+    #         flash('Missing shop ID, BOTH assumed.','info')
+    #         shopChoice = 'showBoth'
+   
     inShop="inShopNow"
     orderBy="orderByName"
     filterOption="Everyone"
-    
-    # COUNT THOSE IN SHOP NOW
-    nbrInRA = db.session.query(func.count(MemberActivity.Member_ID))\
-        .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-        .filter(MemberActivity.Check_Out_Date_Time == None)\
-        .filter(MemberActivity.Shop_Number == 1).scalar()
-
-    nbrInBW = db.session.query(func.count(MemberActivity.Member_ID))\
-        .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-        .filter(MemberActivity.Check_Out_Date_Time == None)\
-        .filter(MemberActivity.Shop_Number == 2).scalar()
 
     sqlCheckInRecord = """SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID,
     format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
@@ -181,6 +194,10 @@ def workersInShop():
     
     whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "'"
     whereClause += " and Check_Out_Date_Time is null"
+    if (shopID == 'RA'):
+        whereClause += " and Shop_Number = 1"
+    if (shopID == 'BW'):
+        whereClause += " and Shop_Number = 2"
     sqlCheckInRecord += whereClause
     
     workersInShop = None
@@ -212,8 +229,12 @@ def workersInShop():
             'isSpecialProjects':w.isSpecialProjects,'isAskMe':w.isAskMe}
         workersInShopArray.append(workersInShopItem)
     
-    return render_template("workersInShop.html",workersInShopArray=workersInShopArray,shopChoice=shopChoice,\
-    inShop=inShop,orderBy=orderBy,filterOption=filterOption,displayDate=displayDate,nbrInRA=nbrInRA,nbrInBW=nbrInBW,)
+    # COUNT MEMBERS IN SHOP
+    NowCount = countMembersInShopNow(shopID)
+    TodayCount = countMembersInShopToday(shopID)
+
+    return render_template("workersInShop.html",workersInShopArray=workersInShopArray,shopChoice=shopID,defaultShopID=shopID,\
+    inShop=inShop,orderBy=orderBy,filterOption=filterOption,displayDate=displayDate,inShopNowCount=NowCount,inShopTodayCount=TodayCount)
     
 
 @app.route("/getTodaysMonitors/")
@@ -221,10 +242,10 @@ def getTodaysMonitors():
     shopChoice=request.args.get('shopChoice')
     shopNumber = 'BOTH'
     shopName = 'Both Locations'
-    if (shopChoice == 'showRA'):
+    if (shopChoice == 'RA'):
         shopNumber = '1'
         shopName = 'Rolling Acres'
-    if (shopChoice == 'showBW'):
+    if (shopChoice == 'BW'):
         shopNumber = '2'
         shopName = 'Brownwood'
 
@@ -246,7 +267,7 @@ def getTodaysMonitors():
     # BUILD WHERE CLAUSE
     whereClause = " WHERE Date_Scheduled = '" + todays_dateSTR + "'"
     if (shopNumber == '1' or shopNumber == '2'):
-        whereClause += " AND Shop_Number = " + shopNumber
+        whereClause += " and Shop_Number = " + shopNumber
     
     sqlSelect = "SELECT tblMonitor_Schedule.ID as recordID, tblMonitor_Schedule.Member_ID as memberID, (Last_Name + ', ' +  First_Name) as memberName, "
     sqlSelect += " Home_Phone, Cell_Phone, "
@@ -349,10 +370,10 @@ def updateNoShow():
 def printTodaysMonitors(shopChoice):
     shopNumber = 'BOTH'
     shopName = 'Both Locations'
-    if (shopChoice == 'showRA'):
+    if (shopChoice == 'RA'):
         shopNumber = '1'
         shopName = 'Rolling Acres'
-    if (shopChoice == 'showBW'):
+    if (shopChoice == 'BW'):
         shopNumber = '2'
         shopName = 'Brownwood'
     
@@ -514,3 +535,42 @@ def checkOutMember():
         msg="ERROR - member NOT checked out."
         return jsonify(msg=msg)
    
+def countMembersInShopNow(shopID):
+    todaysDate = date.today()
+    # SHOP COUNTS
+    if shopID == 'RA':
+        # COUNT THOSE IN SHOP NOW
+        inShopNowCount = db.session.query(func.count(MemberActivity.Member_ID))\
+            .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+            .filter(MemberActivity.Check_Out_Date_Time == None)\
+            .filter(MemberActivity.Shop_Number == 1).scalar()
+    elif shopID == 'BW':
+        # COUNT THOSE IN SHOP NOW
+        inShopNowCount = db.session.query(func.count(MemberActivity.Member_ID))\
+            .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+            .filter(MemberActivity.Check_Out_Date_Time == None)\
+            .filter(MemberActivity.Shop_Number == 2).scalar()
+    else:
+        # COUNTS FOR BOTH SHOPS
+        inShopNowCount = db.session.query(func.count(MemberActivity.Member_ID))\
+            .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+            .filter(MemberActivity.Check_Out_Date_Time == None).scalar()
+    return inShopNowCount            
+
+def countMembersInShopToday(shopID):
+    todaysDate = date.today()
+    if shopID == 'RA':
+        # COUNT THOSE IN SHOP TODAY
+        inShopTodayCount = db.session.query(func.count(MemberActivity.Member_ID))\
+            .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+            .filter(MemberActivity.Shop_Number == 1).scalar()
+    elif shopID == 'BW':
+        # COUNT THOSE IN SHOP TODAY
+        inShopTodayCount = db.session.query(func.count(MemberActivity.Member_ID))\
+            .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
+            .filter(MemberActivity.Shop_Number == 2).scalar()
+    else:
+        # COUNTS FOR BOTH SHOPS
+        inShopTodayCount = db.session.query(func.count(MemberActivity.Member_ID))\
+            .filter(MemberActivity.Check_In_Date_Time >= todaysDate).scalar()
+    return inShopTodayCount

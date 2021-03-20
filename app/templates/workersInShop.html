@@ -20,7 +20,7 @@
       <h2>WORKERS IN SHOP  -   {{displayDate}}</h2>
     </div>
     <div class='version'> 
-      <h6>ver. Mar 8, 2021</h6>
+      <h6>ver. Mar 20, 2021</h6>
     </div>  
     <div class="monitorBtns">
       <button id="showTodaysMonitorsID" type='button' style=padding-top:5px; class = 'btn btn-primary btn-sm' data-toggle = 'modal' data-target = '#todaysMonitorsID'>
@@ -29,6 +29,9 @@
       <button class='btn btn-secondary btn-sm' onclick="location.href='/printTodaysMonitors/{{shopChoice}}'">PRINT MONITORS</button>
       <!-- <button class="btn btn-secondary btn-sm" onclick="location.href='/testSelect'">Test Select</button>
       <button class="btn btn-secondary btn-sm" onclick="location.href='/testUpdate'">Test Update</button> -->
+    </div>
+    <div>
+      <input id='defaultShopID' type="hidden" value={{defaultShopID}}>
     </div>
   </div>  <!-- END OF MONITOR BTNS -->
 
@@ -44,18 +47,19 @@
       
       <div class = "options btn-toolbar" style="justify-content: center"> 
       <div class="shopToShowClass"  style="border:1px solid white; "> 
-          <input id = "showRA" type="radio" name="shopChoiceItem" value='Shop_Number=1'>Rolling Acres
-          <span style='border:1px solid black;width:20px'>({{nbrInRA}})</span>
+          <input id = "showRA" type="radio" name="shopChoiceItem" value='RA'>Rolling Acres
           <br>
-          <input id = "showBW" type="radio" name="shopChoiceItem" value='Shop_Number=2'>Brownwood
-          <span style='border:1px solid black;width:20px'>({{nbrInBW}})</span>
+          <input id = "showBW" type="radio" name="shopChoiceItem" value='BW'>Brownwood
           <br>
-          <input id = "showBoth" type="radio" name="shopChoiceItem" value='' >Show Both<br>
+          <input id = "showBoth" type="radio" name="shopChoiceItem" value='BOTH' >Show Both<br>
       </div> 
       
       <div class="inShopClass"  style="border:1px solid white; ">
-          <input id="inShopNow" type="radio" name="inShopItem" value='Check_Out_Date_Time is null'>In Shop Now<br>
-          <input id = "inShopToday" type="radio" name="inShopItem" value='' >In Shop Today    
+          <input id="inShopNow" type="radio" name="inShopItem" value='Check_Out_Date_Time is null'>In Shop Now
+          <span style='border:1px solid black;width:20px'>({{inShopNowCount}})</span>
+          <br>
+          <input id = "inShopToday" type="radio" name="inShopItem" value='' >In Shop Today 
+          <span style='border:1px solid black;width:20px'>({{inShopTodayCount}})</span>   
       </div>
     
       <div>
