@@ -14,7 +14,6 @@ from sqlalchemy.sql import text as SQLQuery
 import datetime
 from datetime import date, timedelta
 from pytz import timezone
-app.secret_key = "anyrandomstring"
 
 @app.route("/")
 @app.route('/index')
@@ -142,6 +141,8 @@ def workersInShop():
     else:
         shopID = ''
 
+    print('shopID - ',shopID)
+    
     inShop="inShopNow"
     orderBy="orderByName"
     filterOption="Everyone"

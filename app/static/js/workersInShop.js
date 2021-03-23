@@ -4,7 +4,10 @@ $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip()
     })
   
-
+ 
+  window.addEventListener('focus', refresh);
+    
+    
   var currentShopChoice = 'BOTH'
   // DO WE HAVE A COOKIE
   // IF sessionStorage FOR shopID DOES NOT EXIST, USE clientLocation
@@ -78,6 +81,11 @@ $(document).ready(function() {
     document.getElementById('Mentors').checked = true
   if (filterOptionOPT.value == 'Everyone')
     document.getElementById('Everyone').checked = true
+  
+  refreshBtn = document.getElementById('btnRefresh')
+  function refresh(){
+    refreshBtn.click()
+  }
   
   // CLICK ON ONE OF THREE SHOP CHOICE BUTTONS
   $('.shopToShowClass input[type=radio]').click(function(){
