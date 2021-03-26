@@ -21,9 +21,12 @@ from pytz import timezone
 @app.route("/workersInShop",methods=['GET','POST'])
 def workersInShop():
     
-    # USING A FIXED DATE FOR TESTING
-    #todaysDate = datetime.date
-
+    # GET DEFAULT SHOP ID
+    if 'shopID' in session:
+        shopID = session['shopID']
+    else:
+        shopID = ''
+    
     # USING CURRENT DATE FOR PRODUCTION
     todaysDate = date.today()
     displayDate = todaysDate.strftime('%-b %-d, %Y')
@@ -123,7 +126,7 @@ def workersInShop():
 
         inShopNowCount = countMembersInShopNow(shopChoiceSelected)
         inShopTodayCount = countMembersInShopToday(shopChoiceSelected)
-
+        
         return render_template("workersInShop.html",workersInShopArray=workersInShopArray,shopChoice=shopChoiceSelected,\
         inShop=inShopSelected,orderBy=orderBySelected,filterOption=filterOptionSelected,displayDate=displayDate,\
         inShopNowCount=inShopNowCount,inShopTodayCount=inShopTodayCount,\
@@ -134,18 +137,9 @@ def workersInShop():
 
 
     # GET REQUEST (NOT A POST REQUEST)        
-
-    # GET SHOP ID
-    if 'shopID' in session:
-        shopID = session['shopID']
-    else:
-        shopID = ''
-
-    print('shopID - ',shopID)
-    
     inShop="inShopNow"
     orderBy="orderByName"
-    filterOption="Everyone"
+    filterOption = "Everyone"
 
     sqlCheckInRecord = """SELECT (Last_Name + ', ' +  First_Name) as memberName, tblMember_Activity.Member_ID,
     format(Check_In_Date_Time,'hh:mm tt') as CheckInTime, Format(Check_Out_Date_Time,'hh:mm tt') as CheckOutTime,
@@ -194,7 +188,7 @@ def workersInShop():
     # COUNT MEMBERS IN SHOP
     NowCount = countMembersInShopNow(shopID)
     TodayCount = countMembersInShopToday(shopID)
-
+    
     return render_template("workersInShop.html",workersInShopArray=workersInShopArray,shopChoice=shopID,defaultShopID=shopID,\
     inShop=inShop,orderBy=orderBy,filterOption=filterOption,displayDate=displayDate,inShopNowCount=NowCount,inShopTodayCount=TodayCount)
     

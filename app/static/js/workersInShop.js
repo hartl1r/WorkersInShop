@@ -9,21 +9,6 @@ $(document).ready(function() {
     
     
   var currentShopChoice = 'BOTH'
-  // DO WE HAVE A COOKIE
-  // IF sessionStorage FOR shopID DOES NOT EXIST, USE clientLocation
-  // IF clientLocation DOES NOT EXIST USE 'BOTH'
-  // if (sessionStorage.getItem('shopChoice')) {
-  //   currentShopChoice = sessionStorage.getItem('shopChoice')
-  // }
-  // else {
-  //   if (localStorage.getItem('clientLocation')) {
-  //     currentShopChoice = 'show' + localStorage.getItem('clientLocation')
-  //   }
-  //   else {
-  //     currentShopChoice = 'showBoth'
-  //   }
-    
-  // }
   
   // SET SHOP LOCATION
   defaultShopID = document.getElementById('defaultShopID').value
@@ -135,174 +120,174 @@ $(document).ready(function() {
 
 })
 
-  $('#todaysMonitorsID').on('shown.bs.modal', function () {
-    $('#myInput').trigger('focus')
-    var shopChoiceOPT = document.getElementById('shopChoiceOPT').value
-    // GET MEMBERS SCHEDULED FOR MONITOR DUTY TODAY
-    $.ajax({
-      url : "/getTodaysMonitors",
-      type: "GET",
-      data:{
-        shopChoice:shopChoiceOPT},
-      success: function(data, textStatus, jqXHR)
-      {
-        todaysMonitors = data.todaysMonitorsArray
-        detailParent = document.getElementById('detailID')
-        // REMOVE ANY EXISTING DETAIL LINES
-        // REMOVE CURRENT DAY ASSIGNMENTS FOR SELECTED SCHEDULE DAY
-        while (detailParent.firstChild) {
-          detailParent.removeChild(detailParent.lastChild);
+$('#todaysMonitorsID').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+  var shopChoiceOPT = document.getElementById('shopChoiceOPT').value
+  // GET MEMBERS SCHEDULED FOR MONITOR DUTY TODAY
+  $.ajax({
+    url : "/getTodaysMonitors",
+    type: "GET",
+    data:{
+      shopChoice:shopChoiceOPT},
+    success: function(data, textStatus, jqXHR)
+    {
+      todaysMonitors = data.todaysMonitorsArray
+      detailParent = document.getElementById('detailID')
+      // REMOVE ANY EXISTING DETAIL LINES
+      // REMOVE CURRENT DAY ASSIGNMENTS FOR SELECTED SCHEDULE DAY
+      while (detailParent.firstChild) {
+        detailParent.removeChild(detailParent.lastChild);
+      }
+      
+      // ADD DETAIL LINES
+      for (i=0; i<todaysMonitors.length; i++) {
+
+        var spanShop = document.createElement('span')
+        spanShop.classList.add('Shop')
+        spanShop.innerHTML = todaysMonitors[i]['shopInitials']
+        if (todaysMonitors[i]['shopInitials'] == 'RA') {
+          spanShop.style.color = 'Green'
+        }
+        else {
+          spanShop.style.color = 'Brown'
+        }
+        detailParent.appendChild(spanShop)
+
+        var spanShift = document.createElement('span')          
+        spanShift.classList.add('Shift')
+        spanShift.innerHTML = todaysMonitors[i]['shift']
+        if (todaysMonitors[i]['shopInitials'] == 'RA') {
+          spanShift.style.color = 'Green'
+        }
+        else {
+          spanShift.style.color = 'Brown'
+        }
+        detailParent.appendChild(spanShift)
+
+        var spanDuty = document.createElement('span')
+        spanDuty.classList.add('Duty')
+        spanDuty.innerHTML = todaysMonitors[i]['duty']
+        if (todaysMonitors[i]['shopInitials'] == 'RA') {
+          spanDuty.style.color = 'Green'
+        }
+        else {
+          spanDuty.style.color = 'Brown'
+        }
+        detailParent.appendChild(spanDuty)
+
+        var spanName = document.createElement('span')
+        spanName.classList.add('Name')
+        spanName.innerHTML = todaysMonitors[i]['name']
+        if (todaysMonitors[i]['shopInitials'] == 'RA') {
+          spanName.style.color = 'Green'
+        }
+        else {
+          spanName.style.color = 'Brown'
+        }
+        detailParent.appendChild(spanName)
+      
+        var spanCheckIn = document.createElement('span')
+        spanCheckIn.classList.add('CheckIn')
+        spanCheckIn.innerHTML = todaysMonitors[i]['checkIn']
+        if (todaysMonitors[i]['shopInitials'] == 'RA') {
+          spanCheckIn.style.color = 'Green'
+        }
+        else {
+          spanCheckIn.style.color = 'Brown'
+        }
+        detailParent.appendChild(spanCheckIn)
+
+        var spanCheckOut = document.createElement('span')
+        spanCheckOut.classList.add('CheckOut')
+        spanCheckOut.innerHTML = todaysMonitors[i]['checkOut']
+        if (todaysMonitors[i]['shopInitials'] == 'RA') {
+          spanCheckOut.style.color = 'Green'
+        }
+        else {
+          spanCheckOut.style.color = 'Brown'
+        }
+        detailParent.appendChild(spanCheckOut)
+
+        var spanHomePhone = document.createElement('span')
+        spanHomePhone.classList.add('HomePhone')
+        spanHomePhone.innerHTML = todaysMonitors[i]['homePhone']
+        if (todaysMonitors[i]['shopInitials'] == 'RA') {
+          spanHomePhone.style.color = 'Green'
+        }
+        else {
+          spanHomePhone.style.color = 'Brown'
+        }
+        detailParent.appendChild(spanHomePhone)
+
+        var spanCellPhone = document.createElement('span')
+        spanCellPhone.classList.add('CellPhone')
+        spanCellPhone.innerHTML = todaysMonitors[i]['cellPhone']
+        if (todaysMonitors[i]['shopInitials'] == 'RA') {
+          spanCellPhone.style.color = 'Green'
+        }
+        else {
+          spanCellPhone.style.color = 'Brown'
+        }
+        detailParent.appendChild(spanCellPhone)
+
+        var spanLastTraining = document.createElement('span')
+        spanLastTraining.classList.add('LastTraining')
+        spanLastTraining.innerHTML = todaysMonitors[i]['lastTrainingDate']
+        if (todaysMonitors[i]['shopInitials'] == 'RA') {
+          spanLastTraining.style.color = 'Green'
+        }
+        else {
+          spanLastTraining.style.color = 'Brown'
+        }
+        if (todaysMonitors[i]['trainingNeeded'] != '') {
+          spanLastTraining.style.color = 'Red'
         }
         
-        // ADD DETAIL LINES
-        for (i=0; i<todaysMonitors.length; i++) {
+        detailParent.appendChild(spanLastTraining)
 
-          var spanShop = document.createElement('span')
-          spanShop.classList.add('Shop')
-          spanShop.innerHTML = todaysMonitors[i]['shopInitials']
-          if (todaysMonitors[i]['shopInitials'] == 'RA') {
-            spanShop.style.color = 'Green'
-          }
-          else {
-            spanShop.style.color = 'Brown'
-          }
-          detailParent.appendChild(spanShop)
+        var spanTrainingNeeded = document.createElement('span')
+        spanTrainingNeeded.classList.add('TrainingNeeded')
+        spanTrainingNeeded.innerHTML = todaysMonitors[i]['trainingNeeded']
+        detailParent.appendChild(spanTrainingNeeded)
 
-          var spanShift = document.createElement('span')          
-          spanShift.classList.add('Shift')
-          spanShift.innerHTML = todaysMonitors[i]['shift']
-          if (todaysMonitors[i]['shopInitials'] == 'RA') {
-            spanShift.style.color = 'Green'
-          }
-          else {
-            spanShift.style.color = 'Brown'
-          }
-          detailParent.appendChild(spanShift)
-  
-          var spanDuty = document.createElement('span')
-          spanDuty.classList.add('Duty')
-          spanDuty.innerHTML = todaysMonitors[i]['duty']
-          if (todaysMonitors[i]['shopInitials'] == 'RA') {
-            spanDuty.style.color = 'Green'
-          }
-          else {
-            spanDuty.style.color = 'Brown'
-          }
-          detailParent.appendChild(spanDuty)
-  
-          var spanName = document.createElement('span')
-          spanName.classList.add('Name')
-          spanName.innerHTML = todaysMonitors[i]['name']
-          if (todaysMonitors[i]['shopInitials'] == 'RA') {
-            spanName.style.color = 'Green'
-          }
-          else {
-            spanName.style.color = 'Brown'
-          }
-          detailParent.appendChild(spanName)
+        // checkbox within span; span has border
+        var spanNoShow = document.createElement('span')
+        spanNoShow.classList.add('spanNoShow')
+        detailParent.appendChild(spanNoShow)
+
+        // checkbox child of spanNoShow
+        var inputNoShow = document.createElement('input')
+        inputNoShow.id='R'+todaysMonitors[i]['recordID']
+        inputNoShow.classList.add('NoShow')
+        inputNoShow.type='checkbox'
+        if (todaysMonitors[i]['noShow'] == true) {
+          inputNoShow.checked = true
+          inputNoShow.value = 'True'
+        }
+        else {
+          inputNoShow.checked = false
+          inputNoShow.value = 'False'
+        }
+        inputNoShow.onclick = function() {
+          NoShowRtn(this.id);
+        }
+        if (todaysMonitors[i]['shopInitials'] == 'RA') {
+          inputNoShow.style.color = 'Green'
+        }
+        else {
+          inputNoShow.style.color = 'Brown'
+        }
+        spanNoShow.appendChild(inputNoShow)
         
-          var spanCheckIn = document.createElement('span')
-          spanCheckIn.classList.add('CheckIn')
-          spanCheckIn.innerHTML = todaysMonitors[i]['checkIn']
-          if (todaysMonitors[i]['shopInitials'] == 'RA') {
-            spanCheckIn.style.color = 'Green'
-          }
-          else {
-            spanCheckIn.style.color = 'Brown'
-          }
-          detailParent.appendChild(spanCheckIn)
-  
-          var spanCheckOut = document.createElement('span')
-          spanCheckOut.classList.add('CheckOut')
-          spanCheckOut.innerHTML = todaysMonitors[i]['checkOut']
-          if (todaysMonitors[i]['shopInitials'] == 'RA') {
-            spanCheckOut.style.color = 'Green'
-          }
-          else {
-            spanCheckOut.style.color = 'Brown'
-          }
-          detailParent.appendChild(spanCheckOut)
-  
-          var spanHomePhone = document.createElement('span')
-          spanHomePhone.classList.add('HomePhone')
-          spanHomePhone.innerHTML = todaysMonitors[i]['homePhone']
-          if (todaysMonitors[i]['shopInitials'] == 'RA') {
-            spanHomePhone.style.color = 'Green'
-          }
-          else {
-            spanHomePhone.style.color = 'Brown'
-          }
-          detailParent.appendChild(spanHomePhone)
-  
-          var spanCellPhone = document.createElement('span')
-          spanCellPhone.classList.add('CellPhone')
-          spanCellPhone.innerHTML = todaysMonitors[i]['cellPhone']
-          if (todaysMonitors[i]['shopInitials'] == 'RA') {
-            spanCellPhone.style.color = 'Green'
-          }
-          else {
-            spanCellPhone.style.color = 'Brown'
-          }
-          detailParent.appendChild(spanCellPhone)
-  
-          var spanLastTraining = document.createElement('span')
-          spanLastTraining.classList.add('LastTraining')
-          spanLastTraining.innerHTML = todaysMonitors[i]['lastTrainingDate']
-          if (todaysMonitors[i]['shopInitials'] == 'RA') {
-            spanLastTraining.style.color = 'Green'
-          }
-          else {
-            spanLastTraining.style.color = 'Brown'
-          }
-          if (todaysMonitors[i]['trainingNeeded'] != '') {
-            spanLastTraining.style.color = 'Red'
-          }
-          
-          detailParent.appendChild(spanLastTraining)
-  
-          var spanTrainingNeeded = document.createElement('span')
-          spanTrainingNeeded.classList.add('TrainingNeeded')
-          spanTrainingNeeded.innerHTML = todaysMonitors[i]['trainingNeeded']
-          detailParent.appendChild(spanTrainingNeeded)
-  
-          // checkbox within span; span has border
-          var spanNoShow = document.createElement('span')
-          spanNoShow.classList.add('spanNoShow')
-          detailParent.appendChild(spanNoShow)
-
-          // checkbox child of spanNoShow
-          var inputNoShow = document.createElement('input')
-          inputNoShow.id='R'+todaysMonitors[i]['recordID']
-          inputNoShow.classList.add('NoShow')
-          inputNoShow.type='checkbox'
-          if (todaysMonitors[i]['noShow'] == true) {
-            inputNoShow.checked = true
-            inputNoShow.value = 'True'
-          }
-          else {
-            inputNoShow.checked = false
-            inputNoShow.value = 'False'
-          }
-          inputNoShow.onclick = function() {
-            NoShowRtn(this.id);
-          }
-          if (todaysMonitors[i]['shopInitials'] == 'RA') {
-            inputNoShow.style.color = 'Green'
-          }
-          else {
-            inputNoShow.style.color = 'Brown'
-          }
-          spanNoShow.appendChild(inputNoShow)
-          
-          }
-          
-        },
-        error: function (jqXHR, textStatus, errorThrown)
-        {
-          alert('No monitors scheduled')
-        }
-      
-   });
+        }
+        
+      },
+      error: function (jqXHR, textStatus, errorThrown)
+      {
+        alert('No monitors scheduled')
+      }
+    
+  });
 
   function NoShowRtn(clicked_id) {
     recordID = clicked_id.slice(1)
