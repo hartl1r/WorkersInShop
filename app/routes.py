@@ -464,26 +464,21 @@ def printTodaysMonitors(shopChoice):
 
 @app.route('/checkOutMember')
 def checkOutMember():
+    print('/checkOutMember')
     activityID = request.args.get('recordID')
-    est = timezone('EST')
+    est = timezone('US/Eastern')
     checkOutDateTime = datetime.datetime.now(est)
     
     try:
         activity = db.session.query(MemberActivity)\
-            .filter(MemberActivity.ID == activityID).one()
+            .filter(MemberActivity.ID == activityID).first()
         activity.Check_Out_Date_Time = checkOutDateTime
         db.session.commit()
         msg = "SUCCESS - member checked out."
-        return jsonify(msg=msg)
-        
-    except (SQLAlchemyError, DBAPIError) as e:
-        print("ERROR -",e)
-        msg = "ERROR - member was NOT checked out."
-        return jsonify(msg=msg)
-        
+        return jsonify(msg=msg)  
     except Exception as e:
-        print("ERROR -",e)
         msg="ERROR - member NOT checked out."
+        print(msg)
         return jsonify(msg=msg)
    
 def countMembersInShopNow(shopID):
