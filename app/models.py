@@ -49,7 +49,9 @@ class Member(db.Model):
     Dues_Paid=db.Column(db.Boolean)
     NonMember_Volunteer=db.Column(db.Boolean)
     Restricted_From_Shop = db.Column(db.Boolean)
-	
+    Last_Monitor_Training_Date = db.Column(db.Boolean)
+    Last_Monitor_Training_Date_Shop_2 = db.Column(db.DateTime)
+
     fullName = column_property(First_Name + " " + Last_Name)
     # Relationships
     #activities = db.relationship('MemberActivity', backref='member')

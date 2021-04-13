@@ -226,8 +226,10 @@ def getTodaysMonitors():
     
     sqlSelect = "SELECT tblMonitor_Schedule.ID as recordID, tblMonitor_Schedule.Member_ID as memberID, (Last_Name + ', ' +  First_Name) as memberName, "
     sqlSelect += " Home_Phone, Cell_Phone, "
-    sqlSelect += "format(Last_Monitor_Training,'MM-dd-yy') as lastTrainingDate, cast(Last_Monitor_Training as DATE) as LastMonitorTraining, "
-    sqlSelect += " DATEPART(year,Last_Monitor_Training) as trainingYear, Date_Scheduled, AM_PM, Duty, No_Show, Shop_Number, "
+    sqlSelect += "format(Last_Monitor_Training,'MM-dd-yy') as lastTrainingDateRA, cast(Last_Monitor_Training as DATE) as LastMonitorTrainingRA, "
+    sqlSelect += "format(Last_Monitor_Training_Shop_2,'MM-dd-yy') as lastTrainingDateBW, cast(Last_Monitor_Training_Shop_2 as DATE) as LastMonitorTrainingBW, "
+    sqlSelect += " DATEPART(year,Last_Monitor_Training) as trainingYearRA, DATEPART(year,Last_Monitor_Training_Shop_2) as trainingYearBW, "
+    sqlSelect += " Date_Scheduled, AM_PM, Duty, No_Show, Shop_Number, "
     sqlSelect += " DATEPART(year,Date_Scheduled) as scheduleYear "
     sqlSelect += " FROM tblMonitor_Schedule LEFT JOIN tblMember_Data ON tblMonitor_Schedule.Member_ID = tblMember_Data.member_ID "
     sqlSelect += whereClause    
@@ -237,6 +239,7 @@ def getTodaysMonitors():
     todaysMonitorsArray=[]
     todaysMonitor=''
     for m in todaysMonitors:
+        print('training RA/BW - ',m.memberID,m.LastMonitorTrainingRA,'/',m.LastMonitorTrainingBW,m.Shop_Number)
         # IS MONITOR CHECKED IN?  GET THE CHECK IN/OUT TIMES FOR THIS MONITOR 
         if (shopNumber == '1' or shopNumber == '2'):
             activity = db.session.query(MemberActivity)\
@@ -273,15 +276,30 @@ def getTodaysMonitors():
         LastMonitorTrainingDisplay=''
         trainingMsg = ''
        
-        
-        if m.LastMonitorTraining == None or m.LastMonitorTraining == '':
-            trainingMsg = 'Training Needed'
-        else:
-            LastMonitorTrainingDisplay = m.LastMonitorTraining.strftime('%-b %Y')
-            if m.LastMonitorTraining < lastAcceptableTrainingDate:
+        if m.Shop_Number == 1:
+            print('shopNumber = 1')
+            if m.LastMonitorTrainingRA == None or m.LastMonitorTrainingRA == '':
+                print('training needed')
                 trainingMsg = 'Training Needed'
+            else:
+                print('training may be needed')
+                LastMonitorTrainingDisplay = m.LastMonitorTrainingRA.strftime('%b %Y')
+                print('LastMonitorTrainingDisplay (RA) - ',LastMonitorTrainingDisplay)
+                if m.LastMonitorTrainingRA < lastAcceptableTrainingDate:
+                    print('training is needed')
+                    trainingMsg = 'Training Needed'
+        else:
+            if m.LastMonitorTrainingBW == None or m.LastMonitorTrainingBW == '':
+                trainingMsg = 'Training Needed'
+            else:
+                LastMonitorTrainingDisplay = m.LastMonitorTrainingBW.strftime('%b %Y')
+                print('LastMonitorTrainingDisplay (BW)- ',LastMonitorTrainingDisplay)
+                if m.LastMonitorTrainingBW < lastAcceptableTrainingDate:
+                    trainingMsg = 'Training Needed' 
+        print('m.LastMonitorTrainingRA -',m.LastMonitorTrainingRA)
+        print('m.LastMonitorTrainingBW -',m.LastMonitorTrainingBW)   
+        print('LastMonitorTrainingDisplay - ',LastMonitorTrainingDisplay)
 
-       
         todaysMonitor = {'name':m.memberName + ' (' + m.memberID + ')',
             'shopInitials':shopInitials,
             'shift':m.AM_PM,
