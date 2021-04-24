@@ -7,6 +7,9 @@ $(document).ready(function() {
   
  
   window.addEventListener('focus', refresh);
+  document.getElementById('btnShowPhoto').onclick = function() {
+    alert('Feature has not been implemented.')
+  }
     
     
   var currentShopChoice = 'BOTH'
@@ -292,6 +295,8 @@ $(document).ready(function() {
 
   function NoShowRtn(clicked_id) {
     recordID = clicked_id.slice(1)
+    console.log('recordID - ' + recordID)
+    
     $.ajax({
       url : "/updateNoShow",
       type: "GET",
@@ -352,7 +357,11 @@ $(".checkOut").click(function() {
     else {
       link = "https://fd.thevwc.org:42734/"
     }
-    window.location.href = link
-    
+    // window.location.href = link
+    window.open(link,'_blank')
   })
 })
+
+// function showPhoto() {
+//   alert('Feature has not been implemented.')
+// }

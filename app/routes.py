@@ -206,7 +206,7 @@ def getTodaysMonitors():
         shopName = 'Brownwood'
 
     # GET TODAYS DATE IN EST    
-    est = timezone('EST')
+    est = timezone('US/Eastern')
     
     todaysDate = date.today()
     todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
@@ -299,7 +299,8 @@ def getTodaysMonitors():
         print('m.LastMonitorTrainingRA -',m.LastMonitorTrainingRA)
         print('m.LastMonitorTrainingBW -',m.LastMonitorTrainingBW)   
         print('LastMonitorTrainingDisplay - ',LastMonitorTrainingDisplay)
-
+        print('m.No_Show -',m.No_Show)
+        
         todaysMonitor = {'name':m.memberName + ' (' + m.memberID + ')',
             'shopInitials':shopInitials,
             'shift':m.AM_PM,
@@ -320,15 +321,20 @@ def getTodaysMonitors():
 
 @app.route('/updateNoShow')
 def updateNoShow():
+    print('updateNoShow rtn')
     recordID=request.args.get('recordID')
     try:
         schedule = db.session.query(MonitorSchedule)\
                     .filter(MonitorSchedule.ID == recordID).first()
+        print('current No_Show setting - ',schedule.No_Show)
         if schedule.No_Show == True:
             schedule.No_Show = False
         else:
             if schedule.No_Show == False:
                 schedule.No_Show = True 
+                memberID = schedule.Member_ID
+                print('calling updateRestricted')
+                updateRestricted(memberID)
         db.session.commit()
     except:
         db.session.rollback()
@@ -538,3 +544,20 @@ def countMembersInShopToday(shopID):
         inShopTodayCount = db.session.query(func.count(MemberActivity.Member_ID))\
             .filter(MemberActivity.Check_In_Date_Time >= todaysDate).scalar()
     return inShopTodayCount
+
+def updateRestricted(memberID):
+    member = db.session.query(Member).filter(Member.Member_ID == memberID).first()
+    if member:
+        try:
+            print('updating restricted')
+            member.Restricted_From_Shop = 1
+            todaysDate = date.today()
+            todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
+            msg = 'No Show for Monitor Duty on ' + todays_dateSTR
+            member.Reason_For_Restricted_From_Shop += msg
+            db.session.commit
+            print('update successful')
+        except Exception as e:
+            db.session.rollback
+            flash('Could not update restricted for No Show.','danger')
+    return 
