@@ -50,8 +50,8 @@ class Member(db.Model):
     NonMember_Volunteer=db.Column(db.Boolean)
     Restricted_From_Shop = db.Column(db.Boolean)
     Reason_For_Restricted_From_Shop = db.Column(db.String(255))
-    Last_Monitor_Training_Date = db.Column(db.Boolean)
-    Last_Monitor_Training_Date_Shop_2 = db.Column(db.DateTime)
+    Last_Monitor_Training = db.Column(db.DateTime)
+    Last_Monitor_Training_Shop_2 = db.Column(db.DateTime)
 
     fullName = column_property(First_Name + " " + Last_Name)
     # Relationships

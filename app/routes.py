@@ -20,13 +20,14 @@ from pytz import timezone
 @app.route('/index/')
 @app.route("/workersInShop",methods=['GET','POST'])
 def workersInShop():
-    
+    # GET STAFF ID
+    staffID = getStaffID()
+
     # GET DEFAULT SHOP ID
-    if 'shopID' in session:
-        shopID = session['shopID']
-    else:
-        shopID = ''
+    shopID = getShopID()
     
+    print('shopID - ',shopID)
+
     # USING CURRENT DATE FOR PRODUCTION
     todaysDate = date.today()
     displayDate = todaysDate.strftime('%-b %-d, %Y')
@@ -156,6 +157,9 @@ def workersInShop():
         whereClause += " and Shop_Number = 2"
     sqlCheckInRecord += whereClause
     
+    #print(sqlCheckInRecord)
+
+
     workersInShop = None
     workersInShop = db.engine.execute(sqlCheckInRecord)
     workersInShopArray = []
@@ -195,6 +199,7 @@ def workersInShop():
 
 @app.route("/getTodaysMonitors/")
 def getTodaysMonitors():
+    #print('/getTodaysMonitors')
     shopChoice=request.args.get('shopChoice')
     shopNumber = 'BOTH'
     shopName = 'Both Locations'
@@ -238,8 +243,11 @@ def getTodaysMonitors():
     todaysMonitors = db.engine.execute(sqlSelect)
     todaysMonitorsArray=[]
     todaysMonitor=''
+
     for m in todaysMonitors:
-        print('training RA/BW - ',m.memberID,m.LastMonitorTrainingRA,'/',m.LastMonitorTrainingBW,m.Shop_Number)
+        
+        #print(m.memberName, m.memberID, m.Shop_Number)
+
         # IS MONITOR CHECKED IN?  GET THE CHECK IN/OUT TIMES FOR THIS MONITOR 
         if (shopNumber == '1' or shopNumber == '2'):
             activity = db.session.query(MemberActivity)\
@@ -277,29 +285,19 @@ def getTodaysMonitors():
         trainingMsg = ''
        
         if m.Shop_Number == 1:
-            print('shopNumber = 1')
             if m.LastMonitorTrainingRA == None or m.LastMonitorTrainingRA == '':
-                print('training needed')
                 trainingMsg = 'Training Needed'
             else:
-                print('training may be needed')
                 LastMonitorTrainingDisplay = m.LastMonitorTrainingRA.strftime('%b %Y')
-                print('LastMonitorTrainingDisplay (RA) - ',LastMonitorTrainingDisplay)
                 if m.LastMonitorTrainingRA < lastAcceptableTrainingDate:
-                    print('training is needed')
                     trainingMsg = 'Training Needed'
         else:
             if m.LastMonitorTrainingBW == None or m.LastMonitorTrainingBW == '':
                 trainingMsg = 'Training Needed'
             else:
                 LastMonitorTrainingDisplay = m.LastMonitorTrainingBW.strftime('%b %Y')
-                print('LastMonitorTrainingDisplay (BW)- ',LastMonitorTrainingDisplay)
                 if m.LastMonitorTrainingBW < lastAcceptableTrainingDate:
                     trainingMsg = 'Training Needed' 
-        print('m.LastMonitorTrainingRA -',m.LastMonitorTrainingRA)
-        print('m.LastMonitorTrainingBW -',m.LastMonitorTrainingBW)   
-        print('LastMonitorTrainingDisplay - ',LastMonitorTrainingDisplay)
-        print('m.No_Show -',m.No_Show)
         
         todaysMonitor = {'name':m.memberName + ' (' + m.memberID + ')',
             'shopInitials':shopInitials,
@@ -317,30 +315,6 @@ def getTodaysMonitors():
         
     # GET COORDINATOR DATA FOR BOTH SHOPS
     return jsonify(todaysMonitorsArray=todaysMonitorsArray,shopName=shopName)
-
-
-@app.route('/updateNoShow')
-def updateNoShow():
-    print('updateNoShow rtn')
-    recordID=request.args.get('recordID')
-    try:
-        schedule = db.session.query(MonitorSchedule)\
-                    .filter(MonitorSchedule.ID == recordID).first()
-        print('current No_Show setting - ',schedule.No_Show)
-        if schedule.No_Show == True:
-            schedule.No_Show = False
-        else:
-            if schedule.No_Show == False:
-                schedule.No_Show = True 
-                memberID = schedule.Member_ID
-                print('calling updateRestricted')
-                updateRestricted(memberID)
-        db.session.commit()
-    except:
-        db.session.rollback()
-        return "ERROR - Could not update."
-    finally:
-        return "SUCCESS - Data has been saved."
 
 
 @app.route('/printTodaysMonitors/<shopChoice>')
@@ -545,12 +519,82 @@ def countMembersInShopToday(shopID):
             .filter(MemberActivity.Check_In_Date_Time >= todaysDate).scalar()
     return inShopTodayCount
 
+
+
+@app.route('/updateNoShow')
+def updateNoShow():
+    print('updateNoShow rtn')
+    recordID=request.args.get('recordID')
+    noShow = request.args.get('noShow')
+
+    # change the following to ... setNoShow_SP,  ... setNoShow_RAW,  ... setNoShow_SQLALCHEMY
+    msg = setNoShow_RAW(recordID,noShow)
+    return jsonify(msg=msg)
+
+def setNoShow_RAW(recordID,noShow):
+    # RAW SQL APPROACH
+    print('RAW SQL APPROACH test')
+    if (noShow == 'True'):
+        sqlUpdate = "UPDATE tblMonitor_Schedule SET No_Show = 1 WHERE ID = " + recordID
+        result = db.session.execute(sqlUpdate)
+    else:
+        sqlUpdate = "UPDATE tblMonitor_Schedule SET No_Show = 0 WHERE ID = " + recordID
+        result = db.session.execute(sqlUpdate)
+    print('result - '),result
+    msg = "Update successful."
+    return msg
+    
+
+def updNoShow_SQLALCHEMY(recordID,noShow):
+    #SQLALCHEMY APPROACH
+    print('SQLALCHEMY APPROACH test')
+    try:
+        schedule = db.session.query(MonitorSchedule)\
+                    .filter(MonitorSchedule.ID == recordID).first()
+        if (schedule == None):
+            msg = 'ERROR - Schedule record not found.'
+            return (msg)
+        
+        if (noShow == 'True'):  
+            schedule.No_Show = True
+            db.session.commit
+            msg="No show updated to true."
+        else:
+            if (noShow == 'False'): 
+                schedule.No_Show = False 
+                db.session.commit
+                msg = "No show set to off" 
+        return (msg)
+    except Exception as e:
+        db.session.rollback()
+        msg = "ERROR - Could not update."
+        return (msg)
+    
+
+
+def updateNoShow_SP(recordID,noShow):
+    # STORED PROCEDURE APPROACH
+    print('STORED PROCEDURE APPROACH test')
+    if (noShow == 'True'):
+        noShowValue = 1
+    else:
+        noShowValue = 0
+    sp = "EXEC setNoShow " + recordID + "," + noShowValue 
+    print('sp - ',sp)
+    sql = SQLQuery(sp)
+    result = db.engine.execute(sql)
+    print('result - ',result)
+    msg = 'No_Show updated'
+    return (msg)
+
+
 def updateRestricted(memberID):
+    print('updateRestricted for ',memberID)
     member = db.session.query(Member).filter(Member.Member_ID == memberID).first()
     if member:
         try:
             print('updating restricted')
-            member.Restricted_From_Shop = 1
+            member.Restricted_From_Shop = True
             todaysDate = date.today()
             todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
             msg = 'No Show for Monitor Duty on ' + todays_dateSTR
@@ -561,3 +605,21 @@ def updateRestricted(memberID):
             db.session.rollback
             flash('Could not update restricted for No Show.','danger')
     return 
+
+def getStaffID():
+	if 'staffID' in session:
+		staffID = session['staffID']
+	else:
+		flash('Login ID is missing, will use 604875','danger')
+		staffID = '757856'
+	return staffID
+
+def getShopID():
+	if 'shopID' in session:
+		shopID = session['shopID']
+	else:
+		# SET RA FOR TESTING; SEND FLASH ERROR MESSAGE FOR PRODUCTION
+		shopID = 'RA'
+		msg = "Missing location information; Rolling Acres assumed."
+		flash(msg,"danger")
+	return shopID 

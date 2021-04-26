@@ -16,7 +16,9 @@ $(document).ready(function() {
   
   // SET SHOP LOCATION
   defaultShopID = document.getElementById('defaultShopID').value
-  
+  //window.addEventListener('load')
+
+
   var shopChoiceOPT = document.getElementById('shopChoiceOPT')
   
   currentShopChoice = shopChoiceOPT
@@ -127,6 +129,9 @@ $(document).ready(function() {
   $('#todaysMonitorsID').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
     var shopChoiceOPT = document.getElementById('shopChoiceOPT').value
+    //alert('Getting monitors for location '+ shopChoiceOPT)
+    console.log('shopChoiceOPT - ',shopChoiceOPT)
+
     // GET MEMBERS SCHEDULED FOR MONITOR DUTY TODAY
     $.ajax({
       url : "/getTodaysMonitors",
@@ -136,6 +141,8 @@ $(document).ready(function() {
       success: function(data, textStatus, jqXHR)
       {
         todaysMonitors = data.todaysMonitorsArray
+        console.log('todaysMonitors - ' + todaysMonitors)
+        
         detailParent = document.getElementById('detailID')
         // REMOVE ANY EXISTING DETAIL LINES
         // REMOVE CURRENT DAY ASSIGNMENTS FOR SELECTED SCHEDULE DAY
@@ -272,7 +279,8 @@ $(document).ready(function() {
             inputNoShow.checked = false
             inputNoShow.value = 'False'
           }
-          inputNoShow.onclick = function() {
+          inputNoShow.onchange = function() {
+            //location.href='/updateNoShow/?record=' + this.id + '&noShow='
             NoShowRtn(this.id);
           }
           if (todaysMonitors[i]['shopInitials'] == 'RA') {
@@ -294,21 +302,34 @@ $(document).ready(function() {
     });
 
   function NoShowRtn(clicked_id) {
+    console.log('...........................................')
+    console.log("NO SHOW ROUTINE")
     recordID = clicked_id.slice(1)
     console.log('recordID - ' + recordID)
-    
+    if (document.getElementById(clicked_id).checked == true){
+      console.log('No Show is true')
+      noShow = 'True'
+    }
+    else {
+      console.log('No Show is FALSE')
+      noShow = 'False'
+    }
     $.ajax({
       url : "/updateNoShow",
       type: "GET",
       data:{
-        recordID:recordID},
+        recordID:recordID,noShow:noShow},
       success: function(data, textStatus, jqXHR)
       {
+        alert(data.msg)
         // alert('No Show updated.' + scheduleRecordID)
+        //window.reload()
+        //show showTodaysMonitorsID
       },
       error: function (jqXHR, textStatus, errorThrown)
         {
-          alert('Could not update No Show. \n errorThrown - '+errorThrown)
+          alert(data.msg)
+          //alert('Could not update No Show. \n errorThrown - '+errorThrown)
         }
     })  
   }
