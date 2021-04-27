@@ -26,7 +26,7 @@ def workersInShop():
     # GET DEFAULT SHOP ID
     shopID = getShopID()
     
-    print('shopID - ',shopID)
+    #print('shopID - ',shopID)
 
     # USING CURRENT DATE FOR PRODUCTION
     todaysDate = date.today()
@@ -41,7 +41,12 @@ def workersInShop():
         inShopSelected=request.form['inShopOPT'] 
         orderBySelected=request.form['orderByOPT'] 
         filterOptionSelected=request.form['filterOptionOPT']
-        
+
+        # print('shopChoiceSelected - ',shopChoiceSelected)
+        # print('inShopSelected - ',inShopSelected)
+        # print('orderBySelected - ',orderBySelected)
+        # print('filterOptionSelected - ',filterOptionSelected)
+
         # SELECT STATEMENT PHRASES, E.G., 'order by Last_Name, First_Name'
         if (shopChoiceSelected == 'RA'):
             shopChoice = ' Shop_Number = 1'
@@ -55,6 +60,10 @@ def workersInShop():
         orderBy=request.form['orderByItem'] #'OrderByCheckInTime'
         filterOption=request.form['filterItem'] #'All'
 
+        # print('inShop - ',inShop)
+        # print('orderBy - ',orderBy)
+        # print('filterOption - ',filterOption)
+        
         # BUILD INITIAL WHERE CLAUSE TO SELECT TODAY'S ACTIVITY RECORDS
         whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' and"
         whereClause += ' ' + shopChoice
@@ -523,29 +532,74 @@ def countMembersInShopToday(shopID):
 
 @app.route('/updateNoShow')
 def updateNoShow():
-    print('updateNoShow rtn')
     recordID=request.args.get('recordID')
     noShow = request.args.get('noShow')
-
     # change the following to ... setNoShow_SP,  ... setNoShow_RAW,  ... setNoShow_SQLALCHEMY
     msg = setNoShow_RAW(recordID,noShow)
     return jsonify(msg=msg)
-
+    
+    
 def setNoShow_RAW(recordID,noShow):
     # RAW SQL APPROACH
-    print('RAW SQL APPROACH test')
-    if (noShow == 'True'):
-        sqlUpdate = "UPDATE tblMonitor_Schedule SET No_Show = 1 WHERE ID = " + recordID
-        result = db.session.execute(sqlUpdate)
-    else:
-        sqlUpdate = "UPDATE tblMonitor_Schedule SET No_Show = 0 WHERE ID = " + recordID
-        result = db.session.execute(sqlUpdate)
-    print('result - '),result
-    msg = "Update successful."
-    return msg
+    memberID = db.session.query(MonitorSchedule.Member_ID).filter(MonitorSchedule.ID == recordID).scalar()
+    msg = ''
+    # SET 'NO SHOW' FLAG IN tblMonitor_Schedule
+    try:
+        if (noShow == 'True'):
+            sqlUpdate = "UPDATE tblMonitor_Schedule SET No_Show = 1 WHERE ID = " + recordID
+            db.engine.execute(sqlUpdate)
+            msg = "No show set ON."
+        else:
+            sqlUpdate = "UPDATE tblMonitor_Schedule SET No_Show = 0 WHERE ID = " + recordID
+            db.engine.execute(sqlUpdate)
+            msg += "No show set OFF."
+    except (sqlalchemy.exc.SQLAlchemyError, sqlalchemy.exc.DBAPIError) as e:
+        error = str(e.__dict__['orig'])
+        print('error - ',error)
+        return error
     
+    # SET RESTRICTED_FROM_SHOP FLAG IN tblMember_Data
+    try:
+        if (noShow == 'True'):
+            sqlUpdateRestricted = "UPDATE tblMember_Data SET Restricted_From_Shop = 1 "
+            sqlUpdateRestricted += "WHERE Member_ID = '" + memberID + "'"
+            print(sqlUpdateRestricted)
+            db.engine.execute(sqlUpdateRestricted)
+            msg += "Restricted updated."
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        print('error - ',error)
+        return error
 
-def updNoShow_SQLALCHEMY(recordID,noShow):
+    # SET RESTRICTED_FROM_SHOP_REASON IN tblMember_Data
+    try:
+        if (noShow == 'True'):
+            # BUILD MESSAGE
+            todaysDate = date.today()
+            todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
+            # RETRIEVE CURRENT RESTRICTED REASONS, IF ANY
+            noShowReason = "No show on " + todays_dateSTR
+            reason = db.session.query(Member.Reason_For_Restricted_From_Shop).filter(Member.Member_ID == memberID).scalar()
+            # EITHER INSERT OR APPEND THE NO SHOW REASON TO ANY EXISTING REASON
+            if (reason == None or reason == ''):
+                reason = noShowReason
+            else:
+                reason += noShowReason
+
+            sqlUpdateRestrictedReason = "UPDATE tblMember_Data SET "
+            sqlUpdateRestrictedReason += "Reason_For_Restricted_From_Shop = '" + reason
+            sqlUpdateRestrictedReason += "' WHERE Member_ID = '" + memberID + "'"
+            print(sqlUpdateRestrictedReason)
+            db.engine.execute(sqlUpdateRestrictedReason)
+            msg += "Reason restricted updated."
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        print('error - ',error)
+        return error
+    
+    return msg
+
+def setNoShow_SQLALCHEMY(recordID,noShow):
     #SQLALCHEMY APPROACH
     print('SQLALCHEMY APPROACH test')
     try:
@@ -572,14 +626,14 @@ def updNoShow_SQLALCHEMY(recordID,noShow):
     
 
 
-def updateNoShow_SP(recordID,noShow):
+def setNoShow_SP(recordID,noShow):
     # STORED PROCEDURE APPROACH
     print('STORED PROCEDURE APPROACH test')
     if (noShow == 'True'):
         noShowValue = 1
     else:
         noShowValue = 0
-    sp = "EXEC setNoShow " + recordID + "," + noShowValue 
+    sp = "EXEC setNoShow " + str(recordID) + "," + str(noShowValue)
     print('sp - ',sp)
     sql = SQLQuery(sp)
     result = db.engine.execute(sql)
@@ -623,3 +677,7 @@ def getShopID():
 		msg = "Missing location information; Rolling Acres assumed."
 		flash(msg,"danger")
 	return shopID 
+
+# @app.errorhandler(500)
+# def internal_server_error(e):
+#     return render_template('500.html', error=e),500
