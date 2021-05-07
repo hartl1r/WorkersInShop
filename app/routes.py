@@ -548,11 +548,9 @@ def setNoShow_RAW(recordID,noShow):
         if (noShow == 'True'):
             sqlUpdate = "UPDATE tblMonitor_Schedule SET No_Show = 1 WHERE ID = " + recordID
             db.engine.execute(sqlUpdate)
-            msg = "No show set ON."
         else:
             sqlUpdate = "UPDATE tblMonitor_Schedule SET No_Show = 0 WHERE ID = " + recordID
             db.engine.execute(sqlUpdate)
-            msg += "No show set OFF."
     except (sqlalchemy.exc.SQLAlchemyError, sqlalchemy.exc.DBAPIError) as e:
         error = str(e.__dict__['orig'])
         print('error - ',error)
@@ -565,7 +563,7 @@ def setNoShow_RAW(recordID,noShow):
             sqlUpdateRestricted += "WHERE Member_ID = '" + memberID + "'"
             print(sqlUpdateRestricted)
             db.engine.execute(sqlUpdateRestricted)
-            msg += "Restricted updated."
+            msg = "Monitor 'No Show' updated. \ńShift Opened to Add Sub."
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         print('error - ',error)
@@ -591,7 +589,6 @@ def setNoShow_RAW(recordID,noShow):
             sqlUpdateRestrictedReason += "' WHERE Member_ID = '" + memberID + "'"
             print(sqlUpdateRestrictedReason)
             db.engine.execute(sqlUpdateRestrictedReason)
-            msg += "Reason restricted updated."
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         print('error - ',error)

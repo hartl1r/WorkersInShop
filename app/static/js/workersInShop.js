@@ -169,7 +169,7 @@ $('#todaysMonitorsID').on('shown.bs.modal', function () {
         spanShop.classList.add('Shop')
         spanShop.innerHTML = todaysMonitors[i]['shopInitials']
         if (todaysMonitors[i]['shopInitials'] == 'RA') {
-          spanShop.style.color = 'Green'
+          spanShop.style.color = 'Black'
         }
         else {
           spanShop.style.color = 'Brown'
@@ -180,7 +180,7 @@ $('#todaysMonitorsID').on('shown.bs.modal', function () {
         spanShift.classList.add('Shift')
         spanShift.innerHTML = todaysMonitors[i]['shift']
         if (todaysMonitors[i]['shopInitials'] == 'RA') {
-          spanShift.style.color = 'Green'
+          spanShift.style.color = 'Black'
         }
         else {
           spanShift.style.color = 'Brown'
@@ -191,7 +191,7 @@ $('#todaysMonitorsID').on('shown.bs.modal', function () {
         spanDuty.classList.add('Duty')
         spanDuty.innerHTML = todaysMonitors[i]['duty']
         if (todaysMonitors[i]['shopInitials'] == 'RA') {
-          spanDuty.style.color = 'Green'
+          spanDuty.style.color = 'Black'
         }
         else {
           spanDuty.style.color = 'Brown'
@@ -202,7 +202,7 @@ $('#todaysMonitorsID').on('shown.bs.modal', function () {
         spanName.classList.add('Name')
         spanName.innerHTML = todaysMonitors[i]['name']
         if (todaysMonitors[i]['shopInitials'] == 'RA') {
-          spanName.style.color = 'Green'
+          spanName.style.color = 'Black'
         }
         else {
           spanName.style.color = 'Brown'
@@ -213,7 +213,7 @@ $('#todaysMonitorsID').on('shown.bs.modal', function () {
         spanCheckIn.classList.add('CheckIn')
         spanCheckIn.innerHTML = todaysMonitors[i]['checkIn']
         if (todaysMonitors[i]['shopInitials'] == 'RA') {
-          spanCheckIn.style.color = 'Green'
+          spanCheckIn.style.color = 'Black'
         }
         else {
           spanCheckIn.style.color = 'Brown'
@@ -224,7 +224,7 @@ $('#todaysMonitorsID').on('shown.bs.modal', function () {
         spanCheckOut.classList.add('CheckOut')
         spanCheckOut.innerHTML = todaysMonitors[i]['checkOut']
         if (todaysMonitors[i]['shopInitials'] == 'RA') {
-          spanCheckOut.style.color = 'Green'
+          spanCheckOut.style.color = 'Black'
         }
         else {
           spanCheckOut.style.color = 'Brown'
@@ -235,7 +235,7 @@ $('#todaysMonitorsID').on('shown.bs.modal', function () {
         spanHomePhone.classList.add('HomePhone')
         spanHomePhone.innerHTML = todaysMonitors[i]['homePhone']
         if (todaysMonitors[i]['shopInitials'] == 'RA') {
-          spanHomePhone.style.color = 'Green'
+          spanHomePhone.style.color = 'Black'
         }
         else {
           spanHomePhone.style.color = 'Brown'
@@ -246,7 +246,7 @@ $('#todaysMonitorsID').on('shown.bs.modal', function () {
         spanCellPhone.classList.add('CellPhone')
         spanCellPhone.innerHTML = todaysMonitors[i]['cellPhone']
         if (todaysMonitors[i]['shopInitials'] == 'RA') {
-          spanCellPhone.style.color = 'Green'
+          spanCellPhone.style.color = 'Black'
         }
         else {
           spanCellPhone.style.color = 'Brown'
@@ -257,7 +257,7 @@ $('#todaysMonitorsID').on('shown.bs.modal', function () {
         spanLastTraining.classList.add('LastTraining')
         spanLastTraining.innerHTML = todaysMonitors[i]['lastTrainingDate']
         if (todaysMonitors[i]['shopInitials'] == 'RA') {
-          spanLastTraining.style.color = 'Green'
+          spanLastTraining.style.color = 'Black'
         }
         else {
           spanLastTraining.style.color = 'Brown'
@@ -296,7 +296,7 @@ $('#todaysMonitorsID').on('shown.bs.modal', function () {
           NoShowRtn(this.id);
         }
         if (todaysMonitors[i]['shopInitials'] == 'RA') {
-          inputNoShow.style.color = 'Green'
+          inputNoShow.style.color = 'Black'
         }
         else {
           inputNoShow.style.color = 'Brown'
