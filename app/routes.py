@@ -563,7 +563,7 @@ def setNoShow_RAW(recordID,noShow):
             sqlUpdateRestricted += "WHERE Member_ID = '" + memberID + "'"
             print(sqlUpdateRestricted)
             db.engine.execute(sqlUpdateRestricted)
-            msg = "Monitor 'No Show' updated. \ńShift Opened to Add Sub."
+            msg = "Monitor 'No Show' updated. \nShift Opened to Add Sub."
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         print('error - ',error)
