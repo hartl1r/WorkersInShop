@@ -561,7 +561,6 @@ def setNoShow_RAW(recordID,noShow):
         if (noShow == 'True'):
             sqlUpdateRestricted = "UPDATE tblMember_Data SET Restricted_From_Shop = 1 "
             sqlUpdateRestricted += "WHERE Member_ID = '" + memberID + "'"
-            print(sqlUpdateRestricted)
             db.engine.execute(sqlUpdateRestricted)
             msg = "Monitor 'No Show' updated. \nShift Opened to Add Sub."
     except SQLAlchemyError as e:
