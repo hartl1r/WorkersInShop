@@ -220,7 +220,7 @@ def getTodaysMonitors():
         shopName = 'Brownwood'
 
     # GET TODAYS DATE IN EST    
-    est = timezone('US/Eastern')
+    est = timezone('America/NewYork')
     
     todaysDate = date.today()
     todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
@@ -473,7 +473,7 @@ def printTodaysMonitors(shopChoice):
 def checkOutMember():
     print('/checkOutMember')
     activityID = request.args.get('recordID')
-    est = timezone('US/Eastern')
+    est = timezone('America/NewYork')
     checkOutDateTime = datetime.datetime.now(est)
     
     try:
