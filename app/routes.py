@@ -220,7 +220,7 @@ def getTodaysMonitors():
         shopName = 'Brownwood'
 
     # GET TODAYS DATE IN EST    
-    est = timezone('America/NewYork')
+    est = timezone('America/New_York')
     
     todaysDate = date.today()
     todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
@@ -473,7 +473,7 @@ def printTodaysMonitors(shopChoice):
 def checkOutMember():
     print('/checkOutMember')
     activityID = request.args.get('recordID')
-    est = timezone('America/NewYork')
+    est = timezone('America/New_York')
     checkOutDateTime = datetime.datetime.now(est)
     
     try:
@@ -630,10 +630,8 @@ def setNoShow_SP(recordID,noShow):
     else:
         noShowValue = 0
     sp = "EXEC setNoShow " + str(recordID) + "," + str(noShowValue)
-    print('sp - ',sp)
     sql = SQLQuery(sp)
     result = db.engine.execute(sql)
-    print('result - ',result)
     msg = 'No_Show updated'
     return (msg)
 
