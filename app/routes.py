@@ -239,7 +239,7 @@ def getTodaysMonitors():
         whereClause += " and Shop_Number = " + shopNumber
     
     sqlSelect = "SELECT tblMonitor_Schedule.ID as recordID, tblMonitor_Schedule.Member_ID as memberID, (Last_Name + ', ' +  First_Name) as memberName, "
-    sqlSelect += " Home_Phone, Cell_Phone, "
+    sqlSelect += " Home_Phone, Cell_Phone, Restricted_From_Shop, "
     sqlSelect += "format(Last_Monitor_Training,'MM-dd-yy') as lastTrainingDateRA, cast(Last_Monitor_Training as DATE) as LastMonitorTrainingRA, "
     sqlSelect += "format(Last_Monitor_Training_Shop_2,'MM-dd-yy') as lastTrainingDateBW, cast(Last_Monitor_Training_Shop_2 as DATE) as LastMonitorTrainingBW, "
     sqlSelect += " DATEPART(year,Last_Monitor_Training) as trainingYearRA, DATEPART(year,Last_Monitor_Training_Shop_2) as trainingYearBW, "
@@ -307,7 +307,8 @@ def getTodaysMonitors():
                 LastMonitorTrainingDisplay = m.LastMonitorTrainingBW.strftime('%b %Y')
                 if m.LastMonitorTrainingBW < lastAcceptableTrainingDate:
                     trainingMsg = 'Training Needed' 
-        
+        if m.Restricted_From_Shop :
+            trainingMsg = 'RESTRICTED'
         todaysMonitor = {'name':m.memberName + ' (' + m.memberID + ')',
             'shopInitials':shopInitials,
             'shift':m.AM_PM,
@@ -319,7 +320,9 @@ def getTodaysMonitors():
             'cellPhone':m.Cell_Phone,
             'lastTrainingDate':LastMonitorTrainingDisplay,
             'trainingNeeded':trainingMsg,
-            'recordID':m.recordID}
+            'recordID':m.recordID,
+            'restricted':m.Restricted_From_Shop
+            }
         todaysMonitorsArray.append(todaysMonitor)
         
     # GET COORDINATOR DATA FOR BOTH SHOPS
