@@ -248,14 +248,16 @@ def getTodaysMonitors():
     sqlSelect += " FROM tblMonitor_Schedule LEFT JOIN tblMember_Data ON tblMonitor_Schedule.Member_ID = tblMember_Data.member_ID "
     sqlSelect += whereClause    
     sqlSelect += " ORDER BY Shop_Number, AM_PM, Duty,Last_Name,First_Name"
-    
-    todaysMonitors = db.engine.execute(sqlSelect)
+    try:
+        todaysMonitors = db.engine.execute(sqlSelect)
+    except Exception as e:
+        flash('ERROR - Error retrieving todays monitors.','danger')
+   
+
     todaysMonitorsArray=[]
     todaysMonitor=''
 
     for m in todaysMonitors:
-        
-        #print(m.memberName, m.memberID, m.Shop_Number)
 
         # IS MONITOR CHECKED IN?  GET THE CHECK IN/OUT TIMES FOR THIS MONITOR 
         if (shopNumber == '1' or shopNumber == '2'):

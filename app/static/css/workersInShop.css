@@ -215,16 +215,18 @@ input[type='radio']:checked:after {
   background-color:lightgray;
   color:navy;
   margin:0 auto;
+  padding-right:10px;
 }
 .modal-header button {
   float: right;
   }
-.modal-body {
-  width:100%;
+/* .modal-body {
+  width:1210px;
   padding-right:10px;
-}
+  margin-right:20px;
+} */
 .modal-xl {
-  width: 95%;
+  width: 90%;
   max-width:1200px;
 }
 .modal-title {
@@ -234,6 +236,7 @@ input[type='radio']:checked:after {
   
 .modal-content form {
   margin-left: 100px;
+  margin-right:100px;
   }
 
 .modal-col-hdgs {
