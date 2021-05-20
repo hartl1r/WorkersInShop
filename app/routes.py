@@ -165,7 +165,8 @@ def workersInShop():
     if (shopID == 'BW'):
         whereClause += " and Shop_Number = 2"
     sqlCheckInRecord += whereClause
-    
+    orderByClause = " ORDER BY Last_Name, First_Name"
+    sqlCheckInRecord += orderByClause
     #print(sqlCheckInRecord)
 
 
