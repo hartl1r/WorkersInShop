@@ -391,8 +391,8 @@ $(".memberID").click(function() {
   else {
     link = "https://fd.thevwc.org:42734/"
   }
-  // window.location.href = link
-  window.open(link,'_blank')
+  var memberWindow = window.open(link,'memberWindow')
+  memberWindow.focus
 })
 
 
