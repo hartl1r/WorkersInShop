@@ -20,6 +20,9 @@ from pytz import timezone
 @app.route('/index/')
 @app.route("/workersInShop",methods=['GET','POST'])
 def workersInShop():
+    # GET CURRENT ENVIRONMENT LOCATION (DEVELOPMENT OR PRODUCTION)
+    currentURL = app.config['CURRENT_URL']
+
     # GET STAFF ID
     staffID = getStaffID()
 
@@ -29,7 +32,8 @@ def workersInShop():
     #print('shopID - ',shopID)
 
     # USING CURRENT DATE FOR PRODUCTION
-    todaysDate = date.today()
+    est = timezone('America/New_York')
+    todaysDate = datetime.datetime.now(est)
     displayDate = todaysDate.strftime('%-b %-d, %Y')
     tomorrow = todaysDate + timedelta(days=1)
     
@@ -140,7 +144,7 @@ def workersInShop():
         return render_template("workersInShop.html",workersInShopArray=workersInShopArray,shopChoice=shopChoiceSelected,\
         inShop=inShopSelected,orderBy=orderBySelected,filterOption=filterOptionSelected,displayDate=displayDate,\
         inShopNowCount=inShopNowCount,inShopTodayCount=inShopTodayCount,\
-        requestMethod='POST')
+        requestMethod='POST',currentURL=currentURL)
         
         # END OF POST REQUEST
 
@@ -204,7 +208,8 @@ def workersInShop():
     TodayCount = countMembersInShopToday(shopID)
     
     return render_template("workersInShop.html",workersInShopArray=workersInShopArray,shopChoice=shopID,defaultShopID=shopID,\
-    inShop=inShop,orderBy=orderBy,filterOption=filterOption,displayDate=displayDate,inShopNowCount=NowCount,inShopTodayCount=TodayCount)
+    inShop=inShop,orderBy=orderBy,filterOption=filterOption,displayDate=displayDate,inShopNowCount=NowCount,\
+    inShopTodayCount=TodayCount,currentURL=currentURL)
     
 
 @app.route("/getTodaysMonitors/")
@@ -222,8 +227,7 @@ def getTodaysMonitors():
 
     # GET TODAYS DATE IN EST    
     est = timezone('America/New_York')
-    
-    todaysDate = date.today()
+    todaysDate = datetime.datetime.now(est)
     todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
 
     # GET LAST ACCEPTABLE TRAINING DATE
@@ -342,9 +346,9 @@ def printTodaysMonitors(shopChoice):
     if (shopChoice == 'BW'):
         shopNumber = '2'
         shopName = 'Brownwood'
-    
-    todaysDate = date.today()
 
+    est = timezone('America/New_York')
+    todaysDate = datetime.datetime.now(est)
     todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
     hdgDate = todaysDate.strftime('%-b %-d, %Y')
    

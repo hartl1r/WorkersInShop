@@ -385,11 +385,12 @@ $(".checkOut").click(function() {
 
 $(".memberID").click(function() {
   memberID = this.id.slice(0,6)
+  currentURL = document.getElementById('currentURL').value 
   if (memberID != '') {
-    link = "https://fd.thevwc.org:42734/?villageID=" + memberID
+    link = currentURL + ":42734/?villageID=" + memberID
   }
   else {
-    link = "https://fd.thevwc.org:42734/"
+    link = currentURL + ":42734/"
   }
   var memberWindow = window.open(link,'memberWindow')
   memberWindow.focus
