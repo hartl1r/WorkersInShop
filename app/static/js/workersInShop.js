@@ -7,9 +7,6 @@ $(document).ready(function() {
 })  
 
 window.addEventListener('focus', refresh);
-// document.getElementById('btnShowPhoto').onclick = function() {
-//   alert('Feature has not been implemented.')
-// }
   
   
 var currentShopChoice = 'BOTH'
@@ -396,7 +393,62 @@ $(".memberID").click(function() {
   memberWindow.focus
 })
 
+$(".photoBtn").click(function() {
+  memberID = this.id.slice(0,6)
+  memberID = '604875'
+  photoImgModal = document.getElementById('photoImgID')
+  // Try to find a .jpg file
+  url = "/var/www/dev.Member/app/static/memberPhotos/" + memberID + ".png"
+  //url = "/var/www/dev.thevwc.org:42734/static/memberPhotos/" + memberID + ".png"
+  //url = "https://dev.thevwc.org:42734/static/memberPhotos/" + memberID + ".png"
+  if (doesFileExist(url)){
+    alert(url + '\nfile exists')
+  }
+  else{
+    alert(url + '\nfile does NOT exist')
+  }
 
-function showPhoto() {
-  alert('Feature has not been implemented.')
+  try {
+    photoImgModal.src = url
+  }
+  catch {
+    console.log('not found')
+  }
+  //var JPGfileName = new File(url)
+  //if (JPGfileName.exists()) {
+  //   alert('JPG exists - '+url)
+  //   photoImgModal.src = url
+  // }
+  // else {
+  //   alert('JPG does NOT exist')
+    // Try to find a .png file
+    // url = "/var/www/dev/Member/app/static/memberPhotos/" + memberID + ".png"
+    // alert('PNG - '+url)
+    // var PNGfileName = new File(url)  }
+    // if (PNGfileName.exists()) {
+    //   alert('PNG - '+url)
+    //   photoImgModal.src = url
+    // }
+    // else {
+    //   alert('no matches')
+    //   photoImgModal.src = ''
+    // }
+  photoImgModal.alt = "No photo available."
+  $('#photoModal').modal('show')
+  return 
+})
+
+function closePhotoModal() {
+  $('#photoModal').modal('hide')
+}
+function doesFileExist(urlToFile) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('HEAD', urlToFile, false);
+  xhr.send();
+   
+  if (xhr.status == "404") {
+      return false;
+  } else {
+      return true;
+  }
 }

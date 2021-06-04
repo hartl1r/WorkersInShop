@@ -21,7 +21,7 @@
       <h2>WORKERS IN SHOP  -   Today is {{displayDate}}</h2>
     </div>
     <div class='version'> 
-      <h6>ver. Jun 1, 2021</h6>
+      <h6>ver. Jun 4, 2021</h6>
     </div>  
     <div class="monitorBtns">
       <button id="showTodaysMonitorsID" type='button' style=padding-top:5px; class = 'btn btn-primary btn-sm' data-toggle = 'modal' data-target = '#todaysMonitorsID'>
@@ -128,7 +128,7 @@
                 class='memberID'>
                 SHOW
               </button>
-              <button class="button is-success" style=display:none; id="btnShowPhoto">
+              <button class="photoBtn button is-success" style=display:none id="{{worker['memberID']}}+'photo'">
                 <span class="icon is-small">
                   <i class="fas fa-camera"></i>
                 </span>
@@ -201,4 +201,30 @@
   </div>
 </div>
 
+<!-- Modal for photo. -->
+<div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content" style=background-color:white>
+      <div class="modal-header" style="background-color: navy;color:white">
+        <h5 class="modal-title" id="modalTitle"></h5>
+        <button type="button" onclick=closePhotoModal()>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id=modalBody style=text-align:center>
+        <img 
+        id="photoImgID" 
+        src=""
+        alt="NO PHOTO AVAILABLE" 
+        width="400" 
+        height="300" 
+        >
+      </div>
+      <div class="modal-photo-footer" style=text-align:center>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick=closePhotoModal() >CLOSE</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
 {% endblock %}
