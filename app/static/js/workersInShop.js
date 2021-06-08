@@ -394,45 +394,21 @@ $(".memberID").click(function() {
 })
 
 $(".photoBtn").click(function() {
+  console.log('.photoBtn')
   memberID = this.id.slice(0,6)
-  memberID = '604875'
+  console.log('memberID - ',memberID)
   photoImgModal = document.getElementById('photoImgID')
   // Try to find a .jpg file
-  url = "/var/www/dev.Member/app/static/memberPhotos/" + memberID + ".png"
-  //url = "/var/www/dev.thevwc.org:42734/static/memberPhotos/" + memberID + ".png"
-  //url = "https://dev.thevwc.org:42734/static/memberPhotos/" + memberID + ".png"
-  if (doesFileExist(url)){
-    alert(url + '\nfile exists')
-  }
-  else{
-    alert(url + '\nfile does NOT exist')
-  }
+  url = "/var/www/fd/Member/app/static/memberPhotos/" + memberID + ".jpg"
+  //url = "/var/www/dev.Member/app/static/memberPhotos/" + memberID + ".jpg"
 
   try {
     photoImgModal.src = url
   }
   catch {
-    console.log('not found')
+    console.log('Photo not found for member '+ memberID)
   }
-  //var JPGfileName = new File(url)
-  //if (JPGfileName.exists()) {
-  //   alert('JPG exists - '+url)
-  //   photoImgModal.src = url
-  // }
-  // else {
-  //   alert('JPG does NOT exist')
-    // Try to find a .png file
-    // url = "/var/www/dev/Member/app/static/memberPhotos/" + memberID + ".png"
-    // alert('PNG - '+url)
-    // var PNGfileName = new File(url)  }
-    // if (PNGfileName.exists()) {
-    //   alert('PNG - '+url)
-    //   photoImgModal.src = url
-    // }
-    // else {
-    //   alert('no matches')
-    //   photoImgModal.src = ''
-    // }
+ 
   photoImgModal.alt = "No photo available."
   $('#photoModal').modal('show')
   return 
