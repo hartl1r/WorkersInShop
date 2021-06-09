@@ -399,9 +399,8 @@ $(".photoBtn").click(function() {
   console.log('memberID - ',memberID)
   photoImgModal = document.getElementById('photoImgID')
   // Try to find a .jpg file
-  url = "/var/www/fd/Member/app/static/memberPhotos/" + memberID + ".jpg"
-  //url = "/var/www/dev.Member/app/static/memberPhotos/" + memberID + ".jpg"
-
+  url = "/static/memberPhotos/" + memberID + ".jpg"
+  
   try {
     photoImgModal.src = url
   }

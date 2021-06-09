@@ -20,6 +20,7 @@ from pytz import timezone
 @app.route('/index/')
 @app.route("/workersInShop",methods=['GET','POST'])
 def workersInShop():
+
     # GET CURRENT ENVIRONMENT LOCATION (DEVELOPMENT OR PRODUCTION)
     currentURL = app.config['CURRENT_URL']
 
@@ -46,11 +47,6 @@ def workersInShop():
         orderBySelected=request.form['orderByOPT'] 
         filterOptionSelected=request.form['filterOptionOPT']
 
-        # print('shopChoiceSelected - ',shopChoiceSelected)
-        # print('inShopSelected - ',inShopSelected)
-        # print('orderBySelected - ',orderBySelected)
-        # print('filterOptionSelected - ',filterOptionSelected)
-
         # SELECT STATEMENT PHRASES, E.G., 'order by Last_Name, First_Name'
         if (shopChoiceSelected == 'RA'):
             shopChoice = ' Shop_Number = 1'
@@ -64,10 +60,6 @@ def workersInShop():
         orderBy=request.form['orderByItem'] #'OrderByCheckInTime'
         filterOption=request.form['filterItem'] #'All'
 
-        # print('inShop - ',inShop)
-        # print('orderBy - ',orderBy)
-        # print('filterOption - ',filterOption)
-        
         # BUILD INITIAL WHERE CLAUSE TO SELECT TODAY'S ACTIVITY RECORDS
         whereClause = " WHERE Cast(Check_In_Date_Time as DATE) >= '" + str(todaysDate) + "' and Cast(Check_In_Date_Time as DATE) < '" + str(tomorrow) + "' and"
         whereClause += ' ' + shopChoice
@@ -214,7 +206,6 @@ def workersInShop():
 
 @app.route("/getTodaysMonitors/")
 def getTodaysMonitors():
-    #print('/getTodaysMonitors')
     shopChoice=request.args.get('shopChoice')
     shopNumber = 'BOTH'
     shopName = 'Both Locations'
