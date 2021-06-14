@@ -7,7 +7,8 @@ from app.models import ControlVariables, ShopName, Member , MemberActivity, Moni
 from app import app
 from app import db
 
-from sqlalchemy import func, case, desc, extract, select, update
+
+from sqlalchemy import func, case, desc, extract, select, update, cast, Date
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError, DBAPIError
 from sqlalchemy.sql import text as SQLQuery
 
@@ -35,6 +36,7 @@ def workersInShop():
     # USING CURRENT DATE FOR PRODUCTION
     est = timezone('America/New_York')
     todaysDate = datetime.datetime.now(est)
+
     displayDate = todaysDate.strftime('%-b %-d, %Y')
     tomorrow = todaysDate + timedelta(days=1)
     
@@ -206,6 +208,12 @@ def workersInShop():
 
 @app.route("/getTodaysMonitors/")
 def getTodaysMonitors():
+    # GET TODAYS DATE WITH TIME OF 00:00:00 
+    est = timezone('America/New_York')
+    todaysDate = datetime.datetime.now(est)
+    todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
+    
+
     shopChoice=request.args.get('shopChoice')
     shopNumber = 'BOTH'
     shopName = 'Both Locations'
@@ -215,11 +223,6 @@ def getTodaysMonitors():
     if (shopChoice == 'BW'):
         shopNumber = '2'
         shopName = 'Brownwood'
-
-    # GET TODAYS DATE IN EST    
-    est = timezone('America/New_York')
-    todaysDate = datetime.datetime.now(est)
-    todays_dateSTR = todaysDate.strftime('%-m-%-d-%Y')
 
     # GET LAST ACCEPTABLE TRAINING DATE
     lastAcceptableTrainingDate = db.session.query(ControlVariables.Last_Acceptable_Monitor_Training_Date).filter(ControlVariables.Shop_Number == '1').scalar()
@@ -233,7 +236,7 @@ def getTodaysMonitors():
     whereClause = " WHERE Date_Scheduled = '" + todays_dateSTR + "'"
     if (shopNumber == '1' or shopNumber == '2'):
         whereClause += " and Shop_Number = " + shopNumber
-    
+    # GET TODAYS MONITORS
     sqlSelect = "SELECT tblMonitor_Schedule.ID as recordID, tblMonitor_Schedule.Member_ID as memberID, (Last_Name + ', ' +  First_Name) as memberName, "
     sqlSelect += " Home_Phone, Cell_Phone, Restricted_From_Shop, "
     sqlSelect += "format(Last_Monitor_Training,'MM-dd-yy') as lastTrainingDateRA, cast(Last_Monitor_Training as DATE) as LastMonitorTrainingRA, "
@@ -249,30 +252,23 @@ def getTodaysMonitors():
     except Exception as e:
         flash('ERROR - Error retrieving todays monitors.','danger')
    
-
     todaysMonitorsArray=[]
     todaysMonitor=''
 
     for m in todaysMonitors:
-
         # IS MONITOR CHECKED IN?  GET THE CHECK IN/OUT TIMES FOR THIS MONITOR 
-        if (shopNumber == '1' or shopNumber == '2'):
-            activity = db.session.query(MemberActivity)\
-                .filter(MemberActivity.Member_ID == m.memberID)\
-                .filter(MemberActivity.Shop_Number == shopNumber)\
-                .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-                .first()
-        else:
-           activity = db.session.query(MemberActivity)\
-                .filter(MemberActivity.Member_ID == m.memberID)\
-                .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-                .first()
+        activity = db.session.query(MemberActivity)\
+            .filter(MemberActivity.Member_ID == m.memberID)\
+            .filter(MemberActivity.Shop_Number == shopNumber)\
+            .filter(cast(MemberActivity.Check_In_Date_Time,Date) == date.today())\
+            .first()
         if (activity == None) :
             checkInTime='--------'
             checkOutTime='--------'
         else:
             format = '%I:%M %p'
             checkInTime = activity.Check_In_Date_Time.strftime(format)
+
             if (activity.Check_Out_Date_Time != None and activity.Check_Out_Date_Time != ''):
                 checkOutTime = activity.Check_Out_Date_Time.strftime(format)
             else:
@@ -466,7 +462,6 @@ def printTodaysMonitors(shopChoice):
                 flash('Missing member data for '+c.Coordinator_ID,'danger')
     else:
         coordinatorArray = []
-
     return render_template("rptMonitors.html",shopName=shopName,hdgDate=hdgDate,todaysMonitors=todaysMonitorsArray,coordinators=coordinatorArray)
 
 
