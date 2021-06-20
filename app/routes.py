@@ -356,17 +356,12 @@ def printTodaysMonitors(shopChoice):
     todaysMonitor=''
     for m in todaysMonitors:
         # IS MONITOR CHECKED IN?  GET THE CHECK IN/OUT TIMES FOR THIS MONITOR 
-        if (shopNumber == '1' or shopNumber == '2'):
-            activity = db.session.query(MemberActivity)\
-                .filter(MemberActivity.Member_ID == m.memberID)\
-                .filter(MemberActivity.Shop_Number == shopNumber)\
-                .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-                .first()
-        else:
-           activity = db.session.query(MemberActivity)\
-                .filter(MemberActivity.Member_ID == m.memberID)\
-                .filter(MemberActivity.Check_In_Date_Time >= todaysDate)\
-                .first()
+        activity = db.session.query(MemberActivity)\
+            .filter(MemberActivity.Member_ID == m.memberID)\
+            .filter(MemberActivity.Shop_Number == shopNumber)\
+            .filter(cast(MemberActivity.Check_In_Date_Time,Date) >= date.today())\
+            .first()
+        
         if (activity == None) :
             checkInTime='--------'
             checkOutTime='--------'
